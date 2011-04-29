@@ -1,0 +1,26 @@
+#!/bin/bash
+
+DIR="/home/flatcap/work/wiki"
+HOST="ftp://linux-ntfs.org/wiki/data/pages/"
+REJECT="--reject=\*.lock"
+TRIM="-nH --cut-dirs=3"
+#OTHER="--no-remove-listing"
+
+if [ ! -d $DIR ]; then
+	echo "$DIR doesn't exist"
+	exit 1
+fi
+
+pushd $DIR > /dev/null
+
+if [ "$1" = "fresh" ]; then
+	cd /home/flatcap/work/wiki
+	find . -type f -name \*.txt -exec rm {} \;
+	find . -depth -type d ! -name . -exec rmdir {} \;
+	wget -nv -r $TRIM $REJECT $OTHER $HOST
+else
+	wget -nv -r -N $TRIM $REJECT $OTHER $HOST 2>&1 | grep -v "\.listing"
+fi
+
+popd > /dev/null
+

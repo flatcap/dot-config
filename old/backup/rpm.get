@@ -1,0 +1,39 @@
+#!/bin/bash
+
+cd
+
+[ -e rpm ] && exit 1
+
+if [ -z "$SSH_AUTH_SOCK" -o -z "$SSH_AGENT_PID" ]; then
+	echo run ssh-helper
+	exit 1
+fi
+
+echo -n "fs "
+ping -w 1 fs > /dev/null 2>&1
+if [ $? = 0 ]; then
+	rsync $* -aHz fs:public/rpm /home/flatcap
+	if [ $? = 0 ]; then
+		echo "restore succeeded"
+	else
+		echo "restore failed"
+	fi
+else
+	echo "is down"
+fi
+
+[ -e rpm ] && exit 0
+
+echo -n "derwent "
+ping -w 2 derwent.arafel.org.uk > /dev/null 2>&1
+if [ $? = 0 ]; then
+	rsync $* -aHz derwent.arafel.org.uk:rpm /home/flatcap
+	if [ $? = 0 ]; then
+		echo "restore succeeded"
+	else
+		echo "restore failed"
+	fi
+else
+	echo "is down"
+fi
+

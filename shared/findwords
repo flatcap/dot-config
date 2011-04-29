@@ -1,0 +1,32 @@
+#!/bin/bash
+
+DICT="/usr/share/dict/words"
+LINES=$(tput lines)
+LINES=$((LINES-2))
+
+if [ $# = 0 ]; then
+	echo "Usage: "${0##*/} template
+	exit 1
+fi
+
+if [ "$1" = "-a" ]; then
+	WORD="$2"
+else
+	WORD="^$1$"
+fi
+
+TMP="/tmp/findwords.$RANDOM"
+mkdir $TMP
+pushd $TMP >& /dev/null
+
+grep -i "$WORD" $DICT | grep "^[a-z]\+$" | split -l$LINES
+if [ -f xaa ]; then
+	#clear
+	paste -d" " x*
+else
+	echo "No matches for '$WORD'"
+fi
+
+popd >& /dev/null
+rm -fr $TMP
+

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+cd
+
+[ -e web ] || exit 1
+
+if [ -z "$SSH_AUTH_SOCK" -o -z "$SSH_AGENT_PID" ]; then
+	echo run ssh-helper
+	exit 1
+fi
+
+find web -type d -exec chmod 755 {} \;
+find web -type f -exec chmod og+r {} \;
+
+cd ~/web/parts
+./build clean > /dev/null
+
+cd ~/web/rpm/parts
+./build clean > /dev/null
+
+cd
+
+echo -n "fs "
+ping -w 1 fs > /dev/null 2>&1
+if [ $? = 0 ]; then
+	rsync $* -aHz --delete /home/flatcap/web/ fs:public/web
+	if [ $? = 0 ]; then
+		echo "backup succeeded"
+	else
+		echo "backup failed"
+	fi
+else
+	echo "is down"
+fi
+
+echo -n "derwent "
+ping -w 2 derwent.arafel.org.uk > /dev/null 2>&1
+if [ $? = 0 ]; then
+	rsync $* -aHz --delete /home/flatcap/web/ derwent.arafel.org.uk:web
+	if [ $? = 0 ]; then
+		echo "backup succeeded"
+	else
+		echo "backup failed"
+	fi
+else
+	echo "is down"
+fi
+

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+BASE="/home/terminal/git"
+DIRS=("glib" "gtk+" "gnome-terminal" "vte")
+
+for d in "${DIRS[@]}"; do
+	pushd "$BASE/$d"
+	git checkout master
+	git pull
+	touch .
+	popd
+done
+

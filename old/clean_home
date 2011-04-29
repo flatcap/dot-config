@@ -1,0 +1,33 @@
+#!/bin/bash
+
+(killall dbus-launch 2>&1) > /dev/null
+
+cd /home/terminal 2>&1 /dev/null
+
+rm -fr					\
+	.cache				\
+	.ccache				\
+	.dbus				\
+	.esd_auth			\
+	.evolution			\
+	.fontconfig			\
+	.gconf				\
+	.gconfd				\
+	.gimp-2.6			\
+	.gnome2				\
+	.gnome2_private			\
+	.gstreamer-0.10			\
+	.icedteaplugin			\
+	.lesshst			\
+	.nautilus			\
+	.mozilla			\
+	.recently-used.xbel		\
+	.sqlite_history			\
+	.thumbnails			\
+	.Xauthority
+
+find . -type d -print0 | xargs -0 chmod g+rx
+chmod 640 .elinks/*
+
+(find . -type f -print0 | xargs -0 cat > /dev/null &) 2> /dev/null
+

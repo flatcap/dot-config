@@ -1,0 +1,43 @@
+#!/bin/bash
+
+PATH="/bin:/usr/bin"
+HOME="/home/flatcap"
+ORIG_DIR="$HOME/work"
+BACKUP_DIR="/mnt/data/backup/work"
+#BACKUP_MARKER=.backup
+
+# First, duplicate the work directory exactly.
+rsync						\
+	--delete				\
+	--devices				\
+	--group					\
+	--hard-links				\
+	--links					\
+	--owner					\
+	--perms					\
+	--recursive				\
+	--specials				\
+	--times					\
+	--exclude ".*.swp"			\
+	--exclude "tags"			\
+	$ORIG_DIR/				\
+	$BACKUP_DIR
+
+#	--verbose				\
+#	--exclude "*.bz2"			\
+#	--exclude "*.o"				\
+#	--exclude "*.rpm"			\
+
+#find $BACKUP_DIR -type f -name $BACKUP_MARKER
+
+# backup where .backup exists and below
+
+# generate list of orig files, rsync'd files and diff
+
+
+# rdiff-backup					\
+# 		--exclude-special-files		\
+# 		--exclude "**/tags"		\
+# 		--exclude "**/*.swp"		\
+# 						\
+

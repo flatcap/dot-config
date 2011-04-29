@@ -1,0 +1,6 @@
+#!/bin/bash
+
+WIDTH=${1:-$(tput cols)}
+
+exec pr -TW$WIDTH
+

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+PAGE="http://www.guardian.co.uk/crossword/cryptic/"
+SAVEDIR="/home/flatcap/downloads/guardian"
+
+CRYPTIC=$(wget -o /dev/null -O - $PAGE | grep -io "http://[-a-z0-9/\.]\+\.pdf")
+FILE=${CRYPTIC##*/}
+
+cd $SAVEDIR
+
+[ -f $FILE ] || wget -o /dev/null $CRYPTIC
+
+# Extract date from filename
+TIMESTAMP=$(echo $FILE | grep -o "20[[:digit:]]\{6\}" | sed 's/\(....\)\(..\)\(..\)/\1\/\2\/\3 09:00:00/')
+
+# Extract "set by" from pdf
+TEXT=$(pdftotext $FILE - 2> /dev/null | grep "[0-9][0-9][0-9] set by")
+
+# Extract number from pdf
+NUMBER=$(echo $TEXT | grep -o "[0-9,]\+" | sed 's/,//')
+
+# Extract author from pdf
+AUTHOR=$(echo $TEXT | sed 's/.*set by //')
+
+# Rename to "Number - Author.pdf"
+NEWFILE="$NUMBER - $AUTHOR.pdf"
+mv "$FILE" "$NEWFILE"
+
+# Alter timestamp to "Date: 09:00:00"
+touch -d "$TIMESTAMP" "$NEWFILE"
+chmod 644 "$NEWFILE"
+
+echo "$TIMESTAMP : $NEWFILE"
+
+#lpr "$NEWFILE"
+

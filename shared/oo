@@ -1,0 +1,66 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	exit 1
+fi
+
+if [ ! -f "$1" ]; then
+	echo "file not found: $1"
+	exit 1
+fi
+
+exec 2> /dev/null	# Turn off stderr
+
+for i in "$@"; do
+	[ -d "$i" ] && continue
+
+	case "$i" in
+		*.doc|*.odt|*.rtf|*.ott)
+			(oowriter "$i" &) &> /dev/null
+			;;
+		*.xls|*.ods|*.csv)
+			(oocalc "$i" &) &> /dev/null
+			;;
+		*.txt)
+			(gedit "$i" &) &> /dev/null
+			;;
+		*.pdf)
+			(evince "$i" &) &> /dev/null
+			;;
+		*.svg)
+			(inkscape "$i" &) &> /dev/null
+			;;
+		*.avi|*.mpg|*.wmv|*.mp4|*.mkv|*.ogg|*.mov|*.mp3|*.flv)
+			#(totem --fullscreen --enqueue "$i" &) &> /dev/null
+			#(totem --enqueue "$i" &) &> /dev/null
+			(totem --no-existing-session "$i" &) &> /dev/null
+			#(xine --no-splash --auto-play=fq "$i" &) &> /dev/null
+			#gmplayer "$i"
+			;;
+		*.dot)
+			(dotty "$i" &) &> /dev/null
+			;;
+		*.htm|*.html)
+			(firefox "$i" &) &> /dev/null
+			;;
+		*.jpg|*.jpeg|*.png|*.gif)
+			(gthumb -n "$i" &) &> /dev/null
+			;;
+		*.rm)
+			(realplay -f "$i" &) &> /dev/null
+			;;
+		*.torrent)
+			(deluge "$i" &) &> /dev/null
+			;;
+		*.xcf)
+			(gimp "$i" &) &> /dev/null
+			;;
+		*.glade)
+			(glade-2 "$i" &) &> /dev/null
+			;;
+		*)
+			echo "Unknown: $i"
+			;;
+	esac
+done
+

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+rsync						\
+	--recursive				\
+	--links					\
+	--perms					\
+	--times					\
+	--group					\
+	--owner					\
+	--devices				\
+	--specials				\
+	--hard-links				\
+	--verbose				\
+	--compress				\
+	--delete				\
+	--cvs-exclude				\
+	--exclude ".*.swp"			\
+	pc12:/root/				\
+	$HOME/work/terminal.backup
+

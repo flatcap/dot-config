@@ -1,0 +1,29 @@
+_comp_vs()
+{
+	local cur
+	local prev
+
+	COMPREPLY=()
+	cur=${COMP_WORDS[COMP_CWORD]}
+	prev=${COMP_WORDS[COMP_CWORD-1]}
+
+	if [ $COMP_CWORD = 1 ]; then
+		COMPREPLY=( $(compgen -W 'start stop list' -- $cur ) )
+	else
+		case $prev in
+			'list')
+				COMPREPLY=( $(compgen -W '--all --inactive' -- $cur ) )
+				;;
+			'start')
+				LIST=$(vs list --inactive | sed -n -e '/^$/d' -e '3,$ p' | awk '{ print $2 }')
+				COMPREPLY=( $(compgen -W "$LIST" -- $cur) )
+				;;
+			'stop')
+				LIST=$(vs list | sed -n -e '/^$/d' -e '3,$ p' | awk '{ print $2 }')
+				COMPREPLY=( $(compgen -W "$LIST" -- $cur) )
+				;;
+		esac
+	fi
+}
+
+complete -F _comp_vs vs

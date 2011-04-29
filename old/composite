@@ -1,0 +1,7 @@
+#!/bin/bash
+
+KEY="/apps/metacity/general/compositing_manager"
+
+[ $# = 0 ] && gconftool-2 -g $KEY
+[ $# = 1 ] && gconftool-2 --type boolean -s $KEY $1
+

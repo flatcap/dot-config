@@ -1,0 +1,2 @@
+#!/bin/bash
+curl -s http://checkip.dyndns.org | grep --color=none -o "[[:digit:].]\+"

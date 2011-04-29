@@ -1,0 +1,33 @@
+#!/bin/bash -x
+
+# Additionally:
+#   backup /etc
+#   record rpm -qa
+
+ssh dev "cd src; make -q distclean; cd; git-tidy"
+dev.backup
+ssh pc2 "yum clean all; cleanup"
+
+SHUTDOWN="FAILED"
+for i in $(seq 12); do
+	sudo /usr/bin/virsh list | grep -q dev_64
+	if [ $? = 1 ]; then
+		echo vm shutdown
+		SHUTDOWN="OK"
+		break;
+	fi
+	echo "Waiting for 10 seconds"
+	sleep 10
+done
+
+if [ $SHUTDOWN = "FAILED" ]; then
+	exit 1
+fi
+
+cd ~/data/vm
+cp --sparse=always dev_64.img ~
+sudo /usr/bin/virsh start dev_64
+cd
+tar cfvS dev_64.tar dev_64.img
+rm dev_64.img
+pbzip2 -9v dev_64.tar

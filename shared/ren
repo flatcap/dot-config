@@ -1,0 +1,39 @@
+#!/bin/bash
+
+MVOPTS="--interactive"
+#MVOPTS="--backup=t"
+
+if [ "$1" ]; then
+	echo "This program doesn't take any arguments."
+	exit 1
+fi
+
+for i in f1 f2; do
+	if [ ! -f $i ]; then
+		echo "File '$i' is missing."
+		exit 1
+	fi
+done
+
+LEN1=$(wc -l f1 | awk '{ print $1 }')
+LEN2=$(wc -l f2 | awk '{ print $1 }')
+
+if [ $LEN1 != $LEN2 ]; then
+	echo "The file lengths are different: $LEN1, $LEN2."
+	exit 1
+fi
+
+IFS="	"
+COUNT="0"
+
+paste f1 f2 | while read i j; do
+	if [ "$i" != "$j" ]; then
+		mv $MVOPTS -- "$i" "$j"
+		COUNT=$((COUNT+1))
+	fi
+done
+
+rm -f f1 f2
+
+echo "$COUNT files renamed."
+
