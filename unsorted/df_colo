@@ -1,0 +1,59 @@
+#!/bin/bash
+
+shopt -s extglob
+
+DISKS="/dev/simfs"
+DF="/bin/df"
+OPTS=""
+ARGS=""
+
+get_name()
+{
+	case $1 in
+		root|simfs|/dev/simfs|/)
+			DISK_NAME="root"
+			#DISK_NAME="$DISK_NAME(a1)"
+			DISK_DEV="/dev/sda1"
+			;;
+
+		*)
+			DISK_NAME=""
+			DISK_DEV=""
+			;;
+	esac
+}
+
+get_stats()
+{
+	set -- $($DF $OPTS $1 | grep "[[:digit:]]%" | cut -b 20-)
+	DISK_SIZE="$1"
+	DISK_USED="$2"
+	DISK_FREE="$3"
+	DISK_USDP="$4"
+	DISK_MNT="$5"
+}
+
+
+for ARG in "$@"; do
+	case "$ARG" in
+		-*) OPTS="$OPTS $ARG" ;;
+		*)  ARGS="$ARGS $ARG" ;;
+	esac
+done
+
+[ -n "$ARGS" ] || ARGS=$DISKS
+
+(
+echo Disk Size Used Free Used
+for disk in $ARGS; do
+	if [ -e $disk ]; then
+		get_stats $disk
+		get_name $DISK_MNT
+	else
+		get_name $disk
+		get_stats $DISK_DEV
+	fi
+	echo $DISK_NAME $DISK_SIZE $DISK_USED $DISK_FREE $DISK_USDP
+done
+) | column -t
+

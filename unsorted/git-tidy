@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DIRS="git/gt git/vte"
+
+for d in $DIRS; do
+	pushd ~/$d
+	git checkout master
+	git prune
+	git gc --aggressive
+	git fsck --full --strict
+	popd
+done
+
