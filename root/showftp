@@ -1,0 +1,4 @@
+#!/bin/bash
+
+for i in $(pidof vsftpd); do ls -l /proc/$i/fd; done | grep -v -e socket -e xferlog -e total | sort | cut -d/ -f6-
+
