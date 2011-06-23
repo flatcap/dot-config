@@ -1,6 +1,6 @@
 cd()
 {
-	local w=$HOME/.work_dir
+	local w=~/.cd_dir
 	if [ -n "$1" ]; then
 		[ -f "$1" ] && set -- "${1%/*}"
 	else
