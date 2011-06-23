@@ -1,8 +1,19 @@
 cd()
 {
-	#[ -z "$1" ] && set -- ~
-	[ -z "$1" ] && set -- $(cat ~/.work_dir)
-	[ -f "$1" ] && set -- "${1%/*}"
-	command cd "$1" > /dev/null 2>&1
+	local dir=""
+	if [ -n "$1" ]; then
+		if [ -f "$1" ]; then
+			dir="${1%/*}"
+		else
+			dir="$1"
+		fi
+	else
+		if [ -r "$HOME/.work_dir" ]; then
+			dir="$(cat $HOME/.work_dir)"
+		else
+			dir="$HOME"
+		fi
+	fi
+	command cd "$dir" > /dev/null 2>&1
 }
 
