@@ -1,19 +1,19 @@
 cd()
 {
-	local dir=""
+	local d=""
+	local w="~/.work_dir"
 	if [ -n "$1" ]; then
 		if [ -f "$1" ]; then
-			dir="${1%/*}"
+			d="${1%/*}"
 		else
-			dir="$1"
+			d="$1"
 		fi
 	else
-		if [ -r "$HOME/.work_dir" ]; then
-			dir="$(cat $HOME/.work_dir)"
+		if [ -r "$w" ]; then
+			d="$(cat $w)"
 		else
-			dir="$HOME"
+			d="~"
 		fi
 	fi
-	command cd "$dir" > /dev/null 2>&1
+	command cd "$d" > /dev/null 2>&1
 }
-
