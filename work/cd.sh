@@ -1,10 +1,9 @@
 cd()
 {
-	local w=~/.cd_dir
 	if [ -n "$1" ]; then
 		[ -f "$1" ] && set -- "${1%/*}"
 	else
-		[ -r $w ] && set -- "$(cat $w)"
+		[ -n "$CDDIR" ] && set -- "$CDDIR"
 	fi
-	command cd "$1" > /dev/null 2>&1
+	command cd "$@" > /dev/null 2>&1
 }
