@@ -2,10 +2,10 @@ BASH=/bin/bash
 BASH_VERSINFO=([0]="2" [1]="05" [2]="0" [3]="1" [4]="release" [5]="i386-suse-linux")
 BASH_VERSION=$'2.05.0(1)-release'
 COLORTERM=1
-COLUMNS=174
+COLUMNS=80
 CPU=i686
 DIRSTACK=()
-EUID=515
+EUID=500
 FROM_HEADER=derwent.arafel.org.uk
 GNOMEDIR=/opt/gnome
 GNOME_PATH=:/opt/gnome:/usr
@@ -30,7 +30,7 @@ LESSCLOSE=$'lessclose.sh %s %s'
 LESSKEY=/etc/lesskey.bin
 LESSOPEN=$'lessopen.sh %s'
 LESS_ADVANCED_PREPROCESSOR=no
-LINES=46
+LINES=24
 LOGNAME=flatcap
 LS_COLORS=$'no=00:fi=00:di=01;34:ln=01:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;31:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.bat=01;32:*.btm=01;32:*.dll=01;32:*.tar=00;31:*.tbz=00;31:*.tgz=00;31:*.rpm=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.tbz2=00;31:*.png=01;35:*.bmp=01;35:*.gif=01;35:*.jpg=01;35:*.jpeg=01;35:*.pcx=01;35:*.ppm=01;35:*.tif=01;35:*.xbm=01;35:*.xpm=01;35:*.wav=00;32:*.mp3=00;32:*.au=00;32:*.aiff=00;32:*.mid=00;32:*.voc=00;32:'
 LS_OPTIONS=$'-N --color=tty -T 0'
@@ -47,7 +47,7 @@ OSTYPE=linux
 PAGER=less
 PATH=/usr/local/bin:/usr/bin:/bin:/home/flatcap/bin:/usr/lib/java/bin
 PIPESTATUS=([0]="0")
-PPID=11293
+PPID=1234
 PRINTER=lp
 PROFILEREAD=true
 PS1=$'\\u@\\h:\\w> '
@@ -62,7 +62,7 @@ SSH_CONNECTION=$'213.105.7.241 59380 193.201.200.161 22'
 SSH_TTY=/dev/pts/7
 TERM=xterm
 TEXINPUTS=:/home/flatcap/.TeX:/usr/share/doc/.TeX:/usr/doc/.TeX
-UID=515
+UID=500
 USER=flatcap
 WINDOWMANAGER=/usr/X11R6/bin/kde
 XKEYSYMDB=/usr/X11R6/lib/X11/XKeysymDB
