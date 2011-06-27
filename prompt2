@@ -1,0 +1,26 @@
+case $(tty) in
+	/dev/tty[0-9])
+		TERM=linux
+		PROMPT_COMMAND='echo -n '
+		;;
+	/dev/ttyp*|/dev/pts/*)
+		TERM=xterm
+		PROMPT_COMMAND='echo -n ; echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+		;;
+	*)	
+		TERM=vt100
+		PROMPT_COMMAND='echo -n '
+		;;
+esac
+
+if [ -n "$SSH_CLIENT" ]; then
+	export PROMPT_PREFIX="M"
+fi
+
+export PROMPT_COMMAND TERM
+if [ -n "$PROMPT_PREFIX" ]; then
+	export PS1="[$PROMPT_PREFIX]\w\$(parse_git_branch)\\$ "
+else
+	export PS1="$PROMPT_PREFIX\w\$(parse_git_branch)\\$ "
+fi
+

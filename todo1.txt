@@ -1,0 +1,27 @@
+
+muse
+	flatcap
+	root
+	work
+
+linode
+	root
+	flatcap
+	git
+	craggy
+	rpm
+
+eee
+	flatcap
+	root
+
+derwent
+	flatcap
+
+
+from
+	console
+	xterm
+	ssh
+	su
+

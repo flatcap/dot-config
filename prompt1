@@ -1,0 +1,21 @@
+
+muse			GREEN
+	flatcap		F
+	root		#
+	work		W
+
+linode			RED
+	root		#
+	flatcap		F
+	git		G
+	craggy		C
+	rpm		R
+
+eee			CYAN
+	flatcap		F
+	root		#
+
+derwent			YELLOW
+	flatcap		F
+
+

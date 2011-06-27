@@ -1,0 +1,129 @@
+BASH=/bin/bash
+BASH_VERSINFO=([0]="2" [1]="05" [2]="0" [3]="1" [4]="release" [5]="i386-suse-linux")
+BASH_VERSION=$'2.05.0(1)-release'
+COLORTERM=1
+COLUMNS=174
+CPU=i686
+DIRSTACK=()
+EUID=515
+FROM_HEADER=derwent.arafel.org.uk
+GNOMEDIR=/opt/gnome
+GNOME_PATH=:/opt/gnome:/usr
+GROUPS=()
+HISTCONTROL=ignoredups
+HISTFILE=/home/flatcap/.bash_history
+HISTFILESIZE=1000
+HISTSIZE=1000
+HOME=/home/flatcap
+HOST=derwent
+HOSTFILE=
+HOSTNAME=derwent
+HOSTTYPE=i386
+IFS=$' \t\n'
+INFODIR=/usr/local/info:/usr/share/info:/usr/info
+INFOPATH=/usr/local/info:/usr/share/info:/usr/info
+INPUTRC=/etc/inputrc
+LANG=en_GB
+LC_COLLATE=POSIX
+LESS=$'-M -S -I'
+LESSCLOSE=$'lessclose.sh %s %s'
+LESSKEY=/etc/lesskey.bin
+LESSOPEN=$'lessopen.sh %s'
+LESS_ADVANCED_PREPROCESSOR=no
+LINES=46
+LOGNAME=flatcap
+LS_COLORS=$'no=00:fi=00:di=01;34:ln=01:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;31:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.bat=01;32:*.btm=01;32:*.dll=01;32:*.tar=00;31:*.tbz=00;31:*.tgz=00;31:*.rpm=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.tbz2=00;31:*.png=01;35:*.bmp=01;35:*.gif=01;35:*.jpg=01;35:*.jpeg=01;35:*.pcx=01;35:*.ppm=01;35:*.tif=01;35:*.xbm=01;35:*.xpm=01;35:*.wav=00;32:*.mp3=00;32:*.au=00;32:*.aiff=00;32:*.mid=00;32:*.voc=00;32:'
+LS_OPTIONS=$'-N --color=tty -T 0'
+MACHTYPE=i686-suse-linux
+MAIL=/var/mail/flatcap
+MAILCHECK=60
+MAILDIR=/home/flatcap/Maildir
+MANPATH=/usr/local/man:/usr/share/man:/usr/local/perl/man:/usr/openwin/man:/usr/X11R6/man:/usr/local/share/man:/opt/gnome/man:/var/qmail/man
+MINICOM=$'-c on'
+NNTPSERVER=news
+OPTERR=1
+OPTIND=1
+OSTYPE=linux
+PAGER=less
+PATH=/usr/local/bin:/usr/bin:/bin:/home/flatcap/bin:/usr/lib/java/bin
+PIPESTATUS=([0]="0")
+PPID=11293
+PRINTER=lp
+PROFILEREAD=true
+PS1=$'\\u@\\h:\\w> '
+PS2=$'> '
+PS4=$'+ '
+PWD=/home/flatcap
+SHELL=/bin/bash
+SHELLOPTS=braceexpand:hashall:histexpand:monitor:privileged:interactive-comments:emacs
+SHLVL=1
+SSH_CLIENT=$'213.105.7.241 59380 22'
+SSH_CONNECTION=$'213.105.7.241 59380 193.201.200.161 22'
+SSH_TTY=/dev/pts/7
+TERM=xterm
+TEXINPUTS=:/home/flatcap/.TeX:/usr/share/doc/.TeX:/usr/doc/.TeX
+UID=515
+USER=flatcap
+WINDOWMANAGER=/usr/X11R6/bin/kde
+XKEYSYMDB=/usr/X11R6/lib/X11/XKeysymDB
+XNLSPATH=/usr/X11R6/lib/X11/nls
+_=-la
+_HOMEBASHRC=true
+_SUSECONFIG_PROFILE=true
+is=bash
+no_proxy=localhost
+_file_ () 
+{ 
+    local c=${COMP_WORDS[COMP_CWORD]};
+    local e="compgen -f -X";
+    case "$1" in 
+        compress)
+            COMPREPLY=($($e '*.Z'			$c))
+        ;;
+        bunzip2)
+            COMPREPLY=($($e '!*.bz2'		$c))
+        ;;
+        gunzip)
+            COMPREPLY=($($e '!*.gz'			$c))
+        ;;
+        uncompress)
+            COMPREPLY=($($e '!*.Z'			$c))
+        ;;
+        unzip)
+            COMPREPLY=($($e '!*.+(zip|jar)'		$c))
+        ;;
+        gs | ghostview)
+            COMPREPLY=($($e '!*.+(ps|PS|pdf|PDF)'	$c))
+        ;;
+        gv)
+            COMPREPLY=($($e '!*.+(ps|ps.gz|pdf|PDF)' $c))
+        ;;
+        acroread | xpdf)
+            COMPREPLY=($($e '!*.+(pdf|PDF)'		$c))
+        ;;
+        dvips | xdvi)
+            COMPREPLY=($($e '!*.+(dvi|DVI)'		$c))
+        ;;
+        tex | latex)
+            COMPREPLY=($($e '!*.+(tex|TEX|texi)'	$c))
+        ;;
+    esac
+}
+remount () 
+{ 
+    /bin/mount -o remount ${1+"$@"}
+}
+spwd () 
+{ 
+    ( IFS=/;
+    set $PWD;
+    if test $# -le 3; then
+        echo "$PWD";
+    else
+        eval echo \"..\${$(($# - 1))}/\${$#}\";
+    fi )
+}
+startx () 
+{ 
+    /usr/X11R6/bin/startx ${1+"$@"} 2>&1 | tee $HOME/.X.err
+}

@@ -1,0 +1,8 @@
+export HISTCONTROL="ignorespace:erasedups"
+export HISTFILESIZE="10000"
+export HISTIGNORE="&:bg:fg:\!:cd"
+export HISTSIZE="1000"
+#export HISTTIMEFORMAT="%a %H:%M  "
+unset  HISTTIMEFORMAT
+export HISTFILE="$HOME/.bash_history"
+
