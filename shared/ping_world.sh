@@ -25,7 +25,7 @@ log_text()
 log_ping()
 {
 	if [ $1 = 0 ]; then
-		echo -en "\e[32m"		# Good ping - green =
+		echo -en "\e[32m"		# Good ping - green _
 		log_text "_"
 	else
 		echo -en "\e[31m"		# Bad ping - red X
