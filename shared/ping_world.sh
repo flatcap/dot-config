@@ -3,6 +3,10 @@
 #     log output to a file
 #     create an html output file in a shared dir
 
+LOGFILE="/mnt/data/status/internet.txt"
+HOST="8.8.8.8"
+SLEEP="57s"
+
 get_date()
 {
 	set -- $(date "+%Y %m %d %H %M %A %B")
@@ -13,35 +17,49 @@ get_date()
 	MINUTE=$5
 }
 
+log_text()
+{
+	printf "$@" | tee -a "$LOGFILE"
+}
 
-HOST="8.8.8.8"
-SLEEP="55s"
+log_ping()
+{
+	if [ $1 = 0 ]; then
+		echo -en "\e[32m"		# Good ping - green =
+		log_text "_"
+	else
+		echo -en "\e[31m"		# Bad ping - red X
+		log_text "X"
+	fi
+	echo -en "\e[0m"
+}
+
+
+mkdir -p "${LOGFILE%/*}"
 
 get_date
 OLD_HOUR=$HOUR
 OLD_DAY=$DAY
 
-echo "$YEAR/$MONTH/$DAY"
-echo -n "$HOUR:$MINUTE "
+log_text "\n$YEAR/$MONTH/$DAY\n$HOUR:$MINUTE "
+chmod 644 "$LOGFILE"
+chcon -t public_content_t "$LOGFILE"
 
 while :; do
 	get_date
 	if [ $OLD_DAY != $DAY ]; then
-		echo -ne "\n\n$YEAR/$MONTH/$DAY"
+		log_text "\n\n$YEAR/$MONTH/$DAY"
 		OLD_DAY=$DAY
 	fi
 
 	if [ $OLD_HOUR != $HOUR ]; then
-		echo -ne "\n$HOUR:$MINUTE "
+		log_text "\n$HOUR:$MINUTE "
 		OLD_HOUR=$HOUR
 	fi
 
 	ping -c1 -n $HOST > /dev/null
-	if [ $? = 0 ]; then
-		echo -en "\e[32mX\e[0m"		# Good ping - green X
-	else
-		echo -en "\e[31mX\e[0m"		# Bad ping - red X
-	fi
+	log_ping $?
+
 	sleep $SLEEP
 done
 
