@@ -1,3 +1,0 @@
-alias vs='sudo /usr/bin/virsh'
-alias vm='sudo /usr/bin/virt-manager'
-
