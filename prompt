@@ -1,5 +1,3 @@
-#!/bin/bash
-#
 # config
 #	BASH_DEF_{COLOUR,GIT,PREFIX,TITLE}={yes,no}
 
