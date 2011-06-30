@@ -1,21 +1,21 @@
 
-muse			GREEN
+muse			GREEN	32
 	flatcap		F
 	root		#
 	work		W
 
-linode			RED
+linode			RED	31
 	root		#
 	flatcap		F
 	git		G
 	craggy		C
 	rpm		R
 
-eee			CYAN
+eee			CYAN	35
 	flatcap		F
 	root		#
 
-derwent			YELLOW
+derwent			YELLOW	33
 	flatcap		F
 
-
+unknown			MAGENTA	34
