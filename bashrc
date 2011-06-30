@@ -6,23 +6,20 @@ shopt -s cdspell
 shopt -s extglob
 shopt -s progcomp
 
-[[ $TERM =~ ^(xterm|vt100|linux)$ ]] && bind Space:magic-space
+for dir in env alias function complete; do
+	[ -d $HOME/bin/$dir.d/ ] || continue;
 
-if [ -d $HOME/bin/function.d/ ]; then
-	for i in $HOME/bin/function.d/*; do
+	for i in $HOME/bin/$dir.d/*; do
 		source $i
 	done
-fi
-title
-
-if [ -d $HOME/bin/complete.d/ ]; then
-	for i in $HOME/bin/complete.d/*; do
-		source $i
-	done
-fi
+done
 
 #setterm -blank 0
 #setterm -blength 0
+
+[[ $TERM =~ ^(xterm|vt100|linux)$ ]] && bind Space:magic-space
+
+title
 
 [ -f ~/.extra ] && source ~/.extra
 
