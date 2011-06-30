@@ -7,7 +7,7 @@ shopt -s extglob
 shopt -s progcomp
 
 unalias -a
-for dir in env alias function complete; do
+for dir in env function complete alias; do
 	[ -d $HOME/bin/$dir.d/ ] || continue;
 
 	for i in $HOME/bin/$dir.d/*; do

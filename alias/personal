@@ -1,10 +1,11 @@
-alias c="cd ~/downloads/craggy; clear; ls -gG"
+alias c="cd /home/work/craggy; clear; ls -gG"
 alias db="mysql -st"
 alias d="cd ~/downloads; clear; ls -gG"
 alias easytag="_wrapdot /usr/bin/easytag"
 alias file='file --magic-file=/usr/share/file/magic:$HOME/.magic'
-alias g="cd ~/downloads/guardian; clear;/list.sh"
 alias ssh-helper='ssh-add $(find ~/.ssh -name \*.pub | sed "s/\.pub//")'
 alias vm='sudo /usr/bin/virt-manager'
 alias vs='sudo /usr/bin/virsh'
-alias yyum="yum -y"
+
+#alias g="cd ~/downloads/guardian; clear;/list.sh"
+#alias yyum="yum -y"
