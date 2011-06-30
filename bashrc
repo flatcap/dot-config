@@ -6,7 +6,7 @@ shopt -s cdspell
 shopt -s extglob
 shopt -s progcomp
 
-[ "$TERM" = "xterm" ] && bind Space:magic-space
+[[ $TERM =~ ^(xterm|vt100|linux)$ ]] && bind Space:magic-space
 
 if [ -d $HOME/bin/function.d/ ]; then
 	for i in $HOME/bin/function.d/*; do
@@ -14,18 +14,6 @@ if [ -d $HOME/bin/function.d/ ]; then
 	done
 fi
 title
-
-if [ -d $HOME/bin/debug.d/ ]; then
-	for i in $HOME/bin/debug.d/*; do
-		source $i
-	done
-fi
-
-if [ -n "$SSH_AUTH_SOCK" ]; then
-	echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > ~/.ssh-agent
-else
-	source ~/.ssh-agent
-fi
 
 if [ -d $HOME/bin/complete.d/ ]; then
 	for i in $HOME/bin/complete.d/*; do
