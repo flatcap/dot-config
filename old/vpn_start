@@ -1,0 +1,6 @@
+#!/bin/sh
+
+sudo vpnc-connect oxford
+sudo cp /etc/vpnc/oxford.resolv.conf /etc/resolv.conf
+sudo chmod 644 /etc/resolv.conf
+

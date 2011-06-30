@@ -41,6 +41,7 @@ get_date
 OLD_HOUR=$HOUR
 OLD_DAY=$DAY
 
+[ -f "$LOGFILE" ] && log_text "\n"
 log_text "\n$YEAR/$MONTH/$DAY\n$HOUR:$MINUTE "
 chmod 644 "$LOGFILE"
 chcon -t public_content_t "$LOGFILE"
