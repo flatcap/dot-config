@@ -1,4 +1,0 @@
-aliases
-environment variables
-bash completion
-prompt
