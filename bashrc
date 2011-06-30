@@ -6,6 +6,7 @@ shopt -s cdspell
 shopt -s extglob
 shopt -s progcomp
 
+unalias -a
 for dir in env alias function complete; do
 	[ -d $HOME/bin/$dir.d/ ] || continue;
 
@@ -14,12 +15,11 @@ for dir in env alias function complete; do
 	done
 done
 
-#setterm -blank 0
-#setterm -blength 0
-
 [[ $TERM =~ ^(xterm|vt100|linux)$ ]] && bind Space:magic-space
 
 title
+
+source $HOME/.bash_prompt
 
 [ -f ~/.extra ] && source ~/.extra
 
