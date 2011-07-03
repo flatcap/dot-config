@@ -2,7 +2,7 @@ alias c="cd /home/work/craggy; clear; ls -gG"
 alias db="mysql -st"
 alias d="cd ~/downloads; clear; ls -gG"
 alias easytag="_wrapdot /usr/bin/easytag"
-alias ssh-helper='ssh-add $(find ~/.ssh -name \*.pub | sed "s/\.pub//")'
+alias ssh-helper='ssh-add $(find ~/.ssh -name \*.pub | sed "s/\.pub//") && echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > ~/.ssh-agent'
 alias vm='sudo /usr/bin/virt-manager'
 alias vs='sudo /usr/bin/virsh'
 
