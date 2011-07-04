@@ -1,2 +1,0 @@
-#!/bin/sh
-curl --silent --compressed http://www.flatcap.org/cron.php

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-amixer set Mic toggle | grep -q "Mono:.*\[on\]$"
-if [ "$?" = 1 ]; then
-	echo off
-else
-	echo on
-fi
-
