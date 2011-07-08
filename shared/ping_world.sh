@@ -3,9 +3,9 @@
 #     log output to a file
 #     create an html output file in a shared dir
 
-LOGFILE="/mnt/data/status/internet.txt"
-HOST="8.8.8.8"
-SLEEP="57s"
+LOGFILE="/mnt/data/status/internet2.txt"
+HOSTS="8.8.8.8 178.79.161.177"
+SLEEP="5s"
 
 get_date()
 {
@@ -40,14 +40,22 @@ mkdir -p "${LOGFILE%/*}"
 get_date
 OLD_HOUR=$HOUR
 OLD_DAY=$DAY
+OLD_MIN=-1
 
 [ -f "$LOGFILE" ] && log_text "\n"
 log_text "\n$YEAR/$MONTH/$DAY\n$HOUR:$MINUTE "
 chmod 644 "$LOGFILE"
 chcon -t public_content_t "$LOGFILE"
 
+exec 2> /dev/null	# Turn off stderr
+
 while :; do
-	get_date
+	while [ $OLD_MIN = $MINUTE ]; do
+		sleep $SLEEP
+		get_date
+	done
+	OLD_MIN=$MINUTE
+
 	if [ $OLD_DAY != $DAY ]; then
 		log_text "\n\n$YEAR/$MONTH/$DAY"
 		OLD_DAY=$DAY
@@ -58,9 +66,10 @@ while :; do
 		OLD_HOUR=$HOUR
 	fi
 
-	ping -c1 -n $HOST > /dev/null
+	for i in $HOSTS; do
+		ping -c1 $i > /dev/null
+		[ $? = 0 ] && break
+	done
 	log_ping $?
-
-	sleep $SLEEP
 done
 
