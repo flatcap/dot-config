@@ -1,10 +1,11 @@
 #!/bin/bash
 # Todo
-#     log output to a file
 #     create an html output file in a shared dir
+#     tcping?
+#     dnstest?
 
 LOGFILE="/mnt/data/status/internet2.txt"
-HOSTS="8.8.8.8 178.79.161.177"
+HOSTS="178.79.161.177 8.8.8.8"
 SLEEP="5s"
 
 get_date()
