@@ -4,7 +4,7 @@
 #     tcping?
 #     dnstest?
 
-LOGFILE="/mnt/data/status/internet2.txt"
+LOGFILE="/mnt/data/status/internet.txt"
 HOSTS="178.79.161.177 8.8.8.8"
 SLEEP="5s"
 
