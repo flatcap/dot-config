@@ -1,6 +1,10 @@
 # config
 #	BASH_DEF_{COLOUR,GIT,PREFIX,TITLE}={yes,no}
 
+if [[ $USER != "flatcap" ]]; then
+	BASH_DEF_PREFIX=yes
+fi
+
 PS1=""
 if [[ $BASH_DEF_PREFIX == yes || ( ! $BASH_DEF_PREFIX && $SSH_CLIENT ) ]]; then
 	if [ $USER = "root" ]; then
