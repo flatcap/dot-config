@@ -1,3 +1,5 @@
+[ -f ~/.bash_config ] && source ~/.bash_config
+
 umask 0007
 
 unset MAILCHECK
@@ -17,9 +19,7 @@ done
 
 [[ $TERM =~ ^(xterm|vt100|linux)$ ]] && bind Space:magic-space
 
-title
-
-source $HOME/.bash_prompt
+PS1="\$(source ~/.bash_prompt)"
 
 [ -f ~/.extra ] && source ~/.extra
 

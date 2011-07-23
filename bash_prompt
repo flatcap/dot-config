@@ -1,11 +1,34 @@
+#!/bin/bash
+
 # config
 #	BASH_DEF_{COLOUR,GIT,PREFIX,TITLE}={yes,no}
 
-if [[ $USER != "flatcap" ]]; then
-	BASH_DEF_PREFIX=yes
-fi
+# generate prompt and title dynamically from
+#	hostname
+#	git status
+#	cwd
+#	date/time
+#	command
+#	return status
 
-PS1=""
+source ~/bin/function.d/parse_git_branch.sh
+source ~/bin/function.d/title.sh
+
+unset PROMPT_DIR
+unset PROMPT_GIT
+unset PROMPT_GIT_COLOUR
+unset PROMPT_PREFIX
+unset PROMPT_PREFIX_COLOUR
+unset PROMPT_SUFFIX
+
+# Set some defaults
+[[   $USER     != "flatcap"                           ]] && BASH_DEF_PREFIX=yes
+[[ ! $TERM     =~ ^(xterm|vt100|linux)$               ]] && BASH_DEF_COLOUR=no
+[[ ! $TERM     =~ ^(xterm|vt100)$                     ]] && BASH_DEF_TITLE=no
+[[   $HOSTNAME =~ ^(muse.flatcap.org|www.russon.org)$ ]] && BASH_DEF_GIT=yes 
+
+# --------------------------------------------------------------------
+
 if [[ $BASH_DEF_PREFIX == yes || ( ! $BASH_DEF_PREFIX && $SSH_CLIENT ) ]]; then
 	if [ $USER = "root" ]; then
 		PROMPT_PREFIX="#"
@@ -13,10 +36,13 @@ if [[ $BASH_DEF_PREFIX == yes || ( ! $BASH_DEF_PREFIX && $SSH_CLIENT ) ]]; then
 		PROMPT_PREFIX=${USER^^}
 		PROMPT_PREFIX="${PROMPT_PREFIX:0:1}"
 	fi
-	PS1="[$PROMPT_PREFIX]"
+	PROMPT_PREFIX="[$PROMPT_PREFIX]"
 fi
 
-if [[ $BASH_DEF_COLOUR == yes || ( ! $BASH_DEF_COLOUR && $TERM =~ ^(xterm|linux|vt100)$ ) ]]; then
+# --------------------------------------------------------------------
+
+PROMPT_PREFIX_COLOUR="$PROMPT_PREFIX"
+if [[ $BASH_DEF_COLOUR == yes ]]; then
 	case $HOSTNAME in
 		muse.flatcap.org)	PROMPT_COLOUR=32 ;;	# green
 		www.russon.org)		PROMPT_COLOUR=31 ;;	# red
@@ -24,27 +50,43 @@ if [[ $BASH_DEF_COLOUR == yes || ( ! $BASH_DEF_COLOUR && $TERM =~ ^(xterm|linux|
 		enigma.flatcap.org)	PROMPT_COLOUR=36 ;;	# cyan
 		*)			PROMPT_COLOUR=35 ;;	# magenta
 	esac
-	if [ -n "$PS1" ]; then
-		PS1="\e[${PROMPT_COLOUR}m${PS1}\e[0m"
+	if [ -n "$PROMPT_PREFIX" ]; then
+		PROMPT_PREFIX_COLOUR="\e[${PROMPT_COLOUR}m${PROMPT_PREFIX}\e[0m"
 	fi
 fi
 
-PS1="${PS1}\\w"
+# --------------------------------------------------------------------
 
-if [[ $BASH_DEF_GIT == yes || ( ! $BASH_DEF_GIT && $HOSTNAME =~ ^(muse.flatcap.org|www.russon.org)$ ) ]]; then
-	PS1="${PS1}\$(parse_git_branch)"
+PROMPT_DIR="${PWD/#$HOME/~}"
+
+# --------------------------------------------------------------------
+
+if [[ $BASH_DEF_GIT == yes ]]; then
+	PROMPT_GIT="$(parse_git_branch)"
+	if [ -n "$PROMPT_GIT" ]; then
+		PROMPT_GIT="($PROMPT_GIT)"
+		PROMPT_GIT_COLOUR=$PROMPT_GIT
+		if [[ $BASH_DEF_COLOUR == yes ]]; then
+			PROMPT_GIT_COLOUR="\e[38;5;237m$PROMPT_GIT\e[0m"
+		fi
+	fi
 fi
 
-PS1="${PS1}\\$ "
+# --------------------------------------------------------------------
 
-if [[ $BASH_DEF_TITLE == yes || ( ! $BASH_DEF_TITLE && $TERM =~ ^(xterm|vt100)$ ) ]]; then
-	PROMPT_COMMAND='echo -ne "\017\e]0;${PWD/#$HOME/~}\a"'
+if [[ $UID == 0 ]]; then
+	PROMPT_SUFFIX="# "
 else
-	PROMPT_COMMAND='echo -ne "\017"'
+	PROMPT_SUFFIX="$ "
 fi
 
-export PS1
-export PROMPT_COMMAND
-export PROMPT_COLOUR
-export PROMPT_PREFIX
+# --------------------------------------------------------------------
+
+if [[ $BASH_DEF_TITLE == yes ]]; then
+	title "$PROMPT_PREFIX $PROMPT_DIR$PROMPT_GIT"
+fi
+
+# --------------------------------------------------------------------
+
+echo -en "$PROMPT_PREFIX_COLOUR$PROMPT_DIR$PROMPT_GIT_COLOUR$PROMPT_SUFFIX"
 
