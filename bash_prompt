@@ -26,10 +26,11 @@ unset PROMPT_SUFFIX
 [[ ! $TERM     =~ ^(xterm|vt100|linux)$               ]] && BASH_DEF_COLOUR=no
 [[ ! $TERM     =~ ^(xterm|vt100)$                     ]] && BASH_DEF_TITLE=no
 [[   $HOSTNAME =~ ^(muse.flatcap.org|www.russon.org)$ ]] && BASH_DEF_GIT=yes 
+[[   $SSH_CLIENT                                      ]] && BASH_DEF_PREFIX=yes
 
 # --------------------------------------------------------------------
 
-if [[ $BASH_DEF_PREFIX == yes || ( ! $BASH_DEF_PREFIX && $SSH_CLIENT ) ]]; then
+if [[ $BASH_DEF_PREFIX == yes ]]; then
 	if [ $USER = "root" ]; then
 		PROMPT_PREFIX="#"
 	else
