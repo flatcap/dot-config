@@ -5,7 +5,7 @@ alias date2='date "+%n  %R  %A %-d %B%n"'
 alias df="df_"
 alias diff="diff -x CVS -x .svn -x tags -x .git"
 alias ftp="lftp"
-alias gthumb="_wrapdot /usr/bin/gthumb"
+alias gthumb="_wrapdot '/usr/bin/gthumb -n'"
 alias jobs="jobs -l"
 alias keep="export IGNOREEOF=999"
 alias killall="killall -I"
