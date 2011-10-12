@@ -7,9 +7,9 @@ ICON="/usr/share/icons/gnome/48x48/apps/system-users.png"
 
 [ -n "$1" ] && unset DISPLAY
 
-USERS=$(sudo arp-scan -l -m $MAC_FILE | sed -e '/ignore/d' -ne '/..:..:../p'| while read ip mac name; do echo "    $name ($ip)"; done)
+USERS=$(sudo arp-scan -I p5p1 -l -m $MAC_FILE | sed -e '/ignore/d' -ne '/..:..:../p'| while read ip mac name; do echo "    $name ($ip)"; done)
 
-[ -z "$USERS" ] && USERS="    Nobody"
+[ -z "$USERS" ] && USERS="    Nobody else"
 
 if [ -n "$DISPLAY" ]; then
 	notify-send -i $ICON "Online:" "$USERS"

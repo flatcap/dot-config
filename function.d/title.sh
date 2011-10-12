@@ -1,8 +1,11 @@
-title()
+function title ()
 {
 	local prompt=""
 	local title=""
 	local prefix="$PROMPT_PREFIX"
+
+	#[ -w /dev/stderr ] || return
+	#[[ $TERM =~ ^(xterm|vt100)$ ]] || return
 
 	[ -n "$prefix" ] && prefix="[$prefix]"
 

@@ -8,7 +8,7 @@ LOGFILE="/mnt/data/status/internet.txt"
 HOSTS="178.79.161.177 8.8.8.8"
 SLEEP="5s"
 
-get_date()
+function get_date ()
 {
 	set -- $(date "+%Y %m %d %H %M %A %B")
 	YEAR=$1
@@ -18,12 +18,12 @@ get_date()
 	MINUTE=$5
 }
 
-log_text()
+function log_text ()
 {
 	printf "$@" | tee -a "$LOGFILE"
 }
 
-log_ping()
+function log_ping ()
 {
 	if [ $1 = 0 ]; then
 		echo -en "\e[32m"		# Good ping - green _

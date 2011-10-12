@@ -1,0 +1,96 @@
+#!/bin/bash
+
+shopt -s extglob
+
+DISKS="/dev/sda1 /dev/sda2 /dev/sdc2 /dev/sdc3 /dev/mapper/volumes-data"
+DF="/bin/df"
+OPTS="-T -x rootfs -x devtmpfs -x tmpfs"
+ARGS=""
+
+get_name()
+{
+	case $1 in
+		root|sda1|/dev/sda1|/|/tmp|/var/tmp)
+			DISK_NAME="root"
+			#DISK_NAME="$DISK_NAME(a1)"
+			DISK_DEV="/dev/sda1"
+			;;
+
+		home|sda2|/dev/sda2|/home)
+			DISK_NAME="home"
+			#DISK_NAME="$DISK_NAME(a2)"
+			DISK_DEV="/dev/sda2"
+			;;
+
+		music|sda3|/dev/sda3|/mnt/music)
+			DISK_NAME="music"
+			#DISK_NAME="$DISK_NAME(a3)"
+			DISK_DEV="/dev/sda3"
+			;;
+
+		data|sdc2|/dev/sdc2|/mnt/data)
+			DISK_NAME="data"
+			#DISK_NAME="$DISK_NAME(b2)"
+			DISK_DEV="/dev/sdb2"
+			;;
+
+		backup|sdc3|/dev/sdc3|/mnt/backup)
+			DISK_NAME="backup"
+			#DISK_NAME="$DISK_NAME(b3)"
+			DISK_DEV="/dev/sdc3"
+			;;
+
+		tv2|sdd1|/dev/sdd1|/mnt/tv2)
+			DISK_NAME="tv2"
+			#DISK_NAME="$DISK_NAME(c1)"
+			DISK_DEV="/dev/sdc1"
+			;;
+
+		tera|volumes-data|/dev/mapper/volumes-data|/mnt/tera)
+			DISK_NAME="tera"
+			#DISK_NAME="$DISK_NAME(b1)"
+			DISK_DEV="/dev/mapper/volumes-data"
+			;;
+
+		*)
+			DISK_NAME=""
+			DISK_DEV=""
+			;;
+	esac
+}
+
+get_stats()
+{
+	set -- $($DF $OPTS $1 | grep "[[:digit:]]%" | sed 's/^[^ ]\+//')
+	DISK_TYPE="$1"
+	DISK_SIZE="$2"
+	DISK_USED="$3"
+	DISK_FREE="$4"
+	DISK_USDP="$5"
+	DISK_MNT="$6"
+}
+
+
+for ARG in "$@"; do
+	case "$ARG" in
+		-*) OPTS="$OPTS $ARG" ;;
+		*)  ARGS="$ARGS $ARG" ;;
+	esac
+done
+
+[ -n "$ARGS" ] || ARGS=$DISKS
+
+(
+echo Disk Type Size Used Free Used
+for disk in $ARGS; do
+	if [ -e $disk ]; then
+		get_stats $disk
+		get_name $DISK_MNT
+	else
+		get_name $disk
+		get_stats $DISK_DEV
+	fi
+	echo $DISK_NAME $DISK_TYPE $DISK_SIZE $DISK_USED $DISK_FREE $DISK_USDP
+done
+) | column -t
+

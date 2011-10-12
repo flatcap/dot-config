@@ -1,4 +1,4 @@
-path_munge()
+function path_munge ()
 {
 	if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
 		if [ "$2" = "after" ]; then

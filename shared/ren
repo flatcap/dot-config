@@ -2,6 +2,7 @@
 
 MVOPTS="--interactive"
 #MVOPTS="--backup=t"
+#MVOPTS="-f"
 
 if [ "$1" ]; then
 	echo "This program doesn't take any arguments."
@@ -35,5 +36,5 @@ done
 
 rm -f f1 f2
 
-echo "$COUNT files renamed."
+#echo "$COUNT files renamed."
 

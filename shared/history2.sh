@@ -1,4 +1,4 @@
-history2()
+function history2 ()
 {
 	if [ -z "$@" ]; then
 		history $(($(tput lines) - 2))
