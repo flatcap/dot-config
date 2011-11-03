@@ -13,5 +13,5 @@ export LS_COLORS="no=00:fi=00:di=00;33:ln=36:pi=35:so=35:bd=34:cd=34:ex=31:*.cmd
 export PAGER="less"
 export PATH=".:~/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin"
 export TZ="Europe/London"
-export WWW_HOME="file://$HOME/.home/index.html"
+export WWW_HOME="file://$HOME/www/home/index.html"
 export XZ_OPT="-9"
