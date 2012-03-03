@@ -6,6 +6,7 @@ alias easytag="_wrapdot /usr/bin/easytag"
 alias ssh-helper='ssh-add $(find ~/.ssh -name \*.pub | sed "s/\.pub//") && echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > ~/.ssh-agent'
 alias vm='sudo /usr/bin/virt-manager'
 alias vs='sudo /usr/bin/virsh'
+alias m='make -ks -j4'
 
 #alias g="cd ~/downloads/guardian; clear;/list.sh"
 #alias yyum="yum -y"

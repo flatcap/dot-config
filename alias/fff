@@ -2,9 +2,9 @@ alias  ffd="find . -name .git -prune -o \( -type d -print0 \) | xargs -r -0"
 alias  fff="find . -name .git -prune -o \( -type f -print0 \) | xargs -r -0"
 alias  ffl="find .                         -type l -print0    | xargs -r -0"
 
-alias  ffc="find . -type f \( -name \*.c    -o -name \*.cc \) -print0 | xargs -r -0"
-alias ffch="find . -type f \( -name \*.[ch] -o -name \*.cc \) -print0 | xargs -r -0"
-alias  ffh="find . -type f    -name \*.h                      -print0 | xargs -r -0"
+alias  ffc="find . -type f \( -name \*.c    -o -name \*.cc -o -name \*.cpp \) -print0 | xargs -r -0"
+alias ffch="find . -type f \( -name \*.[ch] -o -name \*.cc -o -name \*.cpp \) -print0 | xargs -r -0"
+alias  ffh="find . -type f    -name \*.h                                      -print0 | xargs -r -0"
 
 alias  ffj="find . -type f -name \*.js ! -name jq\* -print0 | xargs -r -0"
 alias  ffm="find . -type f -iname Makefile\*        -print0 | xargs -r -0"
