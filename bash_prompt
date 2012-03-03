@@ -23,7 +23,7 @@ unset PROMPT_SUFFIX
 
 # Set some defaults
 [[   $USER     != flatcap                             ]] && BASH_DEF_PREFIX=yes
-[[   $HOSTNAME != muse.flatcap.org                    ]] && BASH_DEF_COLOUR=yes
+[[   $HOSTNAME != rich.flatcap.org                    ]] && BASH_DEF_COLOUR=yes
 [[ ! $TERM     =~ ^(xterm|vt100|linux)$               ]] && BASH_DEF_COLOUR=no
 [[ ! $TERM     =~ ^(xterm|vt100)$                     ]] && BASH_DEF_TITLE=no
 [[   $HOSTNAME =~ ^(muse.flatcap.org|www.russon.org)$ ]] && BASH_DEF_GIT=yes 

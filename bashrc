@@ -1,6 +1,6 @@
 [ -f ~/.bash_config ] && source ~/.bash_config
 
-umask 0007
+umask 0002
 
 unset MAILCHECK
 
