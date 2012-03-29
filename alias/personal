@@ -1,4 +1,3 @@
-alias c="cd /home/work/craggy; clear; ls -gG"
 alias db="mysql -st"
 alias d="cd ~/downloads; clear; ls -gG"
 alias t="cd ~/torrent; clear; ls -gG"
@@ -7,7 +6,9 @@ alias ssh-helper='ssh-add $(find ~/.ssh -name \*.pub | sed "s/\.pub//") && echo 
 alias vm='sudo /usr/bin/virt-manager'
 alias vs='sudo /usr/bin/virsh'
 alias m='make -ks -j4'
+alias u='cd ~/upstream'
 
+#alias c="cd /home/work/craggy; clear; ls -gG"
 #alias g="cd ~/downloads/guardian; clear;/list.sh"
 #alias yyum="yum -y"
 #alias file='file --magic-file=/usr/share/file/magic:$HOME/.magic'
