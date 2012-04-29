@@ -10,7 +10,7 @@ export LESSCHARSET="iso8859"
 export LESS="-eFfiqrX"
 export LESSHISTFILE="-"
 export LS_COLORS="no=00:fi=00:di=00;33:ln=36:pi=35:so=35:bd=34:cd=34:ex=31:*.cmd=31:*.exe=31:*.com=31:*.btm=31:*.bat=31:*.rpm=32:*.sql=38;5;193:*.tar=32:*.xz=32:*.tgz=32:*.bz2=32:*.lzma=32:*.zip=32:*.z=32:*.Z=32:*.gz=32:*.ha=32:*.svg=35:*.jpg=35:*.gif=35:*.png=35:*.xbm=35:*.xpm=35:*.bmp=35:*.mkv=35:*.avi=35:*.mpg=35:*.mp3=35:*.mp4=35:*.flv=35:*.a=32:*.swp=30:*.dcf=32:*.dcu=01;35:*.o=30"
-export MANSECT=2:3:1
+export MANSECT="2:2x:3:3p:3x:0p:1:1p:1x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:n"
 export PAGER="less"
 export PATH=".:~/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin"
 export TZ="Europe/London"
