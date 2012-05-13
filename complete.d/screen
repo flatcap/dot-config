@@ -1,1 +1,1 @@
-source /etc/bash_completion screen
+source /usr/share/bash-completion/completions/screen
