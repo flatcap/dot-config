@@ -1,4 +1,4 @@
 export HTML_TIDY="$HOME/.tidy"
 export KBUILD_VERBOSE="0"
 export MAKEFLAGS="-j4"
-export PATH=".:~/bin:~/downloads/craggy:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin"
+export PATH=".:~/bin:/usr/bin:/usr/local/bin:/usr/sbin"
