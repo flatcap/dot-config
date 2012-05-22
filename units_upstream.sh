@@ -27,6 +27,6 @@ find "$DIR.acl" "$DIR" -type f -print0						\
 	| tar --create --file - --null --files-from - --sparse --selinux --acls	\
 	| gpg2 --encrypt --recipient "$RCPT" --output "$TAR"
 
-rm -f "$DIR.acl"
+rm --force "$DIR.acl"
 chmod --silent 400 "$TAR"
 
