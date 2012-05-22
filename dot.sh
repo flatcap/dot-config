@@ -38,13 +38,13 @@ if [ -f $TAR ]; then
 	exit 1
 fi
 
-mkdir -p $TMP_DIR
+mkdir --parents $TMP_DIR
 if [ ! -d $TMP_DIR ]; then
 	echo "Can't create tmp dir"
 	exit 1
 fi
 
-cp -al $HOME/.??* $TMP_DIR
+cp --archive --link $HOME/.??* $TMP_DIR
 
 cd $TMP_DIR 2>&1 > /dev/null
 
@@ -53,14 +53,14 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
-rm -fr $(cat $DONTDOT)
+rm --force --recursive $(cat $DONTDOT)
 find . -name "*.sqlite" -exec sqlite3 {} VACUUM \;
 find . -type s -delete
 
-tar cfJ $TAR .??*
+tar --create --xz --file $TAR .??*
 gpg2 --encrypt --recipient "$RCPT" --output $TAR.gpg $TAR
 rm $TAR
 chmod 400 $TAR.gpg
 
-rm -fr $TMP_DIR
+rm --force --recursive $TMP_DIR
 

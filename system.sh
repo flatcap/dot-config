@@ -11,24 +11,25 @@ ionice --class 3     --pid $$ > /dev/null
 umask 0077
 
 DATE=$(date "+%Y_%m_%d")
+RCPT="Rich Russon (backup) <rich@flatcap.org>"
 DIR="/mnt/backup/system/$DATE"
 
 cd /
 
-mkdir -p $DIR
+mkdir --parents $DIR
 
-tar cf $DIR/cron.tar                       var/spool/cron
-tar cf $DIR/etc.tar                        etc
-tar cf $DIR/mysql.tar --exclude mysql.sock var/lib/mysql
-tar cf $DIR/root.tar                       home/root
-tar cf $DIR/usr_local.tar                  usr/local
-tar cf $DIR/var_log.tar                    var/log
-tar cf $DIR/www.tar                        var/www
+tar --create --file $DIR/cron.tar                       var/spool/cron
+tar --create --file $DIR/etc.tar                        etc
+tar --create --file $DIR/mysql.tar --exclude mysql.sock var/lib/mysql
+tar --create --file $DIR/root.tar                       home/root
+tar --create --file $DIR/usr_local.tar                  usr/local
+tar --create --file $DIR/var_log.tar                    var/log
+tar --create --file $DIR/www.tar                        var/www
 
 cd $DIR
 
-rpm -qa | sort > rpm_list
-rpm -qa --last > rpm_last
+rpm --query --all | sort > rpm_list
+rpm --query --all --last > rpm_last
 
 (cd /mnt/tera/tv;     find . -type f) | sort > tv.txt
 (cd /mnt/tera/music;  find . -type f) | sort > music.txt
@@ -40,14 +41,14 @@ for disk in sda; do
 	fdisk -lu /dev/$disk            > fdisk/$disk.txt
 	dd if=/dev/$disk bs=512 count=1 > fdisk/$disk.bin 2> /dev/null
 done
-tar cf fdisk.tar fdisk
-rm -fr fdisk
+tar --create --file fdisk.tar fdisk
+rm --force --recursive fdisk
 
-find . \( -name \*.tar -o -name \*.txt \) -print0 | xargs -0 -n1 -P4 -- xz -9
-find . -type f -print0 | xargs -0 -n1 -P4 -- gpg2 --encrypt --recipient "Rich Russon (backup) <rich@flatcap.org>"
-find . ! -name \*.gpg -delete
+find . \( -name \*.tar -o -name \*.txt \) -print0 | xargs --null --max-args 1 --max-procs 4 -- xz -9
+find . -type f -print0 | xargs --null --max-args 1 --max-procs 4 -- gpg2 --encrypt --recipient "$RCPT"
+find . ! -name "*.gpg" -delete
 
-chown flatcap:flatcap -R .
+chown --recursive flatcap:flatcap .
 chmod 400 *
 chmod 500 .
 

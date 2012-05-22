@@ -20,7 +20,7 @@ TMP_DIR=""
 
 function die()
 {
-	[ -n "$TMP_DIR" ] && rm -fr "$TMP_DIR"
+	[ -n "$TMP_DIR" ] && rm --force --recursive "$TMP_DIR"
 }
 
 trap die EXIT
@@ -33,29 +33,29 @@ if [ -n "$PID" ]; then
 fi
 
 # copy tree
-TMP_DIR=$(mktemp -d)
-cp -a "$MOZ_DIR" "$TMP_DIR"
+TMP_DIR=$(mktemp --directory)
+cp --archive "$MOZ_DIR" "$TMP_DIR"
 
 # empty cookies
-find $TMP_DIR -name cookies.sqlite -exec sqlite3 {} "delete from moz_cookies" \;
+find $TMP_DIR -name "cookies.sqlite" -exec sqlite3 {} "delete from moz_cookies" \;
 
 # vacuum sqlite dbs
 find $TMP_DIR -name "*.sqlite" -exec sqlite3 {} "vacuum" \;
 
 # empty cache
-find $TMP_DIR -depth -name Cache -exec rm -fr {} \;
+find $TMP_DIR -depth -name "Cache" -exec rm -fr {} \;
 
 # other random junk
-rm -fr $TMP_DIR/.mozilla/extensions
-rm -f  $TMP_DIR/XPC.mfasl
-find $TMP_DIR -depth -name "bookmarkbackups" -exec rm -fr {} \;
+rm --force --recursive $TMP_DIR/.mozilla/extensions
+rm --force             $TMP_DIR/XPC.mfasl
+find $TMP_DIR -depth -name "bookmarkbackups" -exec rm --force --recursive {} \;
 find $TMP_DIR -name "extensions.cache" -exec rm {} \;
 find $TMP_DIR -name "*.sqlite-journal" -exec rm {} \;
 find $TMP_DIR -name "*.log" -exec rm {} \;
 
 # tar it up
 pushd $TMP_DIR > /dev/null
-tar cf $TAR .mozilla
+tar --create --file $TAR .mozilla
 xz -9 $TAR
 chmod 400 $TAR.xz
 gpg2 --encrypt --recipient "$RCPT" --output $BAK_DIR/$TAR.xz.gpg $TAR.xz

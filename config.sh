@@ -32,7 +32,7 @@ if [ -f $TAR ]; then
 	exit 1
 fi
 
-mkdir -p $TMP_DIR
+mkdir --parents $TMP_DIR
 if [ ! -d $TMP_DIR ]; then
 	echo "Can't create tmp dir"
 	exit 1
@@ -40,8 +40,8 @@ fi
 
 cd $BAK_DIR 2>&1 > /dev/null
 
-cp -a $HOME/.gconf           $TMP_DIR/gconf
-cp -a $HOME/.config/dconf    $TMP_DIR
+cp --archive $HOME/.gconf        $TMP_DIR/gconf
+cp --archive $HOME/.config/dconf $TMP_DIR
 
 gconftool-2 --dump /       > $TMP_DIR/gconf.xml
 dconf dump /               > $TMP_DIR/dconf_dump.txt
@@ -55,5 +55,5 @@ find "$DATE" -type f -print0							\
 
 chmod 400 $TAR
 
-rm -fr $TMP_DIR
+rm --force --recursive $TMP_DIR
 

@@ -20,7 +20,7 @@ cd $WORK_DIR 2> /dev/null
 
 for d in $DIRS; do
 	chown --quiet --recursive $OWNER $d
-	find $d -type f -print0 | xargs -0 chmod --quiet --recursive $MODE
-	find $d -type f -print0 | xargs -0 chattr +i
+	find $d -type f -print0 | xargs --null -- chmod --quiet --recursive $MODE
+	find $d -type f -print0 | xargs --null -- chattr +i
 done
 
