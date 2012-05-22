@@ -36,11 +36,12 @@ rpm --query --all --last > rpm_last
 (cd /mnt/images;      find . -type f) | sort > images.txt
 
 mkdir fdisk
-#for disk in sda sdb sdc sdd; do
-for disk in sda; do
-	fdisk -lu /dev/$disk            > fdisk/$disk.txt
-	dd if=/dev/$disk bs=512 count=1 > fdisk/$disk.bin 2> /dev/null
+for disk in /dev/sd?; do
+	name=${disk##*/}
+	fdisk -lu $disk            > fdisk/$name.txt
+	dd if=$disk bs=512 count=1 > fdisk/$name.bin 2> /dev/null
 done
+vgcfgbackup -f fdisk/lvm.cfg > /dev/null 2>&1
 tar --create --file fdisk.tar fdisk
 rm --force --recursive fdisk
 
