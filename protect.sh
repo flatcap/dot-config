@@ -1,5 +1,15 @@
 #!/bin/bash
 
+PATH="/bin:/usr/bin"
+
+set -o errexit	# set -e
+set -o nounset	# set -u
+
+renice --priority 19 --pid $$ > /dev/null
+ionice --class 3     --pid $$ > /dev/null
+
+umask 0077
+
 WORK_DIR="/mnt/backup"
 DIRS="config dot eee flatcap linode mozilla root system units"
 OWNER="flatcap.flatcap"

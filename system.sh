@@ -1,13 +1,19 @@
 #!/bin/bash
 
-renice 19 $$ > /dev/null
+PATH="/bin:/usr/bin"
+
+set -o errexit	# set -e
+set -o nounset	# set -u
+
+renice --priority 19 --pid $$ > /dev/null
+ionice --class 3     --pid $$ > /dev/null
 
 umask 0077
 
-cd /
-
 DATE=$(date "+%Y_%m_%d")
 DIR="/mnt/backup/system/$DATE"
+
+cd /
 
 mkdir -p $DIR
 
