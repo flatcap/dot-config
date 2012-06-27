@@ -26,7 +26,7 @@ function die()
 trap die EXIT
 
 # check if firefox is running
-PID=$(pidof firefox)
+PID=$(pidof firefox || :)
 if [ -n "$PID" ]; then
 	echo "Firefox is still running"
 	exit 1
