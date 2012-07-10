@@ -1,14 +1,16 @@
+alias bl="brightness DVI-I-1"
+alias br="brightness VGA-1"
 alias db="mysql -st"
-alias d="cd ~/downloads; clear; ls -gG"
-alias t="cd ~/torrent; clear; ls -gG"
 alias easytag="_wrapdot /usr/bin/easytag"
+alias m='make -ks -j4'
 alias ssh-helper='ssh-add $(find ~/.ssh -name \*.pub | sed "s/\.pub//") && echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" > ~/.ssh-agent'
+alias t="cd ~/torrent; clear; ls -gG"
+alias u='cd ~/upstream'
 alias vm='sudo /usr/bin/virt-manager'
 alias vs='sudo /usr/bin/virsh'
-alias m='make -ks -j4'
-alias u='cd ~/upstream'
 
 #alias c="cd /home/work/craggy; clear; ls -gG"
+#alias d="cd ~/downloads; clear; ls -gG"
 #alias g="cd ~/downloads/guardian; clear;/list.sh"
 #alias yyum="yum -y"
 #alias file='file --magic-file=/usr/share/file/magic:$HOME/.magic'
