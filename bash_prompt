@@ -35,22 +35,22 @@ function _prompt_user()
 	local prompt=""
 	local prompt_colour=""
 
-	[ $cfg_user = "yes" ] || return
+	[ "$cfg_user" = "yes" ] || return
 
-	if [ $USER = "root" ]; then
+	if [ "$USER" = "root" ]; then
 		prompt="#"
 	else
-		prompt=${USER^^}
+		prompt="${USER^^}"
 		prompt="${prompt:0:1}"
 	fi
 	prompt="[$prompt]"
 
-	if [ $cfg_colour = "yes" ]; then
+	if [ "$cfg_colour" = "yes" ]; then
 		case "$HOSTNAME" in
-			rich.flatcap.org)	prompt_colour="32" ;;	# green
-			www.russon.org)		prompt_colour="31" ;;	# red
-			derwent)		prompt_colour="33" ;;	# yellow
-			enigma.flatcap.org)	prompt_colour="36" ;;	# cyan
+			"rich.flatcap.org")	prompt_colour="32" ;;	# green
+			"www.russon.org")	prompt_colour="31" ;;	# red
+			"derwent")		prompt_colour="33" ;;	# yellow
+			"enigma.flatcap.org")	prompt_colour="36" ;;	# cyan
 			*)			prompt_colour="35" ;;	# magenta
 		esac
 		if [ -n "$prompt" ]; then
@@ -69,17 +69,17 @@ function _prompt_git()
 	local colour=""
 	local state=""
 
-	[ $cfg_git = "yes" ] || return
+	[ "$cfg_git" = "yes" ] || return
 
 	local git_status="$(git status -unormal 2>&1)"
 	[[ "$git_status" =~ "Not a git repo" ]] && return
 
 	if [[ "$git_status" =~ "nothing to commit" ]]; then
 		colour="32"		# green
-		if [ $cfg_colour = "yes" -o $cfg_git_abbr = "yes" ]; then
-			state='.'
+		if [ "$cfg_colour" = "yes" -o "$cfg_git_abbr" = "yes" ]; then
+			state="."
 		else
-			state=''
+			state=""
 		fi
 	elif [[ "$git_status" =~ "nothing added to commit but untracked files present" ]]; then
 		colour="33"		# yellow
@@ -91,10 +91,10 @@ function _prompt_git()
 
 	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
 		branch="${BASH_REMATCH[1]}"
-		if [ $cfg_git_abbr = "yes" -a "$branch" = master ]; then
+		if [ "$cfg_git_abbr" = "yes" -a "$branch" = master ]; then
 			branch="$state "
 		else
-			[ $cfg_colour != "yes" ] && branch="$branch$state"
+			[ "$cfg_colour" != "yes" ] && branch="$branch$state"
 			branch="($branch) "
 		fi
 	else
@@ -102,11 +102,11 @@ function _prompt_git()
 		branch="$(git describe --all --contains --abbrev=4 HEAD 2> /dev/null || echo HEAD)"
 		branch="${branch##*/}"
 		#branch="$(cut -b-7 .git/HEAD)"
-		[ $cfg_colour != "yes" ] && branch="$branch$state"
+		[ "$cfg_colour" != "yes" ] && branch="$branch$state"
 		branch="($branch) "
 	fi
 
-	if [ $cfg_colour = "yes" ]; then
+	if [ "$cfg_colour" = "yes" ]; then
 		branch='\[\e['"$colour"'m\]'"$branch"'\[\e[0m\]'
 	fi
 
@@ -122,7 +122,7 @@ function _propmt_dir()
 	[ $cfg_dir = "yes" ] || return
 
 	dir="$PWD"
-	case $cfg_dir_type in
+	case "$cfg_dir_type" in
 		"full")   dir="${PWD}"          ;;
 		"mini")   dir="${PWD##*/}"      ;;
 		"abbr"|*) dir="${PWD/#$HOME/~}" ;;
@@ -136,9 +136,9 @@ function _prompt_ident()
 	local cfg_ident="${PROMPT_CFG_IDENT:-yes}"
 	local ident=""
 
-	[ $cfg_ident = "yes" ] || return
+	[ "$cfg_ident" = "yes" ] || return
 
-	if [[ $UID == 0 ]]; then
+	if [[ "$UID" == 0 ]]; then
 		ident="# "
 	else
 		ident="$ "
