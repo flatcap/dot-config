@@ -19,7 +19,6 @@ done
 
 [[ $TERM =~ ^(xterm|vt100|linux)$ ]] && bind Space:magic-space
 
-PS1="\$(source ~/.bash_prompt)"
-
-[ -f ~/.extra ] && source ~/.extra
+[ -f ~/.bash_prompt ] && source ~/.bash_prompt
+[ -f ~/.extra       ] && source ~/.extra
 

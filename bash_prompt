@@ -1,94 +1,160 @@
 #!/bin/bash
 
-# config
-#	BASH_DEF_{COLOUR,GIT,PREFIX,TITLE}={yes,no}
+# PROMPT_CFG_COLOUR={,yes,no}
+# PROMPT_CFG_DIR={,yes,no}
+# PROMPT_CFG_DIR_TYPE={abbr,full,mini}
+# PROMPT_CFG_GIT={,yes,no}
+# PROMPT_CFG_GIT_ABBR={,yes,no}
+# PROMPT_CFG_TITLE={,yes,no}
+# PROMPT_CFG_IDENT={,yes,no}
+# PROMPT_CFG_USER={,yes,no}
 
-# generate prompt and title dynamically from
-#	hostname
-#	git status
-#	cwd
-#	date/time
-#	command
-#	return status
+# Git
+# 	State		Abbr	Colour
+#	--------------------------------
+#	clean		.	green
+#	untracked	+	yellow
+#	dirty		*	red
 
-source ~/bin/function.d/parse_git_branch.sh
+# Directory
+#	"~/todo"
+#	"/home/flatcap/todo"
+#	"todo"
+
+# Identifier
+#	"# "
+#	"$ "
+
 source ~/bin/function.d/title.sh
 
-unset PROMPT_DIR
-unset PROMPT_GIT
-unset PROMPT_GIT_COLOUR
-unset PROMPT_PREFIX
-unset PROMPT_PREFIX_COLOUR
-unset PROMPT_SUFFIX
+function _prompt_user()
+{
+	local cfg_user="${PROMPT_CFG_USER:-no}"
+	local cfg_colour="${PROMPT_CFG_COLOUR:-no}"
+	local prompt=""
+	local prompt_colour=""
 
-# Set some defaults
-[[   $USER     != flatcap                             ]] && BASH_DEF_PREFIX=yes
-[[   $HOSTNAME != rich.flatcap.org                    ]] && BASH_DEF_COLOUR=yes
-[[ ! $TERM     =~ ^(xterm|vt100|linux)$               ]] && BASH_DEF_COLOUR=no
-[[ ! $TERM     =~ ^(xterm|vt100)$                     ]] && BASH_DEF_TITLE=no
-[[   $HOSTNAME =~ ^(muse.flatcap.org|www.russon.org)$ ]] && BASH_DEF_GIT=yes 
-[[   $SSH_CLIENT                                      ]] && BASH_DEF_PREFIX=yes
+	[ $cfg_user = "yes" ] || return
 
-# --------------------------------------------------------------------
-
-if [[ $BASH_DEF_PREFIX == yes ]]; then
 	if [ $USER = "root" ]; then
-		PROMPT_PREFIX="#"
+		prompt="#"
 	else
-		PROMPT_PREFIX=${USER^^}
-		PROMPT_PREFIX="${PROMPT_PREFIX:0:1}"
+		prompt=${USER^^}
+		prompt="${prompt:0:1}"
 	fi
-	PROMPT_PREFIX="[$PROMPT_PREFIX]"
-fi
+	prompt="[$prompt]"
 
-# --------------------------------------------------------------------
-
-PROMPT_PREFIX_COLOUR="$PROMPT_PREFIX"
-if [[ $BASH_DEF_COLOUR == yes ]]; then
-	case $HOSTNAME in
-		rich.flatcap.org)	PROMPT_COLOUR=32 ;;	# green
-		www.russon.org)		PROMPT_COLOUR=31 ;;	# red
-		derwent)		PROMPT_COLOUR=33 ;;	# yellow
-		enigma.flatcap.org)	PROMPT_COLOUR=36 ;;	# cyan
-		*)			PROMPT_COLOUR=35 ;;	# magenta
-	esac
-	if [ -n "$PROMPT_PREFIX" ]; then
-		PROMPT_PREFIX_COLOUR="\e[${PROMPT_COLOUR}m${PROMPT_PREFIX}\e[0m"
-	fi
-fi
-
-# --------------------------------------------------------------------
-
-PROMPT_DIR="${PWD/#$HOME/~}"
-
-# --------------------------------------------------------------------
-
-if [[ $BASH_DEF_GIT == yes ]]; then
-	PROMPT_GIT="$(parse_git_branch)"
-	if [ -n "$PROMPT_GIT" ]; then
-		PROMPT_GIT="($PROMPT_GIT)"
-		PROMPT_GIT_COLOUR=$PROMPT_GIT
-		if [[ $BASH_DEF_COLOUR == yes ]]; then
-			PROMPT_GIT_COLOUR="\e[38;5;237m$PROMPT_GIT\e[0m"
+	if [ $cfg_colour = "yes" ]; then
+		case "$HOSTNAME" in
+			rich.flatcap.org)	prompt_colour="32" ;;	# green
+			www.russon.org)		prompt_colour="31" ;;	# red
+			derwent)		prompt_colour="33" ;;	# yellow
+			enigma.flatcap.org)	prompt_colour="36" ;;	# cyan
+			*)			prompt_colour="35" ;;	# magenta
+		esac
+		if [ -n "$prompt" ]; then
+			prompt="\[\e[${prompt_colour}m\]${prompt}\[\e[0m\]"
 		fi
 	fi
-fi
 
-# --------------------------------------------------------------------
+	echo -n "$prompt"
+}
 
-if [[ $UID == 0 ]]; then
-	PROMPT_SUFFIX="# "
-else
-	PROMPT_SUFFIX="$ "
-fi
+function _prompt_git()
+{
+	local cfg_git="${PROMPT_CFG_GIT:-no}"
+	local cfg_colour="${PROMPT_CFG_COLOUR:-no}"
+	local cfg_git_abbr="${PROMPT_CFG_GIT_ABBR:-no}"
+	local colour=""
+	local state=""
 
-# --------------------------------------------------------------------
+	[ $cfg_git = "yes" ] || return
 
-if [[ $BASH_DEF_TITLE == yes ]]; then
-	title "$PROMPT_PREFIX $PROMPT_DIR$PROMPT_GIT"
-fi
+	local git_status="$(git status -unormal 2>&1)"
+	[[ "$git_status" =~ "Not a git repo" ]] && return
 
-# --------------------------------------------------------------------
+	if [[ "$git_status" =~ "nothing to commit" ]]; then
+		colour="32"		# green
+		if [ $cfg_colour = "yes" -o $cfg_git_abbr = "yes" ]; then
+			state='.'
+		else
+			state=''
+		fi
+	elif [[ "$git_status" =~ "nothing added to commit but untracked files present" ]]; then
+		colour="33"		# yellow
+		state='+'
+	else
+		colour="31"		# red
+		state='*'
+	fi
 
-echo -en "$PROMPT_PREFIX_COLOUR$PROMPT_DIR$PROMPT_GIT_COLOUR$PROMPT_SUFFIX"
+	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
+		branch="${BASH_REMATCH[1]}"
+		if [ $cfg_git_abbr = "yes" -a "$branch" = master ]; then
+			branch="$state "
+		else
+			[ $cfg_colour != "yes" ] && branch="$branch$state"
+			branch="($branch) "
+		fi
+	else
+		# Detached HEAD.  (branch=HEAD is a faster alternative.)
+		branch="$(git describe --all --contains --abbrev=4 HEAD 2> /dev/null || echo HEAD)"
+		branch="${branch##*/}"
+		#branch="$(cut -b-7 .git/HEAD)"
+		[ $cfg_colour != "yes" ] && branch="$branch$state"
+		branch="($branch) "
+	fi
+
+	if [ $cfg_colour = "yes" ]; then
+		branch='\[\e['"$colour"'m\]'"$branch"'\[\e[0m\]'
+	fi
+
+	echo -n "$branch"
+}
+
+function _propmt_dir()
+{
+	local cfg_dir="${PROMPT_CFG_DIR:-yes}"
+	local cfg_dir_type="${PROMPT_CFG_DIR_TYPE:-abbr}"
+	local dir=""
+
+	[ $cfg_dir = "yes" ] || return
+
+	dir="$PWD"
+	case $cfg_dir_type in
+		"full")   dir="${PWD}"          ;;
+		"mini")   dir="${PWD##*/}"      ;;
+		"abbr"|*) dir="${PWD/#$HOME/~}" ;;
+	esac
+
+	echo -n "$dir"
+}
+
+function _prompt_ident()
+{
+	local cfg_ident="${PROMPT_CFG_IDENT:-yes}"
+	local ident=""
+
+	[ $cfg_ident = "yes" ] || return
+
+	if [[ $UID == 0 ]]; then
+		ident="# "
+	else
+		ident="$ "
+	fi
+
+	echo -n "$ident"
+}
+
+function _prompt_command()
+{
+	export PS1="$(_prompt_user)$(_prompt_git)$(_propmt_dir)$(_prompt_ident)"
+
+	if [ $PROMPT_CFG_TITLE = "yes" ]; then
+		title "$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
+	fi
+}
+
+
+export PROMPT_COMMAND=_prompt_command
 
