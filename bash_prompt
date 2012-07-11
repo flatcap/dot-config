@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# PROMPT_CFG_COLOUR={,yes,no}
-# PROMPT_CFG_DIR={,yes,no}
-# PROMPT_CFG_DIR_TYPE={abbr,full,mini}
-# PROMPT_CFG_GIT={,yes,no}
-# PROMPT_CFG_GIT_ABBR={,yes,no}
-# PROMPT_CFG_TITLE={,yes,no}
-# PROMPT_CFG_IDENT={,yes,no}
-# PROMPT_CFG_USER={,yes,no}
+# Defaults:
+#	PROMPT_CFG_COLOUR	no
+#	PROMPT_CFG_DIR		yes
+#	PROMPT_CFG_DIR_TYPE	abbr
+#	PROMPT_CFG_GIT		no
+#	PROMPT_CFG_GIT_ABBR	no
+#	PROMPT_CFG_TITLE	no
+#	PROMPT_CFG_IDENT	yes
+#	PROMPT_CFG_USER		no
 
 # Git
 # 	State		Abbr	Colour
@@ -17,9 +18,9 @@
 #	dirty		*	red
 
 # Directory
-#	"~/todo"
-#	"/home/flatcap/todo"
-#	"todo"
+#	abbr	"~/todo"
+#	full	"/home/flatcap/todo"
+#	mini	"todo"
 
 # Identifier
 #	"# "
@@ -150,7 +151,8 @@ function _prompt_command()
 {
 	export PS1="$(_prompt_user)$(_prompt_git)$(_propmt_dir)$(_prompt_ident)"
 
-	if [ $PROMPT_CFG_TITLE = "yes" ]; then
+	local cfg_title="${PROMPT_CFG_TITLE:-no}"
+	if [ "$cfg_title" = "yes" ]; then
 		title "$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
 	fi
 }
