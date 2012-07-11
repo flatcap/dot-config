@@ -46,7 +46,7 @@ fi
 PROMPT_PREFIX_COLOUR="$PROMPT_PREFIX"
 if [[ $BASH_DEF_COLOUR == yes ]]; then
 	case $HOSTNAME in
-		muse.flatcap.org)	PROMPT_COLOUR=32 ;;	# green
+		rich.flatcap.org)	PROMPT_COLOUR=32 ;;	# green
 		www.russon.org)		PROMPT_COLOUR=31 ;;	# red
 		derwent)		PROMPT_COLOUR=33 ;;	# yellow
 		enigma.flatcap.org)	PROMPT_COLOUR=36 ;;	# cyan
