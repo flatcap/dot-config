@@ -1,0 +1,6 @@
+#!/bin/bash
+
+WIDTH=${1:-$(tput cols)}
+
+exec awk '{ printf "%s\n", substr($0,0,'$WIDTH') }'
+

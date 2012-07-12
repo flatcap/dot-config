@@ -1,0 +1,6 @@
+#!/bin/bash
+
+usleep 500000
+xset dpms force off
+#xscreensaver-command -lock
+

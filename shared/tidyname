@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	echo
+	echo "Usage: ${0##*/} file [files...]"
+	echo
+	exit 1
+fi
+
+for i in "$@"; do
+	OLD="$(echo $i | sed 's/\/$//')"
+	NEW="$(echo $OLD | tr 'A-Z ' 'a-z.')"
+	if [ ! -e "$OLD" ]; then
+		echo "$OLD doesn't exist"
+		continue
+	fi
+	if [ "$OLD" = "$NEW" ]; then
+		continue
+	fi
+	if [ -e "$NEW" ]; then
+		echo "$NEW exists"
+	else
+		mv "$OLD" "$NEW"
+		echo "$NEW"
+	fi
+done

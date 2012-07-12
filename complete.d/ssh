@@ -1,0 +1,7 @@
+_ssh_complete ()
+{
+	local cur
+	_get_comp_words_by_ref cur
+	COMPREPLY=( $( compgen -W "$(echo $(sed 's/[, ].*//' < ~/.ssh/known_hosts | sort -u))" -- "$cur" ) )
+}
+complete -F _ssh_complete ssh

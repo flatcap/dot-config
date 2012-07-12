@@ -1,0 +1,28 @@
+#!/bin/bash
+
+COUNT=$#
+INDEX=1
+
+if [ $# = 0 ]; then
+	echo Usage: ${0##*/} file1 file2 [...]
+	exit 1
+fi
+
+for i in "$@"; do
+	if [ ! -f "$i" -a ! -d "$i" ]; then
+		echo "Error: '$i' doesn't exist"
+		exit 1
+	fi
+done
+
+rm -f f1 f2
+
+for i in "$@"; do
+	echo $i >> f1
+	printf "%02d" $INDEX >> f2
+	echo $i | sed 's/^..//' >> f2
+	INDEX=$((INDEX+1))
+done
+
+ren
+

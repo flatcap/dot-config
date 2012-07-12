@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#for i in f1 f2; do
+#	if [ -e $i ]; then
+#		echo "File '$i' exists."
+#	fi
+#done
+
+if [ "$1" ]; then
+	ARGS="$@"
+else
+	ARGS="-type f"
+fi
+
+find . $ARGS ! -name f\[12\] ! -name . ! -name .\*swp | cut -b3- | LANG=C sort > f1
+cp f1 f2
+

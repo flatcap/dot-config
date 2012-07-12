@@ -1,0 +1,30 @@
+#!/bin/bash
+
+COUNT="10"
+URL="http://wordsmith.org/anagram/anagram.cgi"
+
+[ $# = 0 ] && exit 1
+
+ANAGRAM=""
+for i in $*; do
+	ARG=$(echo $i | tr "[A-Z]" "[a-z]")
+	if [[ $ARG =~ "^[0-9]+$" ]]; then
+		COUNT=$ARG
+		continue
+	fi
+	if [[ $ARG =~ "^[a-z]+$" ]]; then
+		ANAGRAM="$ANAGRAM $i"
+	else
+		echo "Error: $i"
+	fi
+done
+
+[ -z "$ANAGRAM" ] && exit 1
+
+ANAGRAM="${ANAGRAM/# /}"
+ANAGRAM="${ANAGRAM// /+}"
+
+links -dump -no-references -no-numbering "$URL?t=$COUNT&anagram=$ANAGRAM" | \
+	sed -n '/found. Displaying /,/----------------------/p' | \
+	grep -v -- "-------------"
+
