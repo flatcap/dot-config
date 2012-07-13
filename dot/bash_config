@@ -1,0 +1,26 @@
+# Set some defaults
+PROMPT_CFG_COLOUR=yes
+PROMPT_CFG_DIR=yes
+PROMPT_CFG_DIR_TYPE=abbr
+PROMPT_CFG_GIT=no
+PROMPT_CFG_GIT_ABBR=yes
+PROMPT_CFG_IDENT=yes
+PROMPT_CFG_TITLE=yes
+PROMPT_CFG_USER=yes
+
+[[   $USER     != flatcap                             ]] && PROMPT_CFG_USER="yes"
+[[   $HOSTNAME != rich.flatcap.org                    ]] && PROMPT_CFG_COLOUR="yes"
+[[ ! $TERM     =~ ^(xterm|vt100|linux)$               ]] && PROMPT_CFG_COLOUR="no"
+[[ ! $TERM     =~ ^(xterm|vt100)$                     ]] && PROMPT_CFG_TITLE="no"
+[[   $HOSTNAME =~ ^(rich.flatcap.org|www.russon.org)$ ]] && PROMPT_CFG_GIT="yes "
+[[   $SSH_CLIENT                                      ]] && PROMPT_CFG_USER="yes"
+
+export PROMPT_CFG_COLOUR
+export PROMPT_CFG_DIR
+export PROMPT_CFG_DIR_TYPE
+export PROMPT_CFG_GIT
+export PROMPT_CFG_GIT_ABBR
+export PROMPT_CFG_IDENT
+export PROMPT_CFG_TITLE
+export PROMPT_CFG_USER
+
