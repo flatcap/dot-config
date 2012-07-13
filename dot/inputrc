@@ -1,0 +1,17 @@
+set bell-style none
+set mark-symlinked-directories on
+
+"\M-f" forward-char
+"\M-b" backward-char
+"\C-f" forward-word
+"\C-b" backward-word
+"\M-l" redraw-current-line
+
+#"\C-i" dump-functions
+#"\C-i" dump-variables
+#"\C-i" dump-macros 
+
+# Ctrl-{left,right}-arrow
+"\e[1;5D" backward-word
+"\e[1;5C" forward-word
+

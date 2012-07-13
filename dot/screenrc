@@ -1,0 +1,2 @@
+hardstatus	string "%h"
+escape		"^Zz"

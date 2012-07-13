@@ -1,0 +1,6 @@
+indent: yes
+write-back: yes
+clean: yes
+error-file: /dev/tty
+wrap: 999
+tidy-mark: no
