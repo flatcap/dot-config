@@ -12,6 +12,12 @@ for dir in alias complete env function; do
 	popd > /dev/null
 done
 
+pushd bin > /dev/null
+for file in *; do
+	ln -s ../system/bin/$file ~/bin/$file
+done
+popd > /dev/null
+
 pushd dot > /dev/null
 for file in *; do
 	ln -s system/dot/$file ~/.$file

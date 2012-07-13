@@ -26,7 +26,7 @@
 #	"# "
 #	"$ "
 
-source ~/bin/function.d/title.sh
+source ~/bin/function/title.sh
 
 function _prompt_user()
 {
