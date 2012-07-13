@@ -1,0 +1,10 @@
+_tv_complete ()
+{
+	local cur
+	_get_comp_words_by_ref cur
+
+	DIRS=$(find /mnt/tera/tv/* -type d | sed 's!/mnt/tera/tv/!!')
+	COMPREPLY=( $( compgen -W "$DIRS" -- "$cur" ) )
+}
+
+complete -F _tv_complete tv

@@ -4,5 +4,6 @@ _db_complete ()
     _get_comp_words_by_ref cur
 
     COMPREPLY=( $( compgen -W 'clean cmp pull' -- "$cur" ) )
-} &&
+}
+
 complete -F _db_complete db
