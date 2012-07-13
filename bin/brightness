@@ -1,0 +1,37 @@
+#!/bin/bash
+
+if [ $# = 0 -o $# -gt 2 ]; then
+	echo "Usage:"
+	echo "    ${0##*/} device [brightness]"
+	exit 1
+fi
+
+DEVICE=$1
+NEW=$2
+
+if [[ ! "$NEW" =~ ^[0-9]+$ ]]; then
+
+	OLD=$(xrandr --verbose | sed -n -e "/^$DEVICE connected/,/^[^	]/{/Brightness/{s/.*://;p}}")
+	if [ -z "$OLD" ]; then
+		echo "Unknown device: '$DEVICE'"
+		exit 1
+	fi
+
+	if [[ "$NEW" =~ ^[-+]$ ]]; then
+		if [ "$NEW" = '+' ]; then
+			NEW=$(echo "x=$OLD+0.1; if (x>1) x=1; x" | bc -l)
+		else
+			NEW=$(echo "x=$OLD-0.1; if (x<0) x=0; x" | bc -l)
+		fi
+		#echo "adjust value: $NEW"
+	else
+		echo "$DEVICE brightness: $OLD"
+		exit 0
+	fi
+else
+	NEW=$(echo "scale=1;$NEW/10" | bc -l)
+	#echo "set value: $NEW"
+fi
+
+xrandr --output $DEVICE --brightness $NEW
+

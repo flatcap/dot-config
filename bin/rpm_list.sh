@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd ~root
+umask 022
 
 TMPFILE=$(mktemp)
 

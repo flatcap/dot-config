@@ -24,7 +24,7 @@ if [ -f xaa ]; then
 	#clear
 	paste -d" " x*
 else
-	echo "No matches for '$WORD'"
+	echo "No matches for '$WORD'" > /dev/stderr
 fi
 
 popd >& /dev/null
