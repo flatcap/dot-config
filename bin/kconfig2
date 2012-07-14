@@ -1,0 +1,18 @@
+#!/bin/bash
+
+[ -f arch/x86_64/boot/bzImage ] || exit 1
+[ -f System.map               ] || exit 1
+[ -f .config                  ] || exit 1
+
+eval $(head -3 Makefile | sed 's/ //g')
+source .config
+
+VER="$VERSION.$PATCHLEVEL.$SUBLEVEL$CONFIG_LOCALVERSION"
+
+cp arch/x86_64/boot/bzImage /boot/vmlinuz-$VER
+cp .config                  /boot/config-$VER
+cp System.map               /boot/System.map-$VER
+
+chmod og+r /boot/*$VER
+
+echo Done.
