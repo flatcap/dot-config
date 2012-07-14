@@ -7,20 +7,20 @@ for dir in alias complete env function; do
 
 	pushd $dir > /dev/null
 	for file in *; do
-		ln -s ../../system/$dir/$file ~/bin/$dir/$file
+		ln -s ../../system/bash/$dir/$file ~/bin/$dir/$file
 	done
 	popd > /dev/null
 done
 
 pushd bin > /dev/null
 for file in *; do
-	ln -s ../system/bin/$file ~/bin/$file
+	ln -s ../system/bash/bin/$file ~/bin/$file
 done
 popd > /dev/null
 
 pushd dot > /dev/null
 for file in *; do
-	ln -s system/dot/$file ~/.$file
+	ln -s system/bash/dot/$file ~/.$file
 done
 popd > /dev/null
 
