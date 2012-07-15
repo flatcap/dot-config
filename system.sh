@@ -18,14 +18,17 @@ cd /
 
 mkdir --parents $DIR
 
+mysqldump --all-databases > "mnt/images/mysql/${DATE}_tables.sql"
+
 tar --create --file $DIR/cron.tar                       var/spool/cron
 tar --create --file $DIR/etc.tar                        etc
-tar --create --file $DIR/mysql.tar --exclude mysql.sock var/lib/mysql
+tar --create --file $DIR/mysql.tar --exclude mysql.sock mnt/images/mysql	#var/lib/mysql
 tar --create --file $DIR/root.tar                       home/root
 tar --create --file $DIR/usr_local.tar                  usr/local
 tar --create --file $DIR/var_log.tar                    var/log
 tar --create --file $DIR/www.tar                        var/www
 
+rm -f "mnt/images/mysql/${DATE}_tables.sql"
 cd $DIR
 
 rpm --query --all | sort > rpm_list

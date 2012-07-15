@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PATH="/usr/bin:/usr/sbin"
+DISPLAY=":0"
 
 set -o errexit	# set -e
 set -o nounset	# set -u
