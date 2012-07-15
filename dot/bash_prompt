@@ -152,8 +152,14 @@ function _prompt_command()
 	export PS1="$(_prompt_user)$(_prompt_git)$(_propmt_dir)$(_prompt_ident)"
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
+	local hostname="$(hostname)"
+	if [ "$hostname" = "rich.flatcap.org" ]; then
+		hostname=""
+	else
+		hostname="{$hostname}"
+	fi
 	if [ "$cfg_title" = "yes" ]; then
-		title "$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
+		title "$hostname $(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
 	fi
 }
 
