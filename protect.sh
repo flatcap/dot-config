@@ -11,7 +11,7 @@ ionice --class 3     --pid $$ > /dev/null
 umask 0077
 
 WORK_DIR="/mnt/backup"
-DIRS="config dot eee flatcap linode mozilla root system units"
+DIRS="config dot flatcap linode mozilla root system units"
 OWNER="flatcap.flatcap"
 MODE="a-w,og-rx"
 
