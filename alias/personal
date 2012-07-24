@@ -2,6 +2,7 @@ alias bl="brightness DVI-I-1"
 alias br="brightness VGA-1"
 alias db="mysql -st"
 alias easytag="_wrapdot /usr/bin/easytag"
+alias h="cd ~/hikes; clear; ls -gG"
 alias m='make -ks -j4'
 alias t="cd ~/torrent; clear; ls -gG"
 alias u='cd ~/upstream'
