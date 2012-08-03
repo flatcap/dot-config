@@ -46,8 +46,7 @@ fi
 
 cp --archive --link $HOME/.??* $TMP_DIR
 
-# Delete broken links
-find -L $TMP_DIR -type l -delete
+find -L $TMP_DIR -xdev -type l -delete
 
 cd $TMP_DIR 2>&1 > /dev/null
 
