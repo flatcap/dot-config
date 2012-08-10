@@ -6,6 +6,8 @@ unset MAILCHECK
 
 shopt -s cdspell
 shopt -s extglob
+shopt -s histverify
+shopt -s histreedit
 shopt -s progcomp
 
 unalias -a
