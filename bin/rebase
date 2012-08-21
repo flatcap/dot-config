@@ -18,9 +18,9 @@ done
 rm -f f1 f2
 
 for i in "$@"; do
-	echo $i >> f1
+	echo "$i" >> f1
 	printf "%03d" $INDEX >> f2
-	echo $i | sed 's/^..//' >> f2
+	echo "$i" | sed 's/^...//' >> f2
 	INDEX=$((INDEX+1))
 done
 
