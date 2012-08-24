@@ -25,12 +25,22 @@ function die()
 
 trap die EXIT
 
-# check if firefox is running
-PID=$(pidof firefox || :)
-if [ -n "$PID" ]; then
-	echo "Firefox is still running"
+if [ ! -d $BAK_DIR ]; then
+	echo "No backup dir"
 	exit 1
 fi
+
+if [ -f $TAR -o -f $TAR.xz -o $TAR.xz.gpg ]; then
+	echo "Backup already exists"
+	exit 1
+fi
+
+# check if firefox is running
+#PID=$(pidof firefox || :)
+#if [ -n "$PID" ]; then
+#	echo "Firefox is still running"
+#	exit 1
+#fi
 
 # copy tree
 TMP_DIR=$(mktemp --directory)
