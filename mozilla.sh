@@ -30,7 +30,7 @@ if [ ! -d $BAK_DIR ]; then
 	exit 1
 fi
 
-if [ -f $TAR -o -f $TAR.xz -o $TAR.xz.gpg ]; then
+if [ -f $TAR -o -f $TAR.xz -o -f $TAR.xz.gpg ]; then
 	echo "Backup already exists"
 	exit 1
 fi
