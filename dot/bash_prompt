@@ -48,6 +48,7 @@ function _prompt_user()
 	if [ "$cfg_colour" = "yes" ]; then
 		case "$HOSTNAME" in
 			"rich.flatcap.org")	prompt_colour="32" ;;	# green
+			"ledzep.flatcap.org")	prompt_colour="32" ;;	# green
 			"www.russon.org")	prompt_colour="31" ;;	# red
 			"derwent")		prompt_colour="33" ;;	# yellow
 			"enigma.flatcap.org")	prompt_colour="36" ;;	# cyan
@@ -153,7 +154,7 @@ function _prompt_command()
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
-	if [ "$hostname" = "rich.flatcap.org" ]; then
+	if [[ $hostname =~ "^(rich.flatcap.org|ledzep.flatcap.org)$" ]]; then
 		hostname=""
 	else
 		hostname="{$hostname}"
