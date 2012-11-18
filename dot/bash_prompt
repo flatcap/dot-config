@@ -154,13 +154,13 @@ function _prompt_command()
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
-	if [[ $hostname =~ "^(rich.flatcap.org|ledzep.flatcap.org)$" ]]; then
+	if [[ $hostname =~ ^(rich.flatcap.org|ledzep.flatcap.org)$ ]]; then
 		hostname=""
 	else
-		hostname="{$hostname}"
+		hostname="{$hostname} "
 	fi
 	if [ "$cfg_title" = "yes" ]; then
-		title "$hostname $(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
+		title "$hostname$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
 	fi
 }
 
