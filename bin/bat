@@ -2,6 +2,8 @@
 
 DIR="/sys/devices/LNXSYSTM:00/device:00/PNP0A08:00/device:01/PNP0C0A:00/power_supply/BAT1"
 
+[ ! -d "$DIR" ] && echo No battery && exit 1
+
 STATUS="$(cat $DIR/status)"
 CAPACITY="$(cat $DIR/capacity)"
 
