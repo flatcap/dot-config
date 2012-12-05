@@ -114,7 +114,7 @@ function _prompt_git()
 	echo -n "$branch"
 }
 
-function _propmt_dir()
+function _prompt_dir()
 {
 	local cfg_dir="${PROMPT_CFG_DIR:-yes}"
 	local cfg_dir_type="${PROMPT_CFG_DIR_TYPE:-abbr}"
@@ -151,7 +151,7 @@ function _prompt_ident()
 function _prompt_command()
 {
 	_history_sync
-	export PS1="$(_prompt_user)$(_prompt_git)$(_propmt_dir)$(_prompt_ident)"
+	export PS1="$(_prompt_user)$(_prompt_git)$(_prompt_dir)$(_prompt_ident)"
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
