@@ -126,6 +126,8 @@ function _prompt_dir()
 	case "$cfg_dir_type" in
 		"full")   dir="${PWD}"          ;;
 		"mini")   dir="${PWD##*/}"      ;;
+		"work")   dir="${PWD/#$CDDIR/W}"	# try two substitutions
+			  dir="${dir/#$HOME/~}" ;;
 		"abbr"|*) dir="${PWD/#$HOME/~}" ;;
 	esac
 
