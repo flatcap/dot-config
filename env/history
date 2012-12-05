@@ -1,6 +1,6 @@
 export HISTCONTROL="ignorespace:erasedups"
 export HISTFILESIZE="100000"
-export HISTIGNORE="&:bg:fg:\!:ls:cd:vi:t:su -:below:ssh f:bl:bl *:br:br *:ssh root:exit:keep:ll:ren:public:u:imv:list:poweroff:off:reboot"
+export HISTIGNORE="&:bg:fg:\!:%*:ls:cd:vi:t:su -:below:ssh f:bl:bl *:br:br *:ssh root:exit:keep:ll:ren:public:u:imv:list:poweroff:off:reboot"
 export HISTSIZE="100000"
 #export HISTTIMEFORMAT="%a %H:%M  "
 unset  HISTTIMEFORMAT

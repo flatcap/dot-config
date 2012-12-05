@@ -150,6 +150,7 @@ function _prompt_ident()
 
 function _prompt_command()
 {
+	_history_sync
 	export PS1="$(_prompt_user)$(_prompt_git)$(_propmt_dir)$(_prompt_ident)"
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
