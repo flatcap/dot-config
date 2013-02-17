@@ -2,41 +2,41 @@
 
 [ $# = 0 ] && exit 0
 
-for GPX in "$@"; do
-	if [ ! -f "$GPX" ]; then
-		echo "File doesn't exist: $GPX"
+for KML in "$@"; do
+	if [ ! -f "$KML" ]; then
+		echo "File doesn't exist: $KML"
 		exit 1
 	fi
 
-	if [[ ! "$GPX" =~ .*\.gpx ]]; then
-		echo Not a GPX file: $GPX
+	if [[ ! "$KML" =~ .*\.kml ]]; then
+		echo Not a KML file: $KML
 		continue
 	fi
 
-	KML="${GPX%%.gpx}.kml"
-	if [ -f "$KML" ]; then
-		echo "Output exists: $KML"
+	GPX="${KML%%.kml}.gpx"
+	if [ -f "$GPX" ]; then
+		echo "Output exists: $GPX"
 		continue
 	fi
 
-	gpsbabel -i gpx -f "$GPX" -o kml -F "$KML"
+	gpsbabel -i kml -f "$KML" -o gpx -F "$GPX"
 	if [ ! $? = 0 ]; then
-		echo "Conversion failed: $GPX"
+		echo "Conversion failed: $KML"
 		continue
 	fi
 
-	tidy -q -xml "$KML"
+	tidy -q -xml "$GPX"
 	if [ ! $? = 0 ]; then
-		echo "Tidy failed: $KML"
+		echo "Tidy failed: $GPX"
 		continue
 	fi
 
-	sed -i 's/        /\t/g' "$KML"
+	sed -i 's/        /\t/g' "$GPX"
 	if [ ! $? = 0 ]; then
-		echo "Sed failed: $KML"
+		echo "Sed failed: $GPX"
 		continue
 	fi
 
-	echo "OK: $KML"
+	echo "OK: $GPX"
 done
 
