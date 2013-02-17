@@ -124,11 +124,13 @@ function _prompt_dir()
 
 	dir="$(pwd -P)"
 	case "$cfg_dir_type" in
-		"full")   dir="${dir}"          ;;
-		"mini")   dir="${dir##*/}"      ;;
-		"work")   dir="${dir/#$CDDIR/W}"	# try two substitutions
-			  dir="${dir/#$HOME/~}" ;;
-		"abbr"|*) dir="${dir/#$HOME/~}" ;;
+		"full")		dir="${dir}"          ;;
+		"mini")		dir="${dir##*/}"      ;;
+		"work")		if [ -n "$CDDIR" -a "$CDDIR" != "$HOME" ]; then
+					dir="${dir/#$CDDIR/W}"	# try two substitutions
+				fi
+				dir="${dir/#$HOME/~}" ;;
+		"abbr"|*)	dir="${dir/#$HOME/~}" ;;
 	esac
 
 	echo -n "$dir"
