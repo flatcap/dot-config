@@ -63,6 +63,12 @@ for i in "$@"; do
 		*.glade)
 			(glade-2 "$i" &) &> /dev/null
 			;;
+		*.mobi|*.epub)
+			(FBReader "$i" &) &> /dev/null
+			;;
+		*.dia)
+			(dia "$i" &) &> /dev/null
+			;;
 		*)
 			echo "Unknown: $i"
 			;;
