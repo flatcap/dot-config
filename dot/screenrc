@@ -1,2 +1,4 @@
-hardstatus	string "%h"
+#hardstatus	string "%h"
 escape		"^Zz"
+#hardstatus alwayslastline "%w"
+caption always "%{-b ..}%-w%{+b ..}[[%n%f*%t]]%{-}%+w"
