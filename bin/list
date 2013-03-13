@@ -12,6 +12,6 @@ else
 	ARGS="-type f"
 fi
 
-find . $ARGS ! -name f\[12\] ! -name . ! -name .\*swp | cut -b3- | LANG=C sort > f1
+find . $ARGS ! -name f\[12\] ! -name . ! -name .\*swp ! -name .kindle | cut -b3- | LANG=C sort > f1
 cp f1 f2
 
