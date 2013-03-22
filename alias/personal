@@ -4,6 +4,7 @@ alias db="mysql -st"
 alias easytag="_wrapdot /usr/bin/easytag"
 alias h="cd ~/hikes; clear; ls -gG"
 alias m='make -ks -j4'
+alias n='pushd -0'
 alias t="cd ~/torrent; clear; ls -gG"
 alias u='cd ~/upstream'
 alias vm='sudo /usr/bin/virt-manager'
