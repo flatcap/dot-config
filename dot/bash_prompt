@@ -70,6 +70,7 @@ function _prompt_git()
 	local colour=""
 	local state=""
 
+	[ -d "$PWD" ] || return
 	[ "$cfg_git" = "yes" ] || return
 
 	local git_status="$(git status -unormal 2>&1)"
@@ -122,7 +123,12 @@ function _prompt_dir()
 
 	[ $cfg_dir = "yes" ] || return
 
-	dir="$(pwd -P)"
+	if [ -d "$PWD" ]; then
+		dir="$(pwd -P)"
+	else
+		dir="$PWD [deleted]"
+	fi
+
 	case "$cfg_dir_type" in
 		"full")		dir="${dir}"          ;;
 		"mini")		dir="${dir##*/}"      ;;
