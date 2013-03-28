@@ -13,7 +13,7 @@ function log()
 function usage()
 {
 	echo "Usage:"
-	echo "    ${0##*/} [pull|push|fetch|status|clean|prune|clone|wipe]"
+	echo "    ${0##*/} [pull|push|fetch|status|clean|tidy|clone|wipe]"
 	exit 1
 }
 
@@ -55,6 +55,10 @@ function git_status()
 
 function git_clean()
 {
+	local SURE
+	read -p "Are you sure [y/N]?" -t 3 -n 1 SURE
+	echo
+	[ "$SURE" != "y" ] && return
 	for i in $DIRS; do
 		title git clean $i
 		log $i
@@ -64,10 +68,10 @@ function git_clean()
 	done
 }
 
-function git_prune()
+function git_tidy()
 {
 	for i in $DIRS; do
-		title git prune $i
+		title git tidy $i
 		log $i
 		pushd $i > /dev/null
 		git prune
@@ -130,8 +134,8 @@ case $1 in
 		git_status ;;
 	clean)
 		git_clean ;;
-	prune)
-		git_prune ;;
+	tidy)
+		git_tidy ;;
 	clone)
 		git_clone ;;
 	wipe)

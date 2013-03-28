@@ -15,3 +15,4 @@ set mark-symlinked-directories on
 "\e[1;5D" backward-word
 "\e[1;5C" forward-word
 
+#"\C-l" "clear; ls\n"
