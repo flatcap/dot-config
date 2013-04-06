@@ -46,8 +46,6 @@ fi
 
 cp --archive --link $HOME/.??* $TMP_DIR
 
-find -L $TMP_DIR -xdev -type l -delete
-
 cd $TMP_DIR 2>&1 > /dev/null
 
 if [ $? != 0 ]; then
@@ -58,6 +56,8 @@ fi
 rm --force --recursive $(cat $DONTDOT)
 find . -name "*.sqlite" -exec sqlite3 {} VACUUM \;
 find . -type s -delete
+
+find -L $TMP_DIR -xdev -type l -delete
 
 tar --create --xz --file $TAR .??*
 gpg2 --encrypt --recipient "$RCPT" --output $TAR.gpg $TAR
