@@ -44,11 +44,11 @@ for disk in /dev/sd?; do
 	fdisk -lu $disk            > fdisk/$name.txt
 	dd if=$disk bs=512 count=1 > fdisk/$name.bin 2> /dev/null
 done
-vgcfgbackup -f fdisk/lvm.cfg > /dev/null 2>&1
+vgcfgbackup --file fdisk/lvm.cfg > /dev/null 2>&1
 tar --create --file fdisk.tar fdisk
 rm --force --recursive fdisk
 
-find . \( -name \*.tar -o -name \*.txt \) -print0 | xargs --null --max-args 1 --max-procs 4 -- xz -9
+find . \( -name \*.tar -o -name \*.txt \) -print0 | xargs --null --max-args 1 --max-procs 4 -- xz --best
 find . -type f -print0 | xargs --null --max-args 1 --max-procs 4 -- gpg2 --encrypt --recipient "$RCPT"
 find . ! -name "*.gpg" -delete
 

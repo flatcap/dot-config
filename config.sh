@@ -51,7 +51,7 @@ gsettings list-recursively > $TMP_DIR/dconf_gsettings.txt
 find "$DATE" -type f -print0							\
 	| sort --zero-terminated						\
 	| tar --create --file - --null --files-from - --sparse --selinux --acls	\
-	| xz -9									\
+	| xz --best									\
 	| gpg2 --encrypt --recipient "$RCPT" --output "$TAR"
 
 chmod 400 $TAR

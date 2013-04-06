@@ -57,16 +57,20 @@ find $TMP_DIR -depth -name "Cache" -exec rm -fr {} \;
 
 # other random junk
 rm --force --recursive $TMP_DIR/.mozilla/extensions
+rm --force --recursive $TMP_DIR/.mozilla/firefox/"Crash Reports"
+rm --force --recursive $TMP_DIR/.mozilla/firefox/default/startupCache
+rm --force --recursive $TMP_DIR/.mozilla/firefox/default/thumbnails
+rm --force --recursive $TMP_DIR/.mozilla/firefox/default/bookmarkbackups
 rm --force             $TMP_DIR/XPC.mfasl
-find $TMP_DIR -depth -name "bookmarkbackups" -exec rm --force --recursive {} \;
 find $TMP_DIR -name "extensions.cache" -exec rm {} \;
 find $TMP_DIR -name "*.sqlite-journal" -exec rm {} \;
 find $TMP_DIR -name "*.log" -exec rm {} \;
+find $TMP_DIR -name "*.bak" -exec rm {} \;
 
 # tar it up
 pushd $TMP_DIR > /dev/null
 tar --create --file $TAR .mozilla
-xz -9 $TAR
+xz --best $TAR
 chmod 400 $TAR.xz
 gpg2 --encrypt --recipient "$RCPT" --output $BAK_DIR/$TAR.xz.gpg $TAR.xz
 popd > /dev/null
