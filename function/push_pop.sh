@@ -29,8 +29,11 @@ function first()
 	pushd -0
 	popd -n +1
 
-	alias n='pushd -0'
-	alias p='pushd +1'
+	alias n='pushd -0; clear; ls'
+	alias p='pushd +1; clear; ls'
+
+	clear
+	ls --color=auto -l
 }
 
 function last()
