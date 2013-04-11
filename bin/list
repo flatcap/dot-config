@@ -9,9 +9,9 @@
 if [ "$1" ]; then
 	ARGS="$@"
 else
-	ARGS="-type f"
+	ARGS="! -type d"
 fi
 
-find . $ARGS ! -name f\[12\] ! -name . ! -name .\*swp ! -name .kindle | cut -b3- | LANG=C sort > f1
+find . $ARGS ! -name f\[12\] ! -path "*/.git*" ! -name . ! -name ".*swp" ! -name .kindle | cut -b3- | LANG=C sort > f1
 cp f1 f2
 
