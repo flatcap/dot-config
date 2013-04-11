@@ -7,7 +7,7 @@ for i in m{1..3}; do
 	fi
 done
 
-find . -type f ! -name m1 -print0 | xargs -r0 md5sum > m1
+find . -type f ! -path "*/.git*" ! -name m1 -print0 | xargs -r0 md5sum > m1
 wc -l m1 | awk '{ printf ("%d files\n", $1); }'
 
 if [ ! -s m1 ]; then

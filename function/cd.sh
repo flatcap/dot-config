@@ -7,6 +7,9 @@ function cd ()
 		else
 			local DIR=${1%/*}
 			local END=${1##*/}
+			if [ "$1" = "." ]; then
+				set -- "$(pwd -P)"
+			fi
 			if [ -d "$DIR" -a "$END" = "ls" ]; then
 				set -- "$DIR"
 				LS="yes"
