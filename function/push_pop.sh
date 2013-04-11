@@ -28,6 +28,12 @@ function first()
 	PUSHD_OLD_DIR="$(pwd)"
 	pushd -0
 	popd -n +1
+
+	alias n='pushd -0; clear; ls'
+	alias p='pushd +1; clear; ls'
+
+	clear
+	ls --color=auto -l
 }
 
 function last()
@@ -35,5 +41,8 @@ function last()
 	builtin dirs -c
 	cd "$PUSHD_OLD_DIR"
 	unset PUSHD_OLD_DIR
+
+	unalias n >& /dev/null
+	unalias p >& /dev/null
 }
 

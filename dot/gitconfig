@@ -49,11 +49,16 @@
 
 [diff]
 	mnemonicprefix = true
+	tool           = meld
+	guitool        = meld
+
+[difftool]
+	prompt = no
 
 [giggle]
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
 	history-view-vpane-position = 399
-	main-window-view            = HistoryView
+	main-window-view = FileView
 	file-view-vpane-position    = 214
 
