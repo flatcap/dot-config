@@ -7,5 +7,7 @@ alias ffch="find . -type f \( -name \*.[ch] -o -name \*.cc -o -name \*.cpp \) -p
 alias  ffh="find . -type f    -name \*.h                                      -print0 | xargs --no-run-if-empty --null"
 
 alias  ffj="find . -type f -name \*.js ! -name jq\* -print0 | xargs --no-run-if-empty --null"
+alias  ffk="find . -type f -name \*.kml             -print0 | xargs --no-run-if-empty --null"
 alias  ffm="find . -type f -iname Makefile\*        -print0 | xargs --no-run-if-empty --null"
 alias  ffp="find . -type f -name \*.php             -print0 | xargs --no-run-if-empty --null"
+
