@@ -1,7 +1,7 @@
 alias !="history2"
 alias bc="bc --quiet"
 alias bzip2="_compress /usr/bin/bzip2"
-alias ct="column --table"
+alias ct="column -t"
 alias date2='date "+%n  %R  %A %-d %B %Y%n"'
 alias df="df --print-type --exclude-type rootfs --exclude-type devtmpfs --exclude-type tmpfs"
 alias diff="diff --exclude CVS --exclude .svn --exclude tags --exclude .git"

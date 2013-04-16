@@ -1,5 +1,5 @@
 alias db="mysql --silent --table"
-alias h="cd ~/hikes; clear; ls -gG"
+alias h="cddir ~/hikes; clear; ls -gG"
 alias t="cd ~/torrent; clear; ls -gG"
 
 #alias bl="brightness DVI-I-1"
