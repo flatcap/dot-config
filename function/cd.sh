@@ -19,7 +19,9 @@ function cd ()
 		[ -n "$CDDIR" ] && set -- "$CDDIR"
 	fi
 	command cd "$@" > /dev/null 2>&1
+	RES=$?
 	[ "$LS" = "yes" ] && ls --group-directories-first -lL -T 0 --color=auto -I .\*swp -I lost+found
+	return $RES
 }
 
 function cddir ()

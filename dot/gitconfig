@@ -62,3 +62,6 @@
 	main-window-view = FileView
 	file-view-vpane-position    = 214
 
+[gpg]
+	program = gpg2
+
