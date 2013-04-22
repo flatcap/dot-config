@@ -35,8 +35,7 @@ function git_simple()
 		title git $CMD $i
 		log $i
 		pushd $i > /dev/null
-		[ -z "$(git remote)" ] && continue
-		git $CMD
+		[ -n "$(git remote)" ] && git $CMD
 		popd > /dev/null
 	done
 }
