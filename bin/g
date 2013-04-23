@@ -27,15 +27,42 @@ function get_dirs()
 	DIRS="$DIRS $(find . -type d -name "?*.git" | sort | cut -b3-)"
 }
 
-function git_simple()
+function git_fetch()
 {
-	local CMD=$1
-
 	for i in $DIRS; do
-		title git $CMD $i
+		title git fetch $i
 		log $i
 		pushd $i > /dev/null
-		[ -n "$(git remote)" ] && git $CMD
+		[ -n "$(git remote)" ] && git fetch origin master:master
+		popd > /dev/null
+	done
+}
+
+function git_push()
+{
+	for i in $DIRS; do
+		title git push $i
+		log $i
+		pushd $i > /dev/null
+		[ -n "$(git remote)" ] && git push
+		popd > /dev/null
+	done
+}
+
+function git_pull()
+{
+	for i in $DIRS; do
+		title git pull $i
+		log $i
+		pushd $i > /dev/null
+		if [ -n "$(git remote)" ]; then
+			BARE="$(git config --get core.bare)"
+			if [ "$BARE" = "true" ]; then
+				git fetch origin master:master
+			else
+				git pull
+			fi
+		fi
 		popd > /dev/null
 	done
 }
@@ -127,8 +154,12 @@ umask 0002
 get_dirs
 
 case $1 in
-	push|pull|fetch)
-		git_simple $1 ;;
+	push)
+		git_push ;;
+	pull)
+		git_pull ;;
+	fetch)
+		git_fetch ;;
 	status)
 		git_status ;;
 	clean)
