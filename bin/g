@@ -73,8 +73,11 @@ function git_status()
 		title git status $i
 		log $i
 		pushd $i > /dev/null
-		git stash list
-		git status -s
+		BARE="$(git config --get core.bare)"
+		if [ "$BARE" = "false" ]; then
+			git stash list
+			git status -s
+		fi
 		popd > /dev/null
 	done
 }
