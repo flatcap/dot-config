@@ -1,6 +1,7 @@
 alias l1="/bin/ls --group-directories-first -1"
 alias la="/bin/ls --group-directories-first -la -T 0 --color=auto"
 alias lc="/bin/ls --group-directories-first -CL -T 0 --color=auto"
+alias lh="/bin/ls --group-directories-first -hl -T 0 --color=auto"
 alias li="/bin/ls --group-directories-first -gG -lL -T 0 --color=auto -I .\*swp -I \*.[cho] -I lost+found"
 alias ll="/bin/ls --group-directories-first -l -T 0 --color=auto"
 alias ls="/bin/ls --group-directories-first -lL -T 0 --color=auto -I .\*swp -I lost+found"

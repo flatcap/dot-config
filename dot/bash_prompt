@@ -76,6 +76,9 @@ function _prompt_git()
 	local git_status="$(git status -unormal 2>&1)"
 	[[ "$git_status" =~ "Not a git repo" ]] && return
 
+	# in a bare directory, make up some plausible reposonse
+	[ -f config -a -d refs -a -f HEAD ] && git_status="nothing to commit On branch bare"
+
 	if [[ "$git_status" =~ "nothing to commit" ]]; then
 		colour="32"		# green
 		if [ "$cfg_colour" = "yes" -o "$cfg_git_abbr" = "yes" ]; then
@@ -93,7 +96,7 @@ function _prompt_git()
 
 	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
 		branch="${BASH_REMATCH[1]}"
-		if [ "$cfg_git_abbr" = "yes" -a "$branch" = master ]; then
+		if [ "$cfg_git_abbr" = "yes" -a \( "$branch" = "master" -o "$branch" = "bare" \) ]; then
 			branch="$state "
 		else
 			[ "$cfg_colour" != "yes" ] && branch="$branch$state"
