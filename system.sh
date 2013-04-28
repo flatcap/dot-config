@@ -12,23 +12,23 @@ umask 0077
 
 DATE=$(date "+%Y_%m_%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
-DIR="/mnt/backup/system/$DATE"
+DIR="/home/units/backup/system/$DATE"
 
 cd /
 
 mkdir --parents $DIR
 
-mysqldump --all-databases > "mnt/images/mysql/${DATE}_tables.sql" 2> /dev/null
+mysqldump --all-databases > "/var/lib/mysql/${DATE}_tables.sql" 2> /dev/null
 
 tar --create --file $DIR/cron.tar                       var/spool/cron
 tar --create --file $DIR/etc.tar                        etc
-tar --create --file $DIR/mysql.tar --exclude mysql.sock mnt/images/mysql	#var/lib/mysql
+tar --create --file $DIR/mysql.tar --exclude mysql.sock var/lib/mysql
 tar --create --file $DIR/root.tar                       root
 tar --create --file $DIR/usr_local.tar                  usr/local
 tar --create --file $DIR/var_log.tar                    var/log
 tar --create --file $DIR/www.tar                        var/www
 
-rm -f "mnt/images/mysql/${DATE}_tables.sql"
+rm -f "/var/lib/mysql/${DATE}_tables.sql"
 cd $DIR
 
 rpm --query --all | sort > rpm_list
@@ -48,7 +48,7 @@ vgcfgbackup --file fdisk/lvm.cfg > /dev/null 2>&1
 tar --create --file fdisk.tar fdisk
 rm --force --recursive fdisk
 
-find . \( -name \*.tar -o -name \*.txt \) -print0 | xargs --null --max-args 1 --max-procs 4 -- xz --best
+find . \( -name \*.tar -o -name \*.txt -o -name \*.sql \) -print0 | xargs --null --max-args 1 --max-procs 4 -- xz --best
 find . -type f -print0 | xargs --null --max-args 1 --max-procs 4 -- gpg2 --encrypt --recipient "$RCPT"
 find . ! -name "*.gpg" -delete
 
