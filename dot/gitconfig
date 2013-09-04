@@ -10,8 +10,8 @@
 	default = matching
 
 [alias]
-	l    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative
-	ls   = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --stat
+	l    = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative
+	ls   = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --stat
 	s    = !git stash list && git status -s
 	st   = status
 	sl   = !git status && echo && git l -n 4
@@ -59,7 +59,7 @@
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
 	history-view-vpane-position = 399
-	main-window-view = FileView
+	main-window-view = HistoryView
 	file-view-vpane-position    = 214
 
 [gpg]
