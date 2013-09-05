@@ -47,11 +47,10 @@ function _prompt_user()
 
 	if [ "$cfg_colour" = "yes" ]; then
 		case "$HOSTNAME" in
-			"rich.flatcap.org")	prompt_colour="32" ;;	# green
-			"acdc.flatcap.org")	prompt_colour="32" ;;	# green
-			"www.russon.org")	prompt_colour="31" ;;	# red
-			"derwent")		prompt_colour="33" ;;	# yellow
-			"enigma.flatcap.org")	prompt_colour="36" ;;	# cyan
+			laptop.flatcap.org)	prompt_colour="32" ;;	# green
+			desktop.flatcap.org)	prompt_colour="36" ;;	# cyan
+			www.russon.org)		prompt_colour="31" ;;	# red
+			*.vm.flatcap.org)	prompt_colour="33" ;;	# yellow
 			*)			prompt_colour="35" ;;	# magenta
 		esac
 		if [ -n "$prompt" ]; then
@@ -168,10 +167,10 @@ function _prompt_command()
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
-	if [[ $hostname =~ ^(rich.flatcap.org|acdc.flatcap.org)$ ]]; then
+	if [[ $hostname =~ ^laptop.flatcap.org$ ]]; then
 		hostname=""
 	else
-		hostname="{$hostname} "
+		hostname="{${hostname%%.*}} "
 	fi
 	if [ "$cfg_title" = "yes" ]; then
 		title "$hostname$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
