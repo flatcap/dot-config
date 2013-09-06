@@ -10,7 +10,7 @@ PROMPT_CFG_USER=yes
 
 [[   $USER     != flatcap                                                ]] && PROMPT_CFG_USER="yes"
 [[ ! $HOSTNAME =~ ^(ledzep.flatcap.org|rich.flatcap.org)$                ]] && PROMPT_CFG_COLOUR="yes"
-[[ ! $TERM     =~ ^(xterm|vt100|linux|screen)$                           ]] && PROMPT_CFG_COLOUR="no"
+[[ ! $TERM     =~ ^(xterm|xterm-256color|vt100|linux|screen)$            ]] && PROMPT_CFG_COLOUR="no"
 [[ ! $TERM     =~ ^(xterm|vt100|screen)$                                 ]] && PROMPT_CFG_TITLE="no"
 [[   $HOSTNAME =~ ^(rich.flatcap.org|acdc.flatcap.org|www.russon.org)$   ]] && PROMPT_CFG_GIT="yes"
 [[   $SSH_CLIENT                                                         ]] && PROMPT_CFG_USER="yes"
