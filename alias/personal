@@ -1,4 +1,5 @@
 alias db="mysql --silent --table"
+alias dbs="mysql --silent --skip-column-names"
 alias h="cddir ~/hikes; clear; ls -gG"
 alias t="cd ~/torrent; clear; ls -gG"
 
