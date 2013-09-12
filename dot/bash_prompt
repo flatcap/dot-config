@@ -175,6 +175,8 @@ function _prompt_command()
 	if [ "$cfg_title" = "yes" ]; then
 		title "$hostname$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
 	fi
+	# tell vte our current directory
+	echo -en "\e]7;file://${HOSTNAME:-}$PWD\a"
 }
 
 
