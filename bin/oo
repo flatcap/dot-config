@@ -40,7 +40,7 @@ for i in "$@"; do
 		*.dot|*.gv)
 			#(dotty "$i" &) &> /dev/null
 			#xdotool search --name ${i%.*} windowkill
-			(dot -Tpng $i | display -title ${i%.*} &) >& /dev/null
+			(dot -Tpng $i | display -title ${i%.*} - &) >& /dev/null
 			;;
 		*.htm|*.html)
 			(firefox "$i" &) &> /dev/null
