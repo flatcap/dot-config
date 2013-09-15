@@ -176,7 +176,7 @@ function _prompt_command()
 		title "$hostname$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
 	fi
 	# tell vte our current directory
-	echo -en "\e]7;file://${HOSTNAME:-}$PWD\a"
+	[[ $TERM =~ ^xterm ]] && echo -en "\e]7;file://${HOSTNAME:-}$PWD\a"
 }
 
 

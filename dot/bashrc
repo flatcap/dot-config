@@ -22,6 +22,8 @@ done
 
 [[ $TERM =~ ^(xterm|vt100|linux)$ ]] && bind Space:magic-space
 
+[[ $TERM =~ ^xterm ]] && export TERM=xterm-256color
+
 [ -f ~/.bash_prompt ] && source ~/.bash_prompt
 [ -f ~/.extra       ] && source ~/.extra
 
