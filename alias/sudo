@@ -1,11 +1,17 @@
 
-LVM="fsadm lvchange lvconvert lvcreate lvdisplay lvextend lvm lvmchange lvmconf lvmdiskscan lvmdump lvmsadc lvmsar lvreduce lvremove lvrename lvresize lvs lvscan pvchange pvck pvcreate pvdisplay pvmove pvremove pvresize pvs pvscan vgcfgbackup vgcfgrestore vgchange vgck vgconvert vgcreate vgdisplay vgexport vgextend vgimport vgimportclone vgmerge vgmknodes vgreduce vgremove vgrename vgs vgscan vgsplit"
+if [ $UID != 0 ]; then
+	LVM="fsadm lvchange lvconvert lvcreate lvdisplay lvextend lvm lvmchange lvmconf lvmdiskscan lvmdump lvmsadc lvmsar lvreduce lvremove lvrename lvresize lvs lvscan pvchange pvck pvcreate pvdisplay pvmove pvremove pvresize pvs pvscan vgcfgbackup vgcfgrestore vgchange vgck vgconvert vgcreate vgdisplay vgexport vgextend vgimport vgimportclone vgmerge vgmknodes vgreduce vgremove vgrename vgs vgscan vgsplit"
 
-VM="virsh virt-clone virt-convert virt-df virt-dmesg virt-image virt-install virt-manager virt-mem virt-pack virt-ps virt-top virt-uname virt-viewer"
+	VM="virsh virt-clone virt-convert virt-df virt-dmesg virt-image virt-install virt-manager virt-mem virt-pack virt-ps virt-top virt-uname virt-viewer"
 
-MISC="chvt pm-hibernate pm-suspend nethogs chattr arp-scan restorecon mdadm intel_backlight"
+	MISC="chvt pm-hibernate pm-suspend nethogs chattr arp-scan restorecon mdadm intel_backlight"
 
-for i in $LVM $VM $MISC; do
-	alias $i="sudo $i"
-done
+	for i in $LVM $VM $MISC; do
+		alias $i="sudo $i"
+	done
+
+	unset LVM
+	unset VM
+	unset MISC
+fi
 
