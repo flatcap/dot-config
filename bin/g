@@ -52,7 +52,7 @@ function git_push()
 function git_pull()
 {
 	for i in $DIRS; do
-		title git pull $i
+		title git pull $i $@
 		log $i
 		pushd $i > /dev/null
 		if [ -n "$(git remote)" ]; then
@@ -60,7 +60,7 @@ function git_pull()
 			if [ "$BARE" = "true" ]; then
 				git fetch origin master:master
 			else
-				git pull
+				git pull $@
 			fi
 		fi
 		popd > /dev/null
@@ -151,7 +151,7 @@ function git_wipe()
 }
 
 
-[ $# -ne 1 ] && usage
+#[ $# -ne 1 ] && usage
 
 umask 0002
 get_dirs
@@ -160,7 +160,8 @@ case $1 in
 	push)
 		git_push ;;
 	pull)
-		git_pull ;;
+		shift
+		git_pull $@ ;;
 	fetch|f)
 		git_fetch ;;
 	status|st|s)
