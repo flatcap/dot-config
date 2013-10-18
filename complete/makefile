@@ -14,3 +14,4 @@ _comp_makefile()
 }
 
 complete -F _comp_makefile make
+complete -F _comp_makefile m
