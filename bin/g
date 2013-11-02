@@ -60,7 +60,7 @@ function git_pull()
 			if [ "$BARE" = "true" ]; then
 				git fetch origin master:master
 			else
-				git pull $@
+				git pull --quiet $@
 			fi
 		fi
 		popd > /dev/null
