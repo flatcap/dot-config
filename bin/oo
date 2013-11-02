@@ -44,7 +44,8 @@ for i in "$@"; do
 			(firefox "$i" &) &> /dev/null
 			;;
 		*.jpg|*.jpeg|*.png|*.gif)
-			(gthumb -n "$i" &) &> /dev/null
+			#(gthumb -n "$i" &) &> /dev/null
+			(display --title "$i" "$i" &) &> /dev/null
 			;;
 		*.mobi|*.epub|*.prc)
 			(FBReader "$i" &) &> /dev/null
