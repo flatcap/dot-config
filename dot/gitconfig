@@ -59,7 +59,6 @@
 [merge]
 	tool    = vimdiff
 	guitool = vimdiff
-	ff      = false
 
 [giggle]
 	main-window-maximized = true
