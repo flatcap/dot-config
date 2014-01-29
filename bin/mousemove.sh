@@ -14,6 +14,6 @@ Y=$(sed 's/.*y:\([0-9]\+\).*/\1/' <<< "$COORDS")
 if [ $X -lt 1920 ]; then
 	xdotool mousemove 2054 50
 else
-	xdotool mousemove 1854 50
+	xdotool mousemove 1854 1050
 fi
 
