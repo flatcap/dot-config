@@ -45,7 +45,7 @@ for i in "$@"; do
 			;;
 		*.jpg|*.jpeg|*.png|*.gif)
 			#(gthumb -n "$i" &) &> /dev/null
-			(display --title "$i" "$i" &) &> /dev/null
+			(display -title "$i" "$i" &) &> /dev/null
 			;;
 		*.mobi|*.epub|*.prc)
 			(FBReader "$i" &) &> /dev/null
