@@ -10,7 +10,8 @@
 	default = matching
 
 [alias]
-	l    = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative
+	l    = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative -n 20
+	ll   = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative
 	ls   = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --stat
 	s    = !git stash list --date=local && git status --short
 	st   = status
@@ -44,7 +45,7 @@
 	untracked = cyan
 
 [core]
-	whitespace   = trailing-space,space-before-tab,indent-with-non-tab,tabwidth=8
+	whitespace   = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
 	pager        = "less -eFfiqrX"
 	excludesfile = /home/flatcap/.gitignore
 
@@ -60,13 +61,8 @@
 	tool    = vimdiff
 	guitool = vimdiff
 
-[giggle]
-	main-window-maximized = true
-	main-window-geometry = 0x0+0+0
-	history-view-vpane-position = 444
-	main-window-view = HistoryView
-	file-view-vpane-position = 632
-
 [gpg]
 	program = gpg2
 
+[rich]
+	search = "(QWQ|RAR)"
