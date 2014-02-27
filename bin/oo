@@ -26,7 +26,8 @@ for i in "$@"; do
 			(evince "$i" &) &> /dev/null
 			;;
 		*.svg)
-			(inkscape "$i" &) &> /dev/null
+			#(inkscape "$i" &) &> /dev/null
+			(display -title ${i%.*} "$i" &) >& /dev/null
 			;;
 		*.avi|*.mpg|*.wmv|*.mp4|*.mkv|*.ogg|*.mov|*.mp3|*.flv)
 			#(totem --fullscreen --enqueue "$i" &) &> /dev/null
@@ -38,7 +39,8 @@ for i in "$@"; do
 		*.dot|*.gv)
 			#(dotty "$i" &) &> /dev/null
 			#xdotool search --name ${i%.*} windowkill
-			(dot -Tpng $i | display -resize 70% -title ${i%.*} - &) >& /dev/null
+			#(dot -Tpng $i | display -resize 70% -title ${i%.*} - &) >& /dev/null
+			(dot -Tpng $i | display -title ${i%.*} - &) >& /dev/null
 			;;
 		*.htm|*.html)
 			(firefox "$i" &) &> /dev/null
