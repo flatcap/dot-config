@@ -69,6 +69,8 @@ case "$1" in
 		BRIGHT=$((BRIGHT+ADD))
 		[ $BRIGHT -gt 100 ] && BRIGHT=100
 		set_brightness "$BRIGHT"
+		NEW=$(get_brightness)
+		[ $NEW -le $BRIGHT ] && set_brightness $((BRIGHT+1))
 		;;
 	-*)
 		BRIGHT=$(get_brightness)
@@ -78,6 +80,7 @@ case "$1" in
 		BRIGHT=$((BRIGHT-SUB))
 		[ $BRIGHT -lt 0 ] && BRIGHT=0
 		set_brightness "$BRIGHT"
+		[ $NEW -ge $BRIGHT ] && set_brightness $((BRIGHT-1))
 		;;
 	[0-9]*)
 		set_brightness "$1" || usage_quit "Invalid brightness: $1"
