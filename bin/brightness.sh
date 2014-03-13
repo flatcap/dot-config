@@ -39,6 +39,19 @@ function usage_quit()
 	exit 1
 }
 
+function default_jump()
+{
+	[ $# = 1 ] || echo 1
+
+	local BRIGHT="$1"
+
+	[ $BRIGHT -lt 15 ] && echo 1 && return
+	[ $BRIGHT -lt 30 ] && echo 2 && return
+	[ $BRIGHT -lt 60 ] && echo 4 && return
+
+	echo 6
+}
+
 
 if [ $# = 0 ]; then
 	get_brightness
@@ -51,6 +64,7 @@ case "$1" in
 	+*)
 		BRIGHT=$(get_brightness)
 		ADD="${1:1:99}"
+		[ -z "$ADD" ] && ADD=$(default_jump $BRIGHT)
 		numeric "$ADD" || usage_quit "Invalid increase: $1"
 		BRIGHT=$((BRIGHT+ADD))
 		[ $BRIGHT -gt 100 ] && BRIGHT=100
@@ -59,6 +73,7 @@ case "$1" in
 	-*)
 		BRIGHT=$(get_brightness)
 		SUB="${1:1:99}"
+		[ -z "$SUB" ] && SUB=$(default_jump $BRIGHT)
 		numeric "$SUB" || usage_quit "Invalid decrease: $1"
 		BRIGHT=$((BRIGHT-SUB))
 		[ $BRIGHT -lt 0 ] && BRIGHT=0
