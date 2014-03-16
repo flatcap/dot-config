@@ -80,6 +80,7 @@ case "$1" in
 		BRIGHT=$((BRIGHT-SUB))
 		[ $BRIGHT -lt 0 ] && BRIGHT=0
 		set_brightness "$BRIGHT"
+		NEW=$(get_brightness)
 		[ $NEW -ge $BRIGHT ] && set_brightness $((BRIGHT-1))
 		;;
 	[0-9]*)
