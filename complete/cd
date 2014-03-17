@@ -1,0 +1,10 @@
+_cd_complete ()
+{
+	local cur
+	_get_comp_words_by_ref cur
+	COMPREPLY=(
+		$(compgen -W "$(git branch 2> /dev/null)" -- "$cur")
+		$(compgen -W "$(find . -maxdepth 1 ! -name . -type d | cut -b3- | sort -u)" -- "$cur")
+	)
+}
+complete -F _cd_complete cd
