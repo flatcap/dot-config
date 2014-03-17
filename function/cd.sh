@@ -1,3 +1,11 @@
+
+function git_branch()
+{
+	[ -n "$1" ] || return
+
+	git branch 2> /dev/null | grep -qw "$1"
+}
+
 function cd ()
 {
 	local LS=""
@@ -5,6 +13,10 @@ function cd ()
 		if [ -f "$1" ]; then
 			set -- "${1%/*}"
 		else
+			if git_branch "$1"; then
+				git checkout "$1"
+				return
+			fi
 			local DIR=${1%/*}
 			local END=${1##*/}
 			if [ "$1" = "." ]; then
