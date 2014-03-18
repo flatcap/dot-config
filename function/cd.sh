@@ -13,8 +13,11 @@ function cd ()
 		if [ -f "$1" ]; then
 			set -- "${1%/*}"
 		else
-			if git_branch "$1"; then
-				git checkout "$1"
+			local GDIR="$1"
+			[ "$GDIR" = "." ] && GDIR="master"
+
+			if git_branch "$GDIR"; then
+				git checkout -q "$GDIR"
 				return
 			fi
 			local DIR=${1%/*}

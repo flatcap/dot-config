@@ -99,7 +99,7 @@ function _prompt_git()
 			branch="$state "
 		else
 			[ "$cfg_colour" != "yes" ] && branch="$branch$state"
-			branch="($branch) "
+			branch="/$branch"
 		fi
 	else
 		# Detached HEAD.  (branch=HEAD is a faster alternative.)
@@ -107,7 +107,7 @@ function _prompt_git()
 		branch="${branch##*/}"
 		#branch="$(cut -b-7 .git/HEAD)"
 		[ "$cfg_colour" != "yes" ] && branch="$branch$state"
-		branch="($branch) "
+		branch="/$branch"
 	fi
 
 	if [ "$cfg_colour" = "yes" ]; then
