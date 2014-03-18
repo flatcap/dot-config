@@ -96,7 +96,7 @@ function _prompt_git()
 	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
 		branch="${BASH_REMATCH[1]}"
 		if [ "$cfg_git_abbr" = "yes" -a \( "$branch" = "master" -o "$branch" = "bare" \) ]; then
-			branch="$state "
+			branch="$state"
 		else
 			[ "$cfg_colour" != "yes" ] && branch="$branch$state"
 			branch="/$branch"
