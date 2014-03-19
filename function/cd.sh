@@ -3,7 +3,7 @@ function git_branch()
 {
 	[ -n "$1" ] || return
 
-	git branch 2> /dev/null | grep -qw "$1"
+	git branch 2> /dev/null | grep -Fqw "$1"
 }
 
 function cd ()
