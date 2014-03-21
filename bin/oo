@@ -31,10 +31,11 @@ for i in "$@"; do
 			;;
 		*.avi|*.mpg|*.wmv|*.mp4|*.mkv|*.ogg|*.mov|*.mp3|*.flv)
 			#(totem --fullscreen --enqueue "$i" &) &> /dev/null
-			(totem --enqueue "$i" &) &> /dev/null
+			#(totem --enqueue "$i" &) &> /dev/null
 			#(totem --no-existing-session "$i" &) &> /dev/null
 			#(xine --no-splash --auto-play=fq "$i" &) &> /dev/null
 			#gmplayer "$i"
+			(vlc "$i" &) &> /dev/null
 			;;
 		*.dot|*.gv)
 			#(dotty "$i" &) &> /dev/null
