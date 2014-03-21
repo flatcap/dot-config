@@ -1,6 +1,6 @@
 [user]
-	email = "richard.russon@gmail.com"
-	name = "Richard Russon (flatcap)"
+	email = richard.russon@gmail.com
+	name = Richard Russon (flatcap)
 
 [github]
 	user  = flatcap
@@ -10,17 +10,17 @@
 	default = matching
 
 [alias]
-	l    = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative -n 20
-	ll   = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative
-	ls   = log --branches --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --stat
+	l    = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative -n 20
+	ll   = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
+	ls   = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative --stat
 	s    = !git stash list --date=local && git status --short
 	st   = status
-	sl   = !git status && echo && git log -n 4
 	d    = diff
 	ds   = diff --stat
 	b    = branch --verbose
 	tidy = !git prune && git gc --aggressive && git fsck --full --strict
 	lca  = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
+	since= log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
 
 [color]
 	branch = auto
