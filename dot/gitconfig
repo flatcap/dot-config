@@ -10,9 +10,9 @@
 	default = matching
 
 [alias]
-	l    = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative -n 20
-	ll   = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
-	ls   = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative --stat
+	l    = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative -n 20
+	ll   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
+	ls   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative --stat
 	s    = !git stash list --date=local && git status --short
 	st   = status
 	d    = diff
@@ -20,7 +20,7 @@
 	b    = branch --verbose
 	tidy = !git prune && git gc --aggressive && git fsck --full --strict
 	lca  = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
-	since= log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
+	since= log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
 
 [color]
 	branch = auto
@@ -66,3 +66,4 @@
 
 [rich]
 	search = "(QWQ|RAR)"
+
