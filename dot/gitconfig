@@ -13,7 +13,7 @@
 	l    = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative -n 20
 	ll   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
 	ls   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative --stat
-	s    = !git stash list --date=local && git status --short
+	s    = !git stash list && git status --short
 	st   = status
 	d    = diff
 	ds   = diff --stat
@@ -63,7 +63,4 @@
 
 [gpg]
 	program = gpg2
-
-[rich]
-	search = "(QWQ|RAR)"
 
