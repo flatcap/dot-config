@@ -30,6 +30,9 @@ for i in "$@"; do
 			(display -title ${i%.*} "$i" &) >& /dev/null
 			;;
 		*.avi|*.mpg|*.wmv|*.mp4|*.mkv|*.ogg|*.mov|*.mp3|*.flv)
+			(cat "$i" > /dev/null) &> /dev/null
+			(cat "$i" > /dev/null) &> /dev/null
+			(cat "$i" > /dev/null) &> /dev/null
 			#(totem --fullscreen --enqueue "$i" &) &> /dev/null
 			#(totem --enqueue "$i" &) &> /dev/null
 			#(totem --no-existing-session "$i" &) &> /dev/null
