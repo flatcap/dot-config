@@ -64,3 +64,6 @@
 [gpg]
 	program = gpg2
 
+[rich]
+	search = "(QWQ|RAR)"
+
