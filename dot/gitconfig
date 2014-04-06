@@ -65,5 +65,5 @@
 	program = gpg2
 
 [rich]
-	search = "(QWQ|RAR)"
+	search = "(QWQ|RAR|cout|iostream|printf)"
 
