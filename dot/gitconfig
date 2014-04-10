@@ -17,10 +17,14 @@
 	st   = status
 	d    = diff
 	ds   = diff --stat
-	b    = branch --verbose
+	b    = branch --verbose --verbose
 	tidy = !git prune && git gc --aggressive && git fsck --full --strict
 	lca  = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
 	since= log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
+
+	hide   = update-index --assume-unchanged
+	unhide = update-index --no-assume-unchanged
+	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
 
 [color]
 	branch = auto
