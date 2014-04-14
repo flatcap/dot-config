@@ -81,16 +81,16 @@ function _prompt_git()
 	if [[ "$git_status" =~ "nothing to commit" ]]; then
 		colour="32"		# green
 		if [ "$cfg_colour" = "yes" -o "$cfg_git_abbr" = "yes" ]; then
-			state="∙"
+			state="☆ "
 		else
 			state=""
 		fi
 	elif [[ "$git_status" =~ "nothing added to commit but untracked files present" ]]; then
 		colour="33"		# yellow
-		state='∙'
+		state="∗ "
 	else
 		colour="31"		# red
-		state='∙'
+		state="★ "
 	fi
 
 	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
@@ -99,7 +99,7 @@ function _prompt_git()
 			branch="$state"
 		else
 			[ "$cfg_colour" != "yes" ] && branch="$branch$state"
-			branch="/$branch"
+			branch="($branch)"
 		fi
 	else
 		# Detached HEAD.  (branch=HEAD is a faster alternative.)
@@ -163,7 +163,7 @@ function _prompt_ident()
 function _prompt_command()
 {
 	_history_sync
-	export PS1="$(_prompt_user)$(_prompt_dir)$(_prompt_git)$(_prompt_ident)"
+	export PS1="$(_prompt_user)$(_prompt_git)$(_prompt_dir)$(_prompt_ident)"
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
