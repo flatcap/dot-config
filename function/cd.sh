@@ -18,6 +18,7 @@ function cd ()
 
 			if git_branch "$GDIR"; then
 				git checkout -q "$GDIR"
+				export IGNOREEOF=999
 				return
 			fi
 			local DIR=${1%/*}
