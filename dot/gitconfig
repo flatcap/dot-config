@@ -10,22 +10,22 @@
 	default = matching
 
 [alias]
+	b    = branch --verbose --verbose
+	d    = diff
+	ds   = diff --stat
 	l    = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative -n 20
+	lca  = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
 	ll   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
 	ls   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative --stat
 	s    = !git stash list && git status --short
 	sb   = !git branch --verbose --verbose & git stash list && git status --short
-	st   = status
-	d    = diff
-	ds   = diff --stat
-	b    = branch --verbose --verbose
-	tidy = !git prune && git gc --aggressive && git fsck --full --strict
-	lca  = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
 	since= log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
+	st   = status
+	tidy = !git prune && git gc --aggressive && git fsck --full --strict
 
+	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
 	hide   = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
-	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
 
 [color]
 	branch = auto
@@ -65,11 +65,10 @@
 [merge]
 	tool    = vimdiff
 	guitool = vimdiff
-	ff      = false
 
 [gpg]
 	program = gpg2
 
 [rich]
-	search = "(QWQ|RAR|cout|iostream|printf)"
+	search = "(ZZZ|QWQ|RAR|cout|iostream|printf)"
 
