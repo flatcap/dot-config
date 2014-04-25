@@ -5,7 +5,8 @@ function work()
 	git add --all .
 	COUNT="$(git status --short | wc -l)"
 	[ "$COUNT" = 0 ] && return
-	git commit --message "auto-commit $COUNT files"
+	[ "$COUNT" != 1 ] && SUFFIX="s" || SUFFIX=""
+	git commit --message "auto-commit $COUNT file$SUFFIX"
 	REMOTE="$(git remote)"
 	[ -n "$REMOTE" ] && git push
 }
