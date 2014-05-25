@@ -1,5 +1,5 @@
 alias cgdb="cgdb --quiet"
-alias db="mysql --silent --table"
+alias db="mysql --silent --sigint-ignore --table"
 alias dbs="mysql --silent --skip-column-names"
 alias file="file -sL"
 alias gdb="gdb --quiet"
