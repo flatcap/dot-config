@@ -36,6 +36,7 @@ for i in "$@"; do
 			#(xine --no-splash --auto-play=fq "$i" &) &> /dev/null
 			#gmplayer "$i"
 			(vlc "$i" &) &> /dev/null
+			sleep 1
 			(cat "$i" > /dev/null) &> /dev/null
 			(cat "$i" > /dev/null) &> /dev/null
 			(cat "$i" > /dev/null) &> /dev/null
