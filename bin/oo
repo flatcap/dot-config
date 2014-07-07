@@ -35,7 +35,7 @@ for i in "$@"; do
 			#(totem --no-existing-session "$i" &) &> /dev/null
 			#(xine --no-splash --auto-play=fq "$i" &) &> /dev/null
 			#gmplayer "$i"
-			(vlc "$i" &) &> /dev/null
+			(vlc "$i" vlc://quit &) &> /dev/null
 			sleep 1
 			(cat "$i" > /dev/null) &> /dev/null
 			(cat "$i" > /dev/null) &> /dev/null
