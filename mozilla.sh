@@ -14,7 +14,7 @@ DATE=$(date "+%Y_%m_%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 HOME="/home/flatcap"
 TAR="$DATE.tar"
-BAK_DIR="/home/units/backup/mozilla"
+BAK_DIR="/mnt/space/backup/mozilla"
 MOZ_DIR="$HOME/.mozilla"
 TMP_DIR=""
 
