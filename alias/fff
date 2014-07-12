@@ -10,7 +10,9 @@ alias  ffa="find . -type f -name \*.awk             -print0 | xargs --no-run-if-
 alias  ffj="find . -type f -name \*.js ! -name jq\* -print0 | xargs --no-run-if-empty --null"
 alias  ffk="find . -type f -name \*.kml             -print0 | xargs --no-run-if-empty --null"
 alias  ffm="find . -type f -iname Makefile\*        -print0 | xargs --no-run-if-empty --null"
+alias  ffo="find . -type f -name \*.ogg             -print0 | xargs --no-run-if-empty --null"
 alias  ffp="find . -type f -name \*.php             -print0 | xargs --no-run-if-empty --null"
 alias  ffs="find . -type f -name \*.sed             -print0 | xargs --no-run-if-empty --null"
+alias  fft="find . -type f -name \*.txt             -print0 | xargs --no-run-if-empty --null"
 alias  ffv="find . -type f -name \*.vim             -print0 | xargs --no-run-if-empty --null"
 
