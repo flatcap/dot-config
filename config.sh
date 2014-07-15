@@ -14,7 +14,7 @@ umask 0077
 DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 HOME="/home/flatcap"
-BAK_DIR="/home/units/backup/config"
+BAK_DIR="/mnt/space/backup/config"
 TMP_DIR="$BAK_DIR/$DATE"
 TAR="$BAK_DIR/$DATE.tar.xz.gpg"
 
