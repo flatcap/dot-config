@@ -11,7 +11,7 @@ ionice --class 3     --pid $$ > /dev/null
 
 umask 0077
 
-DATE=$(date "+%Y_%m_%d")
+DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 HOME="/home/flatcap"
 BAK_DIR="/home/units/backup/config"

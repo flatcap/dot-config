@@ -12,7 +12,7 @@ umask 0077
 
 DIR="gfx"
 
-DATE=$(date "+%Y_%m_%d")
+DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 TAR="${DATE}_$DIR.tar.gpg"
 
