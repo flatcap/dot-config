@@ -61,6 +61,7 @@ rm --force --recursive $TMP_DIR/.mozilla/firefox/"Crash Reports"
 rm --force --recursive $TMP_DIR/.mozilla/firefox/default/startupCache
 rm --force --recursive $TMP_DIR/.mozilla/firefox/default/thumbnails
 rm --force --recursive $TMP_DIR/.mozilla/firefox/default/bookmarkbackups
+rm --force --recursive $TMP_DIR/.mozilla/firefox/default/adblockplus/patterns-*.ini
 rm --force             $TMP_DIR/XPC.mfasl
 find $TMP_DIR -name "extensions.cache" -exec rm {} \;
 find $TMP_DIR -name "*.sqlite-journal" -exec rm {} \;
