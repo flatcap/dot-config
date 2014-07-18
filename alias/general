@@ -19,5 +19,11 @@ alias rmdir="rmdir --ignore-fail-on-non-empty --parents"
 alias ssh="ssh -q"
 alias tar="_wrapsimple /bin/tar"
 alias tree="tree -C"
-alias vi="vim -X"
+if [ -n "$DISPLAY" ]; then
+	alias vi="gvim -v"
+	alias vim="gvim -v"
+else
+	alias vi="vim -X"
+	alias vim="vim -X"
+fi
 alias xz="_compress /usr/bin/xz"
