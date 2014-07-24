@@ -6,3 +6,4 @@ tags
 *~
 .mrconfig
 *.bak
+core.[0-9]*
