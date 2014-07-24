@@ -20,6 +20,6 @@ repeat()
 		declare -f title > /dev/null && title "$tstr - $@"
 		"$@" || : $((fail++))
 	done
-	[ $fail -gt 0 ] && echo "$tstr"
+	[ $fail -gt 0 ] && echo "$count/$fail/$count"
 }
 
