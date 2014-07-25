@@ -13,7 +13,7 @@
 	b    = branch --verbose --verbose
 	d    = diff
 	ds   = diff --stat
-	l    = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative -n 20
+	l    = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative -n 30
 	lca  = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
 	ll   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
 	ls   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative --stat
