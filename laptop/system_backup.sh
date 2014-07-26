@@ -41,6 +41,6 @@ done
 
 chown --recursive flatcap:flatcap .
 chmod --silent 400 *
-chmod --silent 500 .
-chattr +i -R .
+#chmod --silent 500 .
+#chattr +i -R .
 
