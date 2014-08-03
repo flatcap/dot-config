@@ -4,7 +4,7 @@ if [ "$UID" != 0 -a "$HOSTNAME" = "laptop.flatcap.org" ]; then
 
 	VM="virsh virt-clone virt-convert virt-df virt-dmesg virt-image virt-install virt-manager virt-mem virt-pack virt-ps virt-top virt-uname virt-viewer"
 
-	MISC="chvt pm-hibernate pm-suspend nethogs chattr arp-scan restorecon mdadm intel_backlight cryptsetup"
+	MISC="chvt pm-hibernate pm-suspend nethogs chattr arp-scan restorecon mdadm intel_backlight cryptsetup poweroff"
 
 	for i in $LVM $VM $MISC; do
 		alias $i="sudo $i"
