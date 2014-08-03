@@ -42,7 +42,7 @@ function cd ()
 
 function cddir ()
 {
-	[ -n "$1" ] && cd "$1"
+	[ -n "$1" ] && builtin cd "$1"
 	CDDIR=$(pwd -P)
 	export IGNOREEOF=999
 }
