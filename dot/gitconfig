@@ -69,6 +69,3 @@
 [gpg]
 	program = gpg2
 
-[rich]
-	search = "(ZZZ|QWQ|RAR|cout|iostream|printf)"
-
