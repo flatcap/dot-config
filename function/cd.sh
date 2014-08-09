@@ -1,40 +1,43 @@
 
 function git_branch()
 {
-	[ -n "$1" ] || return
+	local DIR="$1"
 
-	git branch 2> /dev/null | grep -Fqw "$1"
+	[ -n "$DIR"     ] || return
+	[ "$DIR" == "." ] && DIR="master"
+
+	git branch 2> /dev/null | grep -Fqw "$DIR"
 }
 
 function cd ()
 {
 	local LS=""
 	if [ -n "$1" ]; then						# Argument to cd
-		if [ -f "$1" ]; then
-			set -- "${1%/*}"				# cd dir/file
+		local LEN=${#1}
+		if [ $LEN -gt 2 ]; then
+			local HEAD=${1:0:-2}
+			local TAIL=${1:${#1}-2:2}
 		else
-			if [ -d "$1" ]; then 				# directory exists
-				set -- "$1"
-			else						# no dir, check for git branch
-				local GDIR="$1"
-				[ "$GDIR" = "." ] && GDIR="master"	# dir=. => master branch
+			local HEAD="$1"
+			local TAIL=""
+		fi
+		local GDIR="$1"
+		[ "$GDIR" = "." ] && GDIR="master"			# dir=. => master branch
 
-				if git_branch "$GDIR"; then		# git branch exists => checkout branch
-					local GDIR="$1"
-					git checkout -q "$GDIR"
-					export IGNOREEOF=999
-					return
-				fi
-				local DIR=${1%/*}
-				local END=${1##*/}
-				if [ "$1" = "." ]; then			# cd . => change to hard directory
-					set -- "$(pwd -P)"
-				fi
-				if [ -d "$DIR" -a "$END" = "ls" ]; then	# cd dirls => cd dir; ls
-					set -- "$DIR"
-					LS="yes"
-				fi
-			fi
+		if [ -f "$1" ]; then					# cd dir/file
+			set -- "${1%/*}"
+		elif [ -d "$1" -a \( "$1" != "." \) ]; then 		# directory exists (not .)
+			set -- "$1"
+		elif [ -d "$HEAD" -a "$TAIL" == "ls" ]; then	 	# dirls or dir/ls
+			set -- "$HEAD"
+			LS="yes"
+		elif git_branch "$GDIR"; then				# cd {git_branch}
+			git checkout -q "$GDIR"
+			return
+		elif [ "$1" = "." ]; then				# cd . => pwd -P
+			set -- "$(pwd -P)"
+		else							# default to cd
+			set -- "$1"
 		fi
 	else								# No argument to cd
 		[ -n "$CDDIR" ] && set -- "$CDDIR"
