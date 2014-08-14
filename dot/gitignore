@@ -9,3 +9,4 @@ tags
 core.[0-9]*
 .dep
 .obj
+.vimlocal
