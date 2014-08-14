@@ -6,7 +6,7 @@ _comp_makefile()
 	cur=${COMP_WORDS[COMP_CWORD]}
 
 	if [ -f $file ]; then
-		LIST="$(grep -io "^[a-z_]\+:" $file | cut -d: -f1)"
+		LIST="$(grep -io "^[a-z_ ]\+:" $file | cut -d: -f1)"
 		COMPREPLY=( $(compgen -W "$LIST" $cur) )
 	else
 		COMPREPLY="()"
