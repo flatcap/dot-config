@@ -25,7 +25,7 @@ function read_col()
 		grey)      add_col "1;30" ;;
 		black)     add_col "0;30" ;;
 		underline) add_col "4"    ;;
-		inverse)   add_col "7"    ;;
+		reverse)   add_col "7"    ;;
 		*)         ;;
 	esac
 }
@@ -42,5 +42,5 @@ else
 	read_col $NAME
 fi
 
-GREP_COLORS="ms=$COL" exec grep --color=yes -e "$1" -e "$"
+GREP_COLORS="ms=$COL" exec grep --line-buffered --color=yes -e "$1" -e "$"
 
