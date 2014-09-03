@@ -54,7 +54,5 @@ find "$DATE" -type f -print0							\
 	| xz --best									\
 	| gpg2 --encrypt --recipient "$RCPT" --output "$TAR"
 
-chmod 400 $TAR
-
 rm --force --recursive $TMP_DIR
 

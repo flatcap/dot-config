@@ -52,9 +52,6 @@ find $TMP_DIR -name "cookies.sqlite" -exec sqlite3 {} "delete from moz_cookies" 
 # vacuum sqlite dbs
 find $TMP_DIR -name "*.sqlite" -exec sqlite3 {} "vacuum" \;
 
-# empty cache
-find $TMP_DIR -depth -name "Cache" -exec rm -fr {} \;
-
 # other random junk
 rm --force --recursive $TMP_DIR/.mozilla/extensions
 rm --force --recursive $TMP_DIR/.mozilla/firefox/"Crash Reports"
@@ -65,16 +62,15 @@ rm --force --recursive $TMP_DIR/.mozilla/firefox/default/adblockplus/patterns-*.
 rm --force             $TMP_DIR/XPC.mfasl
 find $TMP_DIR -name "extensions.cache" -exec rm {} \;
 find $TMP_DIR -name "*.sqlite-journal" -exec rm {} \;
-find $TMP_DIR -name "*.log" -exec rm {} \;
-find $TMP_DIR -name "*.bak" -exec rm {} \;
+find $TMP_DIR -name "*.log"            -exec rm {} \;
+find $TMP_DIR -name "*.bak*"           -exec rm {} \;
 
 # tar it up
 pushd $TMP_DIR > /dev/null
 tar --create --file $TAR .mozilla
 xz --best $TAR
-chmod 400 $TAR.xz
 gpg2 --encrypt --recipient "$RCPT" --output $BAK_DIR/$TAR.xz.gpg $TAR.xz
 popd > /dev/null
 
-chmod 400 $BAK_DIR/$TAR.xz.gpg
+rm --force --recursive $TMP_DIR
 
