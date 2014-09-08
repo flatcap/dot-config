@@ -15,7 +15,7 @@ RCPT="Rich Russon (backup) <rich@flatcap.org>"
 HOME="/home/flatcap"
 TMP_DIR="$HOME/dot.$$"
 BAK_DIR="/mnt/space/backup/dot"
-DONTDOT="$BAK_DIR/dontdot.txt"
+DONTDOT="/mnt/space/backup/bin/flatcap/dontdot.txt"
 TAR="$BAK_DIR/$DATE.tar.xz"
 
 if [ ! -d $HOME ]; then
@@ -28,18 +28,19 @@ if [ ! -f $DONTDOT ]; then
 	exit 1
 fi
 
-if [ ! -d $BAK_DIR ]; then
+mkdir --parents "$BAK_DIR"
+if [ ! -d "$BAK_DIR" ]; then
 	echo "No backup dir"
 	exit 1
 fi
 
-if [ -f $TAR ]; then
+if [ -f "$TAR" ]; then
 	echo "Backup already exists"
 	exit 1
 fi
 
-mkdir --parents $TMP_DIR
-if [ ! -d $TMP_DIR ]; then
+mkdir --parents "$TMP_DIR"
+if [ ! -d "$TMP_DIR" ]; then
 	echo "Can't create tmp dir"
 	exit 1
 fi

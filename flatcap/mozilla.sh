@@ -25,12 +25,13 @@ function die()
 
 trap die EXIT
 
-if [ ! -d $BAK_DIR ]; then
+mkdir --parents "$BAK_DIR"
+if [ ! -d "$BAK_DIR" ]; then
 	echo "No backup dir"
 	exit 1
 fi
 
-if [ -f $TAR -o -f $TAR.xz -o -f $TAR.xz.gpg ]; then
+if [ -f "$TAR" -o -f $TAR.xz -o -f $TAR.xz.gpg ]; then
 	echo "Backup already exists"
 	exit 1
 fi

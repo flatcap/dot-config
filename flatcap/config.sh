@@ -23,19 +23,14 @@ if [ ! -d $HOME ]; then
 	exit 1
 fi
 
-if [ ! -d $BAK_DIR ]; then
-	echo "No backup dir"
-	exit 1
-fi
-
-if [ -f $TAR ]; then
-	echo "Backup already exists"
-	exit 1
-fi
-
 mkdir --parents $TMP_DIR
 if [ ! -d $TMP_DIR ]; then
 	echo "Can't create tmp dir"
+	exit 1
+fi
+
+if [ -f "$TAR" ]; then
+	echo "Backup already exists"
 	exit 1
 fi
 
