@@ -22,11 +22,11 @@
 	since= log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
 	st   = status
 	tidy = !git prune && git gc --aggressive && git fsck --full --strict
+	when = log --diff-filter=A
 
 	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
 	hide   = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
-
 [color]
 	branch = auto
 	diff   = auto
