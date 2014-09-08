@@ -106,6 +106,7 @@ function git_tidy()
 		git prune
 		git gc #--aggressive
 		git fsck --full --strict
+		rm -f .git/hooks/*.sample
 		popd > /dev/null
 	done
 }
