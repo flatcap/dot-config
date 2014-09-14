@@ -11,9 +11,17 @@ Y=$(sed 's/.*y:\([0-9]\+\).*/\1/' <<< "$COORDS")
 #	xdotool mousemove 1300 50
 #fi
 
+# Dual monitors
 if [ $X -lt 1920 ]; then
 	xdotool mousemove 2054 50
 else
 	xdotool mousemove 1854 1050
 fi
+
+# # Laptop, split windows
+# if [ $X -lt 683 ]; then
+# 	xdotool mousemove 700 750
+# else
+# 	xdotool mousemove 660 750
+# fi
 
