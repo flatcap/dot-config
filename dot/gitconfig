@@ -10,23 +10,29 @@
 	default = matching
 
 [alias]
-	b    = branch --verbose --verbose
-	d    = diff
-	ds   = diff --stat
-	l    = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative -n 30
-	lca  = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
-	ll   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
-	ls   = log --branches --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative --stat
-	s    = !git stash list && git status --short
-	sb   = !git branch --verbose --verbose & git stash list && git status --short
-	since= log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
-	st   = status
-	tidy = !git prune && git gc --aggressive && git fsck --full --strict
-	when = log --diff-filter=A
+	b     = branch --verbose --verbose
+	d     = diff
+	ds    = diff --stat
+	l     = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' -n 30
+	ll    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset'
+	ln    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(black)<%an>%Creset' -n 30
+	ls    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' --stat
+	lca   = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
+	s     = !git stash list && git status --short
+	sb    = !git branch --verbose --verbose & git stash list && git status --short
+	since = log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
+	st    = status
+	tidy  = !git prune && git gc --aggressive && git fsck --full --strict
+	when  = log --diff-filter=A
 
 	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
 	hide   = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
+
+	fixup  = !sh -c 'git commit --fixup  $(git log -n 1 --format='%h' --grep '^$@')'
+	sq     = !sh -c 'git commit --squash $(git log -n 1 --format='%h' --grep '^$@')'
+	ri     = rebase --interactive --autosquash
+
 [color]
 	branch = auto
 	diff   = auto
