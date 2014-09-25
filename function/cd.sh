@@ -48,7 +48,7 @@ function cd ()
 		elif [ -d "$HEAD" -a "$TAIL" == "ls" ]; then	 	# dirls or dir/ls
 			set -- "$HEAD"
 			LS="yes"
-		elif git_branch "$GDIR"; then				# cd {git_branch}
+		elif is_git_branch "$GDIR"; then			# cd {git_branch}
 			local project="$(get_project)"
 			if [ -d "../$project-$GDIR" ]; then
 				set -- "../$project-$GDIR"

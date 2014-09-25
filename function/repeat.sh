@@ -19,7 +19,8 @@ repeat()
 		fi
 		declare -f title > /dev/null && title "$tstr - $@"
 		"$@" || : $((fail++))
+		[ $fail -gt 0 ] && break;
 	done
-	[ $fail -gt 0 ] && echo "$count/$fail/$count"
+	[ $fail -gt 0 ] && echo "$i/$fail/$count"
 }
 
