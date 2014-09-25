@@ -138,7 +138,12 @@ function _prompt_dir()
 					ABBR=${CDDIR##*/}
 					dir="${dir/$CDDIR/$ABBR}"	# try two substitutions
 				fi
-				dir="${dir/#$HOME/~}" ;;
+				dir="${dir/#$HOME/~}"
+				local git_status="$(git status -unormal 2>&1)"
+				if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
+					branch="${BASH_REMATCH[1]}"
+					dir="${dir%-$branch}"
+				fi ;;
 		"abbr"|*)	dir="${dir/#$HOME/~}" ;;
 	esac
 

@@ -1,5 +1,5 @@
 
-function git_branch()
+function is_git_branch()
 {
 	local DIR="$1"
 
@@ -7,6 +7,23 @@ function git_branch()
 	[ "$DIR" == "." ] && DIR="master"
 
 	git branch 2> /dev/null | grep -Fqw "$DIR"
+}
+
+function get_git_branch()
+{
+	local git_status="$(git status -unormal 2>&1)"
+	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
+		echo "${BASH_REMATCH[1]}"
+	fi
+}
+
+function get_project()
+{
+	local branch="$(get_git_branch)"
+	local project="$(pwd -P)"
+	project="${project##*/}"
+	project="${project%-$branch}"
+	echo "$project"
 }
 
 function cd ()
@@ -32,8 +49,13 @@ function cd ()
 			set -- "$HEAD"
 			LS="yes"
 		elif git_branch "$GDIR"; then				# cd {git_branch}
-			git checkout -q "$GDIR"
-			return
+			local project="$(get_project)"
+			if [ -d "../$project-$GDIR" ]; then
+				set -- "../$project-$GDIR"
+			else
+				git checkout -q "$GDIR"
+				return
+			fi
 		elif [ "$1" = "." ]; then				# cd . => pwd -P
 			set -- "$(pwd -P)"
 		else							# default to cd
@@ -50,7 +72,7 @@ function cd ()
 
 function cddir ()
 {
-	[ -n "$1" ] && builtin cd "$1"
+	[ -n "$1" ] && builtin cd "$1" >& /dev/null
 	CDDIR=$(pwd -P)
 	export IGNOREEOF=999
 }
