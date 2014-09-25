@@ -52,6 +52,8 @@ function cd ()
 			local project="$(get_project)"
 			if [ -d "../$project-$GDIR" ]; then
 				set -- "../$project-$GDIR"
+			elif [ "$GDIR" = "master" -a -d "../$project" ]; then
+				set -- "../$project"
 			else
 				git checkout -q "$GDIR"
 				return
