@@ -107,6 +107,10 @@ function git_tidy()
 		git gc #--aggressive
 		git fsck --full --strict
 		rm -f .git/hooks/*.sample
+		rm -f .git/GIT_COLA_MSG
+		rm -f .git/gitk.cache
+		rm -f .git/COMMIT_EDITMSG
+		rm -f .git/qgit_cache.dat
 		popd > /dev/null
 	done
 }
