@@ -1,0 +1,17 @@
+#!/bin/bash
+
+[ -n "$1"      ] || exit 1
+[ -d "$1/.git" ] || exit 1
+
+DIR="${1%/}"
+
+pushd "$DIR" >& /dev/null
+
+BRANCHES="$(git branch | sed 's/[ \*]//g' | grep -v master)"
+
+[ -n "$BRANCHES" ] || exit 1
+
+for b in $BRANCHES; do
+	[ -d "$DIR-$b" ] || git-new-workdir . "../$DIR-$b" $b
+done
+
