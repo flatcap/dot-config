@@ -2,6 +2,7 @@ alias cgdb="cgdb --quiet"
 alias db="mysql --silent --sigint-ignore --table"
 alias dbs="mysql --silent --skip-column-names"
 alias file="file -sL"
+alias g=git
 alias g++="g++ -std=c++11 -Wall -Wextra -Wpedantic -ggdb -pthread -rdynamic"
 alias gcc="gcc            -Wall -Wextra -Wpedantic -ggdb -pthread -rdynamic"
 alias gdb="gdb --quiet"

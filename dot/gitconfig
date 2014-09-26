@@ -13,6 +13,7 @@
 	b     = branch --verbose --verbose
 	d     = diff
 	ds    = diff --stat
+	j     = jump diff
 	l     = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' -n 30
 	ll    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset'
 	ln    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(black)<%an>%Creset' -n 30
