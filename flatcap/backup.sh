@@ -8,8 +8,8 @@ rsync					\
 	--prune-empty-dirs		\
 	--remove-source-files		\
 	--exclude "bin"			\
-	--exclude "ssh"			\
-	--exclude "gnupg"		\
+	--exclude "*_ssh.tar.xz"	\
+	--exclude "*_gnupg.tar.xz"	\
 	"$FROM" "$TO"
 
 find "$FROM" -type d -empty -delete
