@@ -11,6 +11,7 @@
 
 [alias]
 	b     = branch --verbose --verbose
+	cam   = commit --all --message
 	d     = diff
 	ds    = diff --stat
 	j     = jump diff
