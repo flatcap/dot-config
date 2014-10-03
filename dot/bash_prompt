@@ -28,6 +28,36 @@
 
 source ~/bin/function/title.sh
 
+function get_git_top_level()
+{
+	local d=$(pwd)
+	while [ -n "$d" ]; do
+		if [ -d "$d"/.git ]; then
+			echo "$d"
+			break
+		fi
+		d=${d%/*}
+	done
+}
+
+function get_git_branch()
+{
+	local git_status="$(git status -unormal 2>&1)"
+	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
+		echo "${BASH_REMATCH[1]}"
+	fi
+}
+
+function get_project()
+{
+	local project="$(get_git_top_level)"
+	local branch="$(get_git_branch)"
+	project="${project##*/}"
+	project="${project%-$branch}"
+	echo "$project"
+}
+
+
 function _prompt_user()
 {
 	local cfg_user="${PROMPT_CFG_USER:-no}"
@@ -139,11 +169,9 @@ function _prompt_dir()
 					dir="${dir/$CDDIR/$ABBR}"	# try two substitutions
 				fi
 				dir="${dir/#$HOME/~}"
-				local git_status="$(git status -unormal 2>&1)"
-				if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
-					branch="${BASH_REMATCH[1]}"
-					dir="${dir%-$branch}"
-				fi ;;
+				local project="$(get_project)"
+				local branch="$(get_git_branch)"
+				dir="${dir/$project-$branch/$project}" ;;
 		"abbr"|*)	dir="${dir/#$HOME/~}" ;;
 	esac
 

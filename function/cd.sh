@@ -1,4 +1,16 @@
 
+function get_git_top_level()
+{
+	local d=$(pwd)
+	while [ -n "$d" ]; do
+		if [ -d "$d"/.git ]; then
+			echo "$d"
+			break
+		fi
+		d=${d%/*}
+	done
+}
+
 function is_git_branch()
 {
 	local DIR="$1"
@@ -19,8 +31,8 @@ function get_git_branch()
 
 function get_project()
 {
+	local project="$(get_git_top_level)"
 	local branch="$(get_git_branch)"
-	local project="$(pwd -P)"
 	project="${project##*/}"
 	project="${project%-$branch}"
 	echo "$project"
