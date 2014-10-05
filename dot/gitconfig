@@ -10,6 +10,7 @@
 	default = matching
 
 [alias]
+	a     = add
 	b     = branch --verbose --verbose
 	cam   = commit --all --message
 	d     = diff
