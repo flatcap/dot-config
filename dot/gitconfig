@@ -13,6 +13,7 @@
 	a     = add
 	b     = branch --verbose --verbose
 	cam   = commit --all --message
+	cm    = commit --message
 	d     = diff
 	ds    = diff --stat
 	j     = jump diff
@@ -36,6 +37,9 @@
 	fixup  = !sh -c 'git commit --fixup  $(git log -n 1 --format='%h' --grep '^$@')'
 	sq     = !sh -c 'git commit --squash $(git log -n 1 --format='%h' --grep '^$@')'
 	ri     = rebase --interactive --autosquash
+
+	save   = stash save
+	pop    = stash pop
 
 [color]
 	branch = auto
