@@ -90,3 +90,12 @@ function cddir ()
 	CDDIR=$(pwd -P)
 	export IGNOREEOF=999
 }
+
+function . ()
+{
+	if [ -n "$1" ]; then
+		source "$@"
+	else
+		cd .
+	fi
+}
