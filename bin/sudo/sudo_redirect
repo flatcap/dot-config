@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SUDO=""
+PATH="/usr/bin:/usr/sbin"
+
+if [ "$UID" != 0 -a "$HOSTNAME" = "laptop.flatcap.org" ]; then
+	SUDO="/usr/bin/sudo"
+fi
+
+COMMAND=$(which ${0##*/} >& /dev/null)
+if [ -z "$COMMAND" ]; then
+	echo "Command not found: $0"
+	exit 1
+fi
+
+"$SUDO" "$COMMAND" "$@"
+
