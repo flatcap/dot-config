@@ -7,7 +7,7 @@ alias g=git
 alias gcc="gcc            -Wall -Wextra -Wpedantic -ggdb -pthread -rdynamic"
 alias gdb="gdb --quiet"
 alias m="make"
-alias OFF="sudo systemctl poweroff --force --force"
+alias OFF="sync; sudo systemctl poweroff --force --force"
 alias t="cd ~/torrent; clear; ls -gG"
 alias vo="vi -O"
 
