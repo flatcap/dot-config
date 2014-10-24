@@ -25,3 +25,10 @@ else
 	xdotool mousemove 660 750
 fi
 
+# Monitor, split windows
+# if [ $X -lt 960 ]; then
+# 	xdotool mousemove 977 1064
+# else
+# 	xdotool mousemove 943 1064
+# fi
+
