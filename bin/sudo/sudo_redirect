@@ -13,5 +13,9 @@ if [ -z "$COMMAND" ]; then
 	exit 1
 fi
 
-"$SUDO" "$COMMAND" "$@"
+if [ -n "$SUDO" ]; then
+	"$SUDO" "$COMMAND" "$@"
+else
+	"$COMMAND" "$@"
+fi
 
