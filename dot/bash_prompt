@@ -162,6 +162,7 @@ function _prompt_dir()
 		dir="$PWD [deleted]"
 	fi
 
+	tilde='~'
 	case "$cfg_dir_type" in
 		"full")		dir="${dir}"          ;;
 		"mini")		dir="${dir##*/}"      ;;
@@ -169,11 +170,11 @@ function _prompt_dir()
 					ABBR=${CDDIR##*/}
 					dir="${dir/$CDDIR/$ABBR}"	# try two substitutions
 				fi
-				dir="${dir/#$HOME/\~}"
+				dir="${dir/#$HOME/$tilde}"
 				local project="$(get_project)"
 				local branch="$(get_git_branch)"
 				dir="${dir/$project-$branch/$project}" ;;
-		"abbr"|*)	dir="${dir/$HOME/\~}" ;;
+		"abbr"|*)	dir="${dir/$HOME/$tilde}" ;;
 	esac
 
 	echo -n "$dir"
@@ -205,7 +206,12 @@ function _prompt_command()
 	if [[ $hostname =~ ^laptop.flatcap.org$ ]]; then
 		hostname=""
 	else
-		hostname="{${hostname%%.*}} "
+		if grep -q hypervisor /proc/cpuinfo; then
+			IP=$(ip addr | grep -o "192.168.122.[0-9]\+" | head -1 | cut -d. -f4)
+			hostname="{${hostname%%.*}:$IP} "
+		else
+			hostname="{${hostname%%.*}} "
+		fi
 	fi
 	if [ "$cfg_title" = "yes" ]; then
 		title "$hostname$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
