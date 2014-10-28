@@ -1,2 +1,3 @@
 #!/bin/bash
-curl -s http://russon.org/ip.php
+curl -s https://www.flatcap.org/ip.php
+echo
