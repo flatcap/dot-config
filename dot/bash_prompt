@@ -57,6 +57,24 @@ function get_project()
 	echo "$project"
 }
 
+function ssh_ip()
+{
+	[ -n "$SSH_CONNECTION" ] || return
+
+	local PARTS=($SSH_CONNECTION)
+
+	echo ${PARTS[2]}
+}
+
+function virtual()
+{
+	[ -n "$SSH_CONNECTION" ] || return
+
+	local IP=$(ssh_ip)
+
+	[[ $IP =~ 192.168.122.* ]]
+}
+
 
 function _prompt_user()
 {
@@ -76,7 +94,7 @@ function _prompt_user()
 	prompt="[$prompt]"
 
 	if [ "$cfg_colour" = "yes" ]; then
-		grep -q hypervisor /proc/cpuinfo && HOSTNAME=dummy.vm.flatcap.org
+		virtual && HOSTNAME=dummy.vm.flatcap.org
 		case "$HOSTNAME" in
 			laptop.flatcap.org)	prompt_colour="32" ;;	# green
 			desktop.flatcap.org)	prompt_colour="36" ;;	# cyan
@@ -206,9 +224,11 @@ function _prompt_command()
 	if [[ $hostname =~ ^laptop.flatcap.org$ ]]; then
 		hostname=""
 	else
-		if grep -q hypervisor /proc/cpuinfo; then
-			IP=$(ip addr | grep -o "192.168.122.[0-9]\+" | head -1 | cut -d. -f4)
-			hostname="{${hostname%%.*}:$IP} "
+		if virtual; then
+			IP=$(ssh_ip)
+			IP=${IP##*.}
+			[ -n "$IP" ] && IP=":$IP"
+			hostname="{${hostname%%.*}$IP} "
 		else
 			hostname="{${hostname%%.*}} "
 		fi
