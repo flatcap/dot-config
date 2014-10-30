@@ -76,6 +76,9 @@ for i in "$@"; do
 		*.dia)
 			(dia "$i" &) &> /dev/null
 			;;
+		*.pcap|*.pcapng)
+			(wireshark "$i" &) >& /dev/null
+			;;
 		*)
 			echo "Unknown: $i"
 			;;
