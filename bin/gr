@@ -106,11 +106,11 @@ function git_tidy()
 		git prune
 		git gc #--aggressive
 		git fsck --full --strict
-		rm -f .git/hooks/*.sample
-		rm -f .git/GIT_COLA_MSG
-		rm -f .git/gitk.cache
-		rm -f .git/COMMIT_EDITMSG
-		rm -f .git/qgit_cache.dat
+		if [ -d .git ]; then
+			rm -f .git/hooks/*.sample .git/GIT_COLA_MSG .git/gitk.cache .git/COMMIT_EDITMSG .git/qgit_cache.dat
+		else
+			rm -f hooks/*.sample GIT_COLA_MSG gitk.cache COMMIT_EDITMSG qgit_cache.dat
+		fi
 		popd > /dev/null
 	done
 }
