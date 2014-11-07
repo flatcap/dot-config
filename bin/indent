@@ -1,0 +1,41 @@
+#!/bin/bash
+
+INDENT=8
+REGEX=
+
+function usage()
+{
+	echo "Usage: ${0##*/} [INDENT] [REGEX]"
+}
+
+
+case $# in
+	0)
+		;;
+	1)	INDENT="$1"
+		;;
+	2)	INDENT="$1"
+		REGEX="$2"
+		;;
+	*)
+		usage
+		exit 1
+		;;
+esac
+
+if [[ ! "$INDENT" =~ ^[0-9]+$ ]]; then
+	usage
+	echo "Indent must be an integer"
+	exit 1
+fi
+
+STR=$(printf "%*s" $INDENT)
+
+if [ -n "$REGEX" ]; then
+	SED="/$REGEX/s/^/$STR/"
+else
+	SED="s/^/$STR/"
+fi
+
+exec sed "$SED"
+
