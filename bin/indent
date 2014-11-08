@@ -1,41 +1,70 @@
 #!/bin/bash
 
-INDENT=8
-REGEX=
-
 function usage()
 {
-	echo "Usage: ${0##*/} [INDENT] [REGEX]"
+	echo indent [ -i NUM ] [ -r REGEX ] [ FILE... ]
 }
 
 
-case $# in
-	0)
-		;;
-	1)	INDENT="$1"
-		;;
-	2)	INDENT="$1"
-		REGEX="$2"
-		;;
-	*)
-		usage
-		exit 1
-		;;
-esac
+FILES=()
+INDENT=8
+REGEX=
 
-if [[ ! "$INDENT" =~ ^[0-9]+$ ]]; then
-	usage
-	echo "Indent must be an integer"
-	exit 1
-fi
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-i)
+			if [ $# -lt 2 ]; then
+				echo INDENT needs an argument
+				usage
+				exit 1
+			fi
+
+			if [[ ! "$2" =~ ^[0-9]+$ ]]; then
+				echo "INDENT must be an integer"
+				usage
+				exit 1
+			fi
+
+			INDENT="$2"
+			shift 2
+			;;
+		-r)
+			if [ $# -lt 2 ]; then
+				echo REGEX needs an argument
+				usage
+				exit 1
+			fi
+
+			REGEX="$2"
+			shift 2
+			;;
+		*)
+			FILES+=("$1")
+			shift
+			;;
+	esac
+done
+
+echo "INDENT = $INDENT"
 
 STR=$(printf "%*s" $INDENT)
-
 if [ -n "$REGEX" ]; then
+	echo "REGEX = $REGEX"
 	SED="/$REGEX/s/^/$STR/"
 else
+	echo "NO REGEX"
 	SED="s/^/$STR/"
 fi
+echo "SED = $SED"
 
-exec sed "$SED"
+if [ -n "$FILES" ]; then
+	echo -n "FILES = "
+	for i in "${FILES[@]}"; do
+		echo -n "'$i' "
+	done
+	echo
+	cat "${FILES[@]}" | sed "$SED"
+else
+	exec sed "$SED"
+fi
 
