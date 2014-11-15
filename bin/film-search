@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for i in *; do
+	[ "$i" = "${0##*/}" ] && continue
+	i=${i%.???}
+	i=${i//./+}
+	firefox http://www.imdb.com/find?q=$i
+done
+
