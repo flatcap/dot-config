@@ -45,24 +45,24 @@ while [ $# -gt 0 ]; do
 	esac
 done
 
-echo "INDENT = $INDENT"
+# echo "INDENT = $INDENT"
 
 STR=$(printf "%*s" $INDENT)
 if [ -n "$REGEX" ]; then
-	echo "REGEX = $REGEX"
+	# echo "REGEX = $REGEX"
 	SED="/$REGEX/s/^/$STR/"
 else
-	echo "NO REGEX"
+	# echo "NO REGEX"
 	SED="s/^/$STR/"
 fi
-echo "SED = $SED"
+# echo "SED = $SED"
 
 if [ -n "$FILES" ]; then
-	echo -n "FILES = "
-	for i in "${FILES[@]}"; do
-		echo -n "'$i' "
-	done
-	echo
+	# echo -n "FILES = "
+	# for i in "${FILES[@]}"; do
+	# 	echo -n "'$i' "
+	# done
+	# echo
 	cat "${FILES[@]}" | sed "$SED"
 else
 	exec sed "$SED"
