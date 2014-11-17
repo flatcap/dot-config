@@ -1,7 +1,25 @@
-_ssh_complete ()
+_comp_ssh()
 {
-	local cur
-	_get_comp_words_by_ref cur
-	COMPREPLY=( $( compgen -W "$(echo $(sed 's/[, ].*//' < ~/.ssh/known_hosts | sort -u))" -- "$cur" ) )
+	local cur=${COMP_WORDS[COMP_CWORD]}
+
+	local LIST
+	local FILE
+
+	FILE=/var/lib/libvirt/dnsmasq/hosts
+	[ -f $FILE ] && LIST="$LIST $(sed 's/.* //' $FILE)"
+
+	FILE=~/.ssh/known_hosts
+	[ -f $FILE ] && LIST="$LIST $(sed 's/[, ].*//' $FILE)"
+
+	if [[ "$cur" =~ @ ]]; then
+		local REPLACE="${cur%@*}@"		# Just keep the 'user@' bit
+		local ARRAY=($LIST)
+		ARRAY=(${ARRAY[@]/#/$REPLACE})
+		local LIST="${ARRAY[@]}"
+	fi
+
+	COMPREPLY=( $(compgen -W "$LIST" $cur) )
 }
-complete -F _ssh_complete ssh
+
+complete -F _comp_ssh ssh
+
