@@ -2,7 +2,7 @@
 
 function usage()
 {
-	echo indent [ -i NUM ] [ -r REGEX ] [ FILE... ]
+	echo indent [-h] [ -i NUM ] [ -r REGEX ] [ FILE... ]
 }
 
 
@@ -14,13 +14,13 @@ while [ $# -gt 0 ]; do
 	case "$1" in
 		-i)
 			if [ $# -lt 2 ]; then
-				echo INDENT needs an argument
+				echo "INDENT needs an argument"
 				usage
 				exit 1
 			fi
 
 			if [[ ! "$2" =~ ^[0-9]+$ ]]; then
-				echo "INDENT must be an integer"
+				echo "INDENT '$2' must be an integer"
 				usage
 				exit 1
 			fi
@@ -30,13 +30,22 @@ while [ $# -gt 0 ]; do
 			;;
 		-r)
 			if [ $# -lt 2 ]; then
-				echo REGEX needs an argument
+				echo "REGEX needs an argument"
 				usage
 				exit 1
 			fi
 
 			REGEX="$2"
 			shift 2
+			;;
+		-h)
+			usage
+			exit 1
+			;;
+		-*)
+			echo "Unknown option: '$1'"
+			usage
+			exit 1
 			;;
 		*)
 			FILES+=("$1")
@@ -45,24 +54,14 @@ while [ $# -gt 0 ]; do
 	esac
 done
 
-# echo "INDENT = $INDENT"
-
 STR=$(printf "%*s" $INDENT)
 if [ -n "$REGEX" ]; then
-	# echo "REGEX = $REGEX"
 	SED="/$REGEX/s/^/$STR/"
 else
-	# echo "NO REGEX"
 	SED="s/^/$STR/"
 fi
-# echo "SED = $SED"
 
 if [ -n "$FILES" ]; then
-	# echo -n "FILES = "
-	# for i in "${FILES[@]}"; do
-	# 	echo -n "'$i' "
-	# done
-	# echo
 	cat "${FILES[@]}" | sed "$SED"
 else
 	exec sed "$SED"
