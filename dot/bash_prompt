@@ -98,7 +98,7 @@ function _prompt_user()
 		case "$HOSTNAME" in
 			laptop.flatcap.org)	prompt_colour="32" ;;	# green
 			desktop.flatcap.org)	prompt_colour="36" ;;	# cyan
-			www.russon.org)		prompt_colour="31" ;;	# red
+			flatcap.org)		prompt_colour="31" ;;	# red
 			*.vm.flatcap.org)	prompt_colour="33" ;;	# yellow
 			*)			prompt_colour="35" ;;	# magenta
 		esac
