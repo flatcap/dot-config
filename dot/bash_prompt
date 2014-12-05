@@ -229,19 +229,20 @@ function __prompt_command()
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
-	local v=$(__virtual_machine)
-	if [[ $v = 0 && $hostname =~ ^laptop.flatcap.org$ ]]; then
-		hostname=""
+
+	if __virtual_machine; then
+		IP=$(__ssh_ip)
+		IP=${IP##*.}
+		[ -n "$IP" ] && IP=":$IP"
+		hostname="{${hostname%%.*}$IP} "
 	else
-		if $v; then
-			IP=$(__ssh_ip)
-			IP=${IP##*.}
-			[ -n "$IP" ] && IP=":$IP"
-			hostname="{${hostname%%.*}$IP} "
+		if [[ $hostname =~ ^laptop.flatcap.org$ ]]; then
+			hostname=""
 		else
 			hostname="{${hostname%%.*}} "
 		fi
 	fi
+
 	if [ "$cfg_title" = "yes" ]; then
 		title "$hostname$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
 	fi
