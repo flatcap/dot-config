@@ -76,7 +76,8 @@ function __virtual_machine()
 {
 	if [ -n "$SSH_CONNECTION" ]; then
 		local IP=$(__ssh_ip)
-		return [[ $IP =~ 10.0.0.*|192.168.122.* ]]
+		[[ $IP =~ 10.0.0.*|192.168.122.* ]]
+		return
 	fi
 	grep -q "^flags.* acpi .*" /proc/cpuinfo
 	return $((1-$?))
