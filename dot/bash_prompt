@@ -28,7 +28,7 @@
 
 source ~/bin/function/title.sh
 
-function get_git_top_level()
+function __get_git_top_level()
 {
 	local d=$(pwd)
 	while [ -n "$d" ]; do
@@ -40,7 +40,7 @@ function get_git_top_level()
 	done
 }
 
-function get_git_branch()
+function __get_git_branch()
 {
 	local git_status="$(git status -unormal 2>&1)"
 	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
@@ -48,16 +48,16 @@ function get_git_branch()
 	fi
 }
 
-function get_project()
+function __get_project()
 {
-	local project="$(get_git_top_level)"
-	local branch="$(get_git_branch)"
+	local project="$(__get_git_top_level)"
+	local branch="$(__get_git_branch)"
 	project="${project##*/}"
 	project="${project%-$branch}"
 	echo "$project"
 }
 
-function ssh_ip()
+function __ssh_ip()
 {
 	[ -n "$SSH_CONNECTION" ] || return
 
@@ -66,17 +66,24 @@ function ssh_ip()
 	echo ${PARTS[2]}
 }
 
-function virtual()
+
+function __local_machine()
 {
-	[ -n "$SSH_CONNECTION" ] || return
+	[ -z "$SSH_CONNECTION" ]
+}
 
-	local IP=$(ssh_ip)
-
-	[[ $IP =~ 192.168.122.* ]]
+function __virtual_machine()
+{
+	if [ -n "$SSH_CONNECTION" ]; then
+		local IP=$(__ssh_ip)
+		return [[ $IP =~ 10.0.0.*|192.168.122.* ]]
+	fi
+	grep -q "^flags.* acpi .*" /proc/cpuinfo
+	return $((1-$?))
 }
 
 
-function _prompt_user()
+function __prompt_user()
 {
 	local cfg_user="${PROMPT_CFG_USER:-no}"
 	local cfg_colour="${PROMPT_CFG_COLOUR:-no}"
@@ -94,7 +101,7 @@ function _prompt_user()
 	prompt="[$prompt]"
 
 	if [ "$cfg_colour" = "yes" ]; then
-		virtual && HOSTNAME=dummy.vm.flatcap.org
+		__virtual_machine && HOSTNAME=dummy.vm.flatcap.org
 		case "$HOSTNAME" in
 			laptop.flatcap.org)	prompt_colour="32" ;;	# green
 			desktop.flatcap.org)	prompt_colour="36" ;;	# cyan
@@ -110,7 +117,7 @@ function _prompt_user()
 	echo -n "$prompt"
 }
 
-function _prompt_git()
+function __prompt_git()
 {
 	local cfg_git="${PROMPT_CFG_GIT:-no}"
 	local cfg_colour="${PROMPT_CFG_COLOUR:-no}"
@@ -166,7 +173,7 @@ function _prompt_git()
 	echo -n "$branch"
 }
 
-function _prompt_dir()
+function __prompt_dir()
 {
 	local cfg_dir="${PROMPT_CFG_DIR:-yes}"
 	local cfg_dir_type="${PROMPT_CFG_DIR_TYPE:-abbr}"
@@ -189,8 +196,8 @@ function _prompt_dir()
 					dir="${dir/$CDDIR/$ABBR}"	# try two substitutions
 				fi
 				dir="${dir/#$HOME/$tilde}"
-				local project="$(get_project)"
-				local branch="$(get_git_branch)"
+				local project="$(__get_project)"
+				local branch="$(__get_git_branch)"
 				dir="${dir/$project-$branch/$project}" ;;
 		"abbr"|*)	dir="${dir/$HOME/$tilde}" ;;
 	esac
@@ -198,7 +205,7 @@ function _prompt_dir()
 	echo -n "$dir"
 }
 
-function _prompt_ident()
+function __prompt_ident()
 {
 	local cfg_ident="${PROMPT_CFG_IDENT:-yes}"
 	local ident=""
@@ -214,18 +221,18 @@ function _prompt_ident()
 	echo -n "$ident"
 }
 
-function _prompt_command()
+function __prompt_command()
 {
 	_history_sync
-	export PS1="$(_prompt_user)$(_prompt_git)$(_prompt_dir)$(_prompt_ident)"
+	export PS1="$(__prompt_user)$(__prompt_git)$(__prompt_dir)$(__prompt_ident)"
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
 	if [[ $hostname =~ ^laptop.flatcap.org$ ]]; then
 		hostname=""
 	else
-		if virtual; then
-			IP=$(ssh_ip)
+		if __virtual_machine; then
+			IP=$(__ssh_ip)
 			IP=${IP##*.}
 			[ -n "$IP" ] && IP=":$IP"
 			hostname="{${hostname%%.*}$IP} "
@@ -237,9 +244,9 @@ function _prompt_command()
 		title "$hostname$(sed -e 's/\\\[[^]]*\\\]//g' -e 's/[$#] $//' <<< "$PS1")"
 	fi
 	# tell vte our current directory
-	[[ $TERM =~ ^xterm ]] && echo -en "\e]7;file://${HOSTNAME:-}$PWD\a"
+	__local_machine && [[ $TERM =~ ^xterm ]] && echo -en "\e]7;file://${HOSTNAME:-}$PWD\a"
 }
 
 
-export PROMPT_COMMAND=_prompt_command
+export PROMPT_COMMAND=__prompt_command
 
