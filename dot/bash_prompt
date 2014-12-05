@@ -229,10 +229,11 @@ function __prompt_command()
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
-	if [[ $hostname =~ ^laptop.flatcap.org$ ]]; then
+	local v=$(__virtual_machine)
+	if [[ $v = 0 && $hostname =~ ^laptop.flatcap.org$ ]]; then
 		hostname=""
 	else
-		if __virtual_machine; then
+		if $v; then
 			IP=$(__ssh_ip)
 			IP=${IP##*.}
 			[ -n "$IP" ] && IP=":$IP"
