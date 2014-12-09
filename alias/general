@@ -4,6 +4,7 @@ alias ct="column -t"
 alias date2='date "+%n  %R  %A %-d %B %Y%n"'
 alias df="df --print-type --exclude-type rootfs --exclude-type devtmpfs --exclude-type tmpfs"
 alias diff="diff --exclude CVS --exclude .svn --exclude tags --exclude .git"
+alias grep="grep --colour=auto --directories=skip --binary-files=without-match --exclude=tags --exclude=*~"
 alias gthumb="_wrapdot '/usr/bin/gthumb'"
 alias h="history2"
 alias jobs="jobs -l"
