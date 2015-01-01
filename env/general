@@ -9,7 +9,7 @@ export LESSCHARSET="iso8859"
 #export LESS="-eFfinqrX"
 export LESS="-eFfinqrXP %F - %pt\%]0;%F - %pt\%"$'\007'
 export LESSHISTFILE="-"
-export LS_COLORS="no=00:fi=00:di=01;33:ln=36:pi=35:so=35:bd=34:cd=34:ex=01;31:*.awk=38;5;193:*.cmd=31:*.exe=31:*.com=31:*.btm=31:*.bat=31:*.rpm=32:*.sql=38;5;193:*.tar=32:*.xz=32:*.tgz=32:*.bz2=32:*.lzma=32:*.zip=32:*.z=32:*.Z=32:*.gz=32:*.ha=32:*.svg=01;35:*.jpg=01;35:*.gif=01;35:*.png=01;35:*.xbm=01;35:*.xpm=01;35:*.bmp=01;35:*.mkv=01;35:*.ogg=01;35:*.avi=01;35:*.mpg=01;35:*.mp3=01;35:*.mp4=01;35:*.flv=01;35:*.a=32:*.swp=30:*.dcf=32:*.dcu=01;35:*.o=30:*.gpg=38;5;182"
+export LS_COLORS="no=00:fi=00:di=01;33:ln=36:pi=35:so=35:bd=34:cd=34:ex=01;31:*.awk=38;5;193:*.cmd=31:*.exe=31:*.com=31:*.btm=31:*.bat=31:*.drpm=32:*.rpm=32:*.sql=38;5;193:*.tar=32:*.xz=32:*.tgz=32:*.bz2=32:*.lzma=32:*.zip=32:*.z=32:*.Z=32:*.gz=32:*.ha=32:*.svg=01;35:*.jpg=01;35:*.gif=01;35:*.png=01;35:*.xbm=01;35:*.xpm=01;35:*.bmp=01;35:*.mkv=01;35:*.ogg=01;35:*.avi=01;35:*.mpg=01;35:*.mp3=01;35:*.mp4=01;35:*.flv=01;35:*.a=32:*.swp=30:*.dcf=32:*.dcu=01;35:*.o=30:*.gpg=38;5;182"
 #export MANSECT="2:2x:3:3p:3x:0p:1:1p:1x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:n"
 export PAGER="less"
 export PATH=".:~/bin:~/bin/colour:~/bin/sudo:/usr/bin:/usr/local/bin:/usr/sbin"
