@@ -74,6 +74,9 @@ for i in "$@"; do
 		*.mobi|*.epub)
 			(FBReader "$i" &) &> /dev/null
 			;;
+		*.vik)
+			(viking "$i" &) &> /dev/null
+			;;
 		*.dia)
 			(dia "$i" &) &> /dev/null
 			;;
