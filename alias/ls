@@ -4,5 +4,6 @@ alias lc="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto
 alias lh="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -l --human-readable"
 alias ll="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -l"
 alias ls="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -l --dereference"
+alias lt="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -lt --dereference"
 alias lv="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -lv --dereference"
 alias lz="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -l --dereference --context"
