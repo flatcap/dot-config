@@ -155,6 +155,17 @@ function git_wipe()
 	done
 }
 
+function git_redate()
+{
+	for i in $DIRS; do
+		title git redate $i
+		log $i
+		pushd $i > /dev/null
+		find . -name .git -prune -o \( ! -type l -print \) | while IFS="" read i; do touch -d "$(git log --format="%cd" -n1 --date=iso $i)" $i; done
+		popd > /dev/null
+	done
+}
+
 
 #[ $# -ne 1 ] && usage
 
@@ -179,6 +190,8 @@ case $1 in
 		git_clone ;;
 	wipe)
 		git_wipe ;;
+	redate)
+		git_redate ;;
 	*)
 		usage ;;
 esac
