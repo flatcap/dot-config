@@ -1,0 +1,1 @@
+@reboot root /bin/find /tmp/ /var/tmp/ ! -path /tmp/ ! -path /var/tmp/ -cmin +2 -delete

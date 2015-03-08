@@ -7,3 +7,9 @@ alias ls="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto
 alias lt="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -lt --dereference"
 alias lv="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -lv --dereference"
 alias lz="/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -l --dereference --context"
+
+alias lL='/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -l $(find . -maxdepth 1 -type l -printf "-I%f\n")'
+alias lD='/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -l $(find . -maxdepth 1 -type d -printf "-I%f\n")'
+alias lF='/bin/ls --group-directories-first -I .\*swp -I lost+found --color=auto -T 0 -l $(find . -maxdepth 1 -type f -printf "-I%f\n")'
+
+# alias li="/bin/ls --group-directories-first -gG -lL -T 0 --color=auto -I .\*swp -I \*.[cho] -I lost+found"

@@ -73,5 +73,5 @@ xz --best $TAR
 gpg2 --encrypt --recipient "$RCPT" --output $BAK_DIR/$TAR.xz.gpg $TAR.xz
 popd > /dev/null
 
-rm --force --recursive $TMP_DIR
+chmod 400 $BAK_DIR/$TAR.xz.gpg
 

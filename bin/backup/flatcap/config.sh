@@ -36,10 +36,8 @@ fi
 
 cd $BAK_DIR 2>&1 > /dev/null
 
-cp --archive $HOME/.gconf        $TMP_DIR/gconf
 cp --archive $HOME/.config/dconf $TMP_DIR
 
-gconftool-2 --dump /       > $TMP_DIR/gconf.xml
 dconf dump /               > $TMP_DIR/dconf_dump.txt
 gsettings list-recursively > $TMP_DIR/dconf_gsettings.txt
 

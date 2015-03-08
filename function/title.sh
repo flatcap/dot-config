@@ -1,9 +1,27 @@
 title()
 {
-	[ -w /dev/stderr ] || return
+	local prompt=""
+	local title=""
+	local prefix="$PROMPT_PREFIX"
 
-	[[ $TERM =~ ^(xterm|xterm-256color|vt100)$ ]] || return
+	[ -n "$prefix" ] && prefix="[$prefix]"
 
-	echo -ne "\e]0;${@}\a" > /dev/stderr
+	case $1 in
+	"")
+		title="${PWD/#$HOME/~}"
+		prompt='echo -ne "\033]2;'${prefix}' ${PWD/#$HOME/~}$(parse_git_branch)\007"'
+		;;
+	"-")
+		;;
+	"done")
+		title="done"
+		;;
+	*)
+		title="$*"
+		;;
+	esac
+	title="$prefix $title"
+
+	echo -ne "\033]2;${title}\007" > /dev/stderr
+	PROMPT_COMMAND="echo -n ; $prompt"
 }
-

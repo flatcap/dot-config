@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FROM="/var/log/"
+FROM="/var/log/ /var/named/data"
 TO="/backup/log"
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 

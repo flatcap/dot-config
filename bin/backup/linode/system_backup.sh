@@ -19,27 +19,32 @@ TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude
 mkdir --parents $DIR
 
 # Run fsck and garbage collection on the git repos
-su - gitolite -c "./g tidy >& /dev/null"
+su - gitolite3 -c "bin/gr tidy >& /dev/null; reset-dates; drop-cache"
 
 cd /var/lib
 
-tar $TAR_OPTS --create --file "$GIT_TAR" gitolite
+tar $TAR_OPTS --create --file "$GIT_TAR" gitolite3
 
 cd /
 
 tar $TAR_OPTS --create --file $DIR/cron.tar				var/spool/cron
-tar $TAR_OPTS --create --file $DIR/etc.tar   				etc
+tar $TAR_OPTS --create --file $DIR/etc.tar				etc
 tar $TAR_OPTS --create --file $DIR/mysql.tar --exclude mysql.sock	var/lib/mysql
-tar $TAR_OPTS --create --file $DIR/root.tar  				root
+tar $TAR_OPTS --create --file $DIR/root.tar				root
 tar $TAR_OPTS --create --file $DIR/usr_local.tar			usr/local
 tar $TAR_OPTS --create --file $DIR/var_log.tar				var/log
 tar $TAR_OPTS --create --file $DIR/www.tar				var/www
 
 tar $TAR_OPTS --create --file $DIR/home.tar	\
 	--exclude home/flatcap/torrent		\
+	--exclude home/flatcap/google		\
 	--exclude home/flatcap/books		\
 	--exclude home/flatcap/hikes		\
-	--exclude home/flatcap/www		\
+	--exclude home/flatcap/oc		\
+	--exclude home/flatcap/flatcap.org	\
+	--exclude home/flatcap/flatcap.xyz	\
+	--exclude home/flatcap/russon.org	\
+	--exclude home/flatcap/.cache		\
 	home
 
 rpm --query --all | sort > $DIR/rpm_list

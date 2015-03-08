@@ -1,0 +1,5 @@
+alias cgdb="cgdb --quiet"
+alias g++="g++ -std=c++11 -Wall -Wextra -Wpedantic -ggdb -pthread -rdynamic"
+alias gcc="gcc            -Wall -Wextra -Wpedantic -ggdb -pthread -rdynamic"
+alias gdb="gdb --quiet"
+alias m="make"

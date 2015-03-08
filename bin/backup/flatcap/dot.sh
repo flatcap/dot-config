@@ -15,8 +15,8 @@ RCPT="Rich Russon (backup) <rich@flatcap.org>"
 HOME="/home/flatcap"
 TMP_DIR="$HOME/dot.$$"
 BAK_DIR="/mnt/space/backup/dot"
-DONTDOT="/mnt/space/backup/bin/flatcap/dontdot.txt"
 TAR="$BAK_DIR/$DATE.tar.xz"
+DONTDOT="${0%/*}/dontdot.txt"
 
 if [ ! -d $HOME ]; then
 	echo "No home"
@@ -45,7 +45,7 @@ if [ ! -d "$TMP_DIR" ]; then
 	exit 1
 fi
 
-cp --archive --link $HOME/.??* $TMP_DIR
+cp --archive $HOME/.??* $TMP_DIR
 
 cd $TMP_DIR 2>&1 > /dev/null
 
@@ -54,7 +54,7 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
-rm --force --recursive $(cat $DONTDOT)
+rm --force --recursive $(cat ../$DONTDOT)
 find . -name "*.sqlite" -exec sqlite3 {} VACUUM \;
 find . -type s -delete
 
@@ -63,6 +63,7 @@ find -L $TMP_DIR -xdev -type l -delete
 tar --create --xz --file $TAR .??*
 gpg2 --encrypt --recipient "$RCPT" --output $TAR.gpg $TAR
 rm $TAR
+chmod 400 $TAR.gpg
 
 rm --force --recursive $TMP_DIR
 

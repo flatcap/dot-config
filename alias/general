@@ -1,25 +1,54 @@
+alias !="history2"
+alias ..="cd .."
+alias .="cd ."
 alias bc="bc --quiet --mathlib"
 alias bzip2="_compress /usr/bin/bzip2"
+alias cd="cd >& /dev/null"
 alias ct="column -t"
 alias date2='date "+%n  %R  %A %-d %B %Y%n"'
+alias db="mysql --silent --sigint-ignore --table"
+alias dbs="mysql --silent --skip-column-names"
 alias df="df --print-type --exclude-type rootfs --exclude-type devtmpfs --exclude-type tmpfs"
+alias df="df_"
 alias diff="diff --exclude CVS --exclude .svn --exclude tags --exclude .git"
+alias easytag="_wrapdot /usr/bin/easytag"
+alias eog="_wrapdot /usr/bin/eog"
+alias file="file -sL"
+alias ftp="lftp"
+alias g=git
 alias grep="grep --colour=auto --directories=skip --binary-files=without-match --exclude=tags --exclude=*~"
-alias gthumb="_wrapdot '/usr/bin/gthumb'"
+alias gthumb="_wrapdot /usr/bin/gthumb"
 alias h="history2"
 alias jobs="jobs -l"
 alias keep="export IGNOREEOF=999"
 alias killall="killall --ignore-case"
 alias man="_wrapsimple /usr/bin/man"
 alias mkdir="mkdir --parents"
+alias more="less"
 alias nautilus="_wrapdot /usr/bin/nautilus"
 alias od="LANG=C hexdump -f ~/.format"
 alias odw="LANG=C hexdump -f ~/.format2"
+alias OFF="sync; sudo systemctl poweroff --force --force"
 alias rar="unrar"
 alias rmdir="rmdir --ignore-fail-on-non-empty --parents"
+alias root="if screen -S root -Q select . >& /dev/null; then screen -S root -r; else screen -S root su -; fi"
+alias ssh-helper='ssh-add $(find ~/.ssh -name \*.pub | sed "s/\.pub//")'
 alias ssh="ssh -q"
 alias tar="_wrapsimple /bin/tar"
 alias tree="tree -C"
+alias vi="vim -X"
+alias vm='sudo /usr/bin/virt-manager'
+alias vo="vi -O"
+alias vs='sudo /usr/bin/virsh'
+alias xz="_compress /usr/bin/xz"
+alias yyum="yum -y"
+alias ~="cd $HOME; clear; ls"
+
+alias root="if screen -S root -Q select . >& /dev/null; then screen -S root -r; else screen -S root su -; fi"
+alias ..="cd .."
+#alias .="cd ."
+alias ~="cd $HOME; clear; ls"
+
 if [ -n "$DISPLAY" ]; then
 	alias vi="gvim -v"
 	alias vim="gvim -v"
@@ -27,4 +56,4 @@ else
 	alias vi="vim -X"
 	alias vim="vim -X"
 fi
-alias xz="_compress /usr/bin/xz"
+

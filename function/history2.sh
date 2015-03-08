@@ -1,4 +1,5 @@
-_history_sync() {
+function _history_sync()
+{
 	builtin history -a
 	HISTFILESIZE=$HISTSIZE
 	builtin history -c
@@ -6,7 +7,7 @@ _history_sync() {
 	builtin history -r
 }
 
-history2()
+function history2()
 {
 	_history_sync
 	if [ -z "$@" ]; then

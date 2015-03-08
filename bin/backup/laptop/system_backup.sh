@@ -17,17 +17,17 @@ TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude
 
 cd /
 
-mkdir --parents $DIR
+mkdir --parents "$DIR"
 
-tar $TAR_OPTS --create --file $DIR/cron.tar                       var/spool/cron
-tar $TAR_OPTS --create --file $DIR/etc.tar                        etc
-tar $TAR_OPTS --create --file $DIR/mysql.tar --exclude mysql.sock var/lib/mysql
-tar $TAR_OPTS --create --file $DIR/root.tar                       root
-#tar $TAR_OPTS --create --file $DIR/usr_local.tar                  usr/local
-tar $TAR_OPTS --create --file $DIR/var_log.tar                    var/log
-#tar $TAR_OPTS --create --file $DIR/www.tar                        var/www
+tar $TAR_OPTS --create --file "$DIR"/cron.tar                       var/spool/cron
+tar $TAR_OPTS --create --file "$DIR"/etc.tar                        etc
+tar $TAR_OPTS --create --file "$DIR"/mysql.tar --exclude mysql.sock var/lib/mysql
+tar $TAR_OPTS --create --file "$DIR"/root.tar  --exclude .ssh/*@*   root
+#tar $TAR_OPTS --create --file "$DIR"/usr_local.tar                  usr/local
+tar $TAR_OPTS --create --file "$DIR"/var_log.tar                    var/log
+#tar $TAR_OPTS --create --file "$DIR"/www.tar                        var/www
 
-cd $DIR
+cd "$DIR"
 
 xz -9 *.tar
 
@@ -35,12 +35,12 @@ rpm --query --all | sort > rpm_list
 rpm --query --all --last > rpm_last
 
 for i in *; do
-	gpg2 --encrypt --recipient "$RCPT" $i
-	rm $i
+	gpg2 --encrypt --recipient "$RCPT" "$i"
+	rm "$i"
 done
 
-chown --recursive flatcap:flatcap .
-chmod --silent 400 *
-#chmod --silent 500 .
-#chattr +i -R .
+chown --recursive flatcap:flatcap ..
+# chmod --silent 400 *
+# chmod --silent 500 .
+# chattr +i -R .
 
