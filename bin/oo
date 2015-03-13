@@ -83,7 +83,7 @@ for i in "$@"; do
 		*.pcap|*.pcapng)
 			(wireshark "$i" &) >& /dev/null
 			;;
-		*.md)
+		*.md|*.markdown)
 			(remarkable "$i" &) >& /dev/null
 			;;
 		*)
