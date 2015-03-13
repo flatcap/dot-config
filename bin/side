@@ -4,3 +4,4 @@ WIDTH=${1:-$(tput cols)}
 
 exec pr -TW$WIDTH
 #exec cut -b-$WIDTH
+#exec awk '{ printf "%s\n", substr($0,0,'$WIDTH') }'

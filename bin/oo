@@ -83,6 +83,9 @@ for i in "$@"; do
 		*.pcap|*.pcapng)
 			(wireshark "$i" &) >& /dev/null
 			;;
+		*.md)
+			(remarkable "$i" &) >& /dev/null
+			;;
 		*)
 			echo "Unknown: $i"
 			;;
