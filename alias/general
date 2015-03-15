@@ -9,7 +9,6 @@ alias date2='date "+%n  %R  %A %-d %B %Y%n"'
 alias db="mysql --silent --sigint-ignore --table"
 alias dbs="mysql --silent --skip-column-names"
 alias df="df --print-type --exclude-type rootfs --exclude-type devtmpfs --exclude-type tmpfs"
-alias df="df_"
 alias diff="diff --exclude CVS --exclude .svn --exclude tags --exclude .git"
 alias easytag="_wrapdot /usr/bin/easytag"
 alias eog="_wrapdot /usr/bin/eog"
