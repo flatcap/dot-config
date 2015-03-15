@@ -1,26 +1,13 @@
 #!/bin/bash
 
-#ln all the files into their correct places
+# link the files into their correct places
 
-for dir in alias complete env function; do
-	mkdir -p ~/bin/$dir || break
+BASE=${0%/*}
+cd "$BASE/dot"
 
-	pushd $dir > /dev/null
-	for file in *; do
-		ln -sf ../../shell/bash/$dir/$file ~/bin/$dir/$file
-	done
-	popd > /dev/null
-done
+DIR=$(pwd)
 
-pushd bin > /dev/null
 for file in *; do
-	ln -sf ../shell/bash/bin/$file ~/bin/$file
+	ln -sf $DIR/$file ~/.$file
 done
-popd > /dev/null
-
-pushd dot > /dev/null
-for file in *; do
-	ln -sf shell/bash/dot/$file ~/.$file
-done
-popd > /dev/null
 
