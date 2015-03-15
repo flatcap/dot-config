@@ -26,7 +26,7 @@
 #	"# "
 #	"$ "
 
-source ~/bin/function/title.sh
+source ~/.shell/bash/function/title.sh
 
 function __get_git_top_level()
 {

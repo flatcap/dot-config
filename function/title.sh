@@ -23,5 +23,5 @@ title()
 	title="$prefix $title"
 
 	echo -ne "\033]2;${title}\007" > /dev/stderr
-	PROMPT_COMMAND="echo -n ; $prompt"
+	# PROMPT_COMMAND="echo -n ; $prompt"
 }
