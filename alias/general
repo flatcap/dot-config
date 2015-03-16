@@ -3,7 +3,6 @@ alias ..="cd .."
 alias .="cd ."
 alias bc="bc --quiet --mathlib"
 alias bzip2="_compress /usr/bin/bzip2"
-alias cd="cd >& /dev/null"
 alias ct="column -t"
 alias date2='date "+%n  %R  %A %-d %B %Y%n"'
 alias db="mysql --silent --sigint-ignore --table"

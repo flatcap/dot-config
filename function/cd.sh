@@ -1,4 +1,3 @@
-
 function get_git_top_level()
 {
 	local d=$(pwd)
@@ -62,8 +61,13 @@ function cd ()
 			LS="yes"
 		elif is_git_branch "$GDIR"; then			# cd {git_branch}
 			local project="$(get_project)"
+			local DIR=$(pwd)
+			DIR="${DIR##*/}"
 			if [ -d "../$project-$GDIR" ]; then
 				set -- "../$project-$GDIR"
+			elif [ "$project" = "$DIR" ]; then
+				git checkout -q "$GDIR"
+				return
 			elif [ "$GDIR" = "master" -a -d "../$project" ]; then
 				set -- "../$project"
 			else
@@ -99,3 +103,4 @@ function . ()
 		cd .
 	fi
 }
+
