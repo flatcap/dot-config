@@ -40,22 +40,28 @@ function get_project()
 function cd ()
 {
 	local LS=""
-	if [ -n "$1" ]; then						# Argument to cd
-		local LEN=${#1}
+	local ARG="$1"
+
+	if [ -n "$ARG" ]; then						# Argument to cd
+		local LEN=${#ARG}
 		if [ $LEN -gt 2 ]; then
-			local HEAD=${1:0:-2}
-			local TAIL=${1:${#1}-2:2}
+			local HEAD=${ARG:0:-2}
+			local TAIL=${ARG:${#ARG}-2:2}
 		else
-			local HEAD="$1"
+			local HEAD="$ARG"
 			local TAIL=""
 		fi
-		local GDIR="$1"
+		local GDIR="$ARG"
 		[ "$GDIR" = "." ] && GDIR="master"			# dir=. => master branch
 
-		if [ -f "$1" ]; then					# cd dir/file
-			set -- "${1%/*}"
-		elif [ -d "$1" -a \( "$1" != "." \) ]; then 		# directory exists (not .)
-			set -- "$1"
+		if [ -L "$ARG" ]; then					# cd link to dir/file
+			ARG="$(readlink $ARG)"
+		fi
+
+		if [ -f "$ARG" ]; then					# cd dir/file
+			set -- "${ARG%/*}"
+		elif [ -d "$ARG" -a \( "$ARG" != "." \) ]; then 	# directory exists (not .)
+			set -- "$ARG"
 		elif [ -d "$HEAD" -a "$TAIL" == "ls" ]; then	 	# dirls or dir/ls
 			set -- "$HEAD"
 			LS="yes"
@@ -74,10 +80,10 @@ function cd ()
 				git checkout -q "$GDIR"
 				return
 			fi
-		elif [ "$1" = "." ]; then				# cd . => pwd -P
+		elif [ "$ARG" = "." ]; then				# cd . => pwd -P
 			set -- "$(pwd -P)"
 		else							# default to cd
-			set -- "$1"
+			set -- "$ARG"
 		fi
 	else								# No argument to cd
 		[ -n "$CDDIR" ] && set -- "$CDDIR"
