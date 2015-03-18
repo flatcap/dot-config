@@ -1,6 +1,5 @@
 alias !="history2"
 alias ..="cd .."
-alias .="cd ."
 alias bc="bc --quiet --mathlib"
 alias bzip2="_compress /usr/bin/bzip2"
 alias ct="column -t"

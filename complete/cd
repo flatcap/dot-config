@@ -9,4 +9,4 @@ _cd_complete ()
 		)" -- "$cur")
 	)
 }
-complete -F _cd_complete cd
+#complete -F _cd_complete cd
