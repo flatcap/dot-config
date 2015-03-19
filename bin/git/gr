@@ -1,5 +1,11 @@
 #!/bin/bash
 
+set -o errexit	# set -e
+set -o nounset	# set -u
+
+renice --priority 19 --pid $$ > /dev/null
+ionice --class 3     --pid $$ > /dev/null
+
 DATA_FILE="git.txt"
 # CGIT_REPO="cgit.repo"
 
