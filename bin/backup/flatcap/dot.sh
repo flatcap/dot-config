@@ -54,7 +54,7 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
-rm --force --recursive $(cat ../$DONTDOT)
+rm --force --recursive $(cat $DONTDOT)
 find . -name "*.sqlite" -exec sqlite3 {} VACUUM \;
 find . -type s -delete
 
