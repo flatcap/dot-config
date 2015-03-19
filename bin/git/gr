@@ -4,7 +4,6 @@ renice --priority 19 --pid $$ > /dev/null
 ionice --class 3     --pid $$ > /dev/null
 
 DATA_FILE="git.txt"
-# CGIT_REPO="cgit.repo"
 
 function log()
 {
@@ -125,22 +124,8 @@ function git_clone()
 			title git clone $DIR
 			log $DIR
 			git clone $GIT $DIR
-
-			# if [ ! -f "$CGIT_REPO" ]; then
-			# 	echo "repo.group=terminal"		>  "$CGIT_REPO"
-			# 	echo "#repo.owner=rich@flatcap.org"	>> "$CGIT_REPO"
-			# 	echo					>> "$CGIT_REPO"
-			# fi
-
-			# echo "repo.url=$DIR"				>> "$CGIT_REPO"
-			# echo "repo.path=/home/work/terminal/git/$DIR/.git"	>> "$CGIT_REPO"
-			# echo "repo.desc=$DIR"				>> "$CGIT_REPO"
-			# echo						>> "$CGIT_REPO"
 		fi
 	done
-
-	# chmod 664 "$CGIT_REPO"
-	# chcon -t public_content_t "$CGIT_REPO"
 }
 
 function git_wipe()
