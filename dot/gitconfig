@@ -13,6 +13,7 @@
 	a     = add
 	b     = branch --verbose --verbose
 	cam   = commit --all --message
+	camp  = "!f() { git commit --all --message \"$1\"; git push; }; f"
 	cm    = commit --message
 	d     = diff
 	ds    = diff --stat
