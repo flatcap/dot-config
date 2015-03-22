@@ -71,7 +71,7 @@ find -L $TMP_DIR -xdev -type l -delete
 tar --create --xz --file $TAR .??*
 gpg2 --encrypt --recipient "$RCPT" --output $TAR.gpg $TAR
 rm $TAR
-chmod 400 $TAR.gpg
+# chmod 400 $TAR.gpg
 
 rm --force --recursive $TMP_DIR
 
