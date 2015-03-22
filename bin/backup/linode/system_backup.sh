@@ -31,7 +31,7 @@ tar $TAR_OPTS --create --file $DIR/cron.tar				var/spool/cron
 tar $TAR_OPTS --create --file $DIR/etc.tar				etc
 tar $TAR_OPTS --create --file $DIR/mysql.tar --exclude mysql.sock	var/lib/mysql
 tar $TAR_OPTS --create --file $DIR/root.tar				root
-tar $TAR_OPTS --create --file $DIR/usr_local.tar			usr/local
+# tar $TAR_OPTS --create --file $DIR/usr_local.tar			usr/local
 tar $TAR_OPTS --create --file $DIR/var_log.tar				var/log
 tar $TAR_OPTS --create --file $DIR/www.tar				var/www
 
