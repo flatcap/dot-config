@@ -14,7 +14,7 @@ umask 0077
 DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 HOME="/home/flatcap"
-BAK_DIR="/mnt/space/backup/config"
+BAK_DIR="/mnt/space/backup/flatcap/config"
 TMP_DIR="$BAK_DIR/$DATE"
 TAR="$BAK_DIR/$DATE.tar.xz.gpg"
 
@@ -22,6 +22,13 @@ if [ ! -d $HOME ]; then
 	echo "No home"
 	exit 1
 fi
+
+function die()
+{
+	[ -n "$TMP_DIR" ] && rm --force --recursive "$TMP_DIR"
+}
+
+trap die EXIT
 
 mkdir --parents $TMP_DIR
 if [ ! -d $TMP_DIR ]; then

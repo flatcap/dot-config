@@ -14,9 +14,14 @@ DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 HOME="/home/flatcap"
 TAR="$DATE.tar"
-BAK_DIR="/mnt/space/backup/mozilla"
+BAK_DIR="/mnt/space/backup/flatcap/mozilla"
 MOZ_DIR="$HOME/.mozilla"
 TMP_DIR=""
+
+if [ ! -d $HOME ]; then
+	echo "No home"
+	exit 1
+fi
 
 function die()
 {

@@ -14,9 +14,10 @@ DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 HOME="/home/flatcap"
 TMP_DIR="$HOME/dot.$$"
-BAK_DIR="/mnt/space/backup/dot"
+BAK_DIR="/mnt/space/backup/flatcap/dot"
 TAR="$BAK_DIR/$DATE.tar.xz"
-DONTDOT="${0%/*}/dontdot.txt"
+BASE="$(cd ${0%/*}; pwd)"
+DONTDOT="$BASE/dontdot.txt"
 
 if [ ! -d $HOME ]; then
 	echo "No home"
@@ -27,6 +28,13 @@ if [ ! -f $DONTDOT ]; then
 	echo "No dontdot.txt"
 	exit 1
 fi
+
+function die()
+{
+	[ -n "$TMP_DIR" ] && rm --force --recursive "$TMP_DIR"
+}
+
+trap die EXIT
 
 mkdir --parents "$BAK_DIR"
 if [ ! -d "$BAK_DIR" ]; then
@@ -45,7 +53,7 @@ if [ ! -d "$TMP_DIR" ]; then
 	exit 1
 fi
 
-cp --archive $HOME/.??* $TMP_DIR
+cp --recursive --dereference $HOME/.??* $TMP_DIR
 
 cd $TMP_DIR 2>&1 > /dev/null
 
