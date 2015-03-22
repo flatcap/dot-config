@@ -10,7 +10,7 @@ umask 0077
 
 DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
-DIR="/mnt/space/backup/database/$DATE"
+DIR="/mnt/space/backup/database"
 
 MYSQL_USER="--defaults-file=/etc/my.backup.cnf"
 
@@ -22,10 +22,12 @@ mkdir --parents "$DIR"
 cd "$DIR"
 
 for i in $DB_LIST; do
-	mysqldump $MYSQL_USER "$i" > "$i.sql" 2> /dev/null
-	xz --best "$i.sql"
-	gpg2 --encrypt --recipient "$RCPT" "$i.sql.xz"
-	rm "$i.sql.xz"
+	mkdir --parents "$i"
+	FILE="$i/${DATE}_laptop.sql"
+	mysqldump $MYSQL_USER "$i" > "$FILE" 2> /dev/null
+	xz --best "$FILE"
+	gpg2 --encrypt --recipient "$RCPT" "$FILE.xz"
+	rm "$FILE.xz"
 done
 
 chown --recursive flatcap:flatcap ..
