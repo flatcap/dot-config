@@ -55,7 +55,7 @@ fi
 
 cp --recursive --dereference $HOME/.??* $TMP_DIR
 
-cd $TMP_DIR 2>&1 > /dev/null
+cd $TMP_DIR >& /dev/null
 
 if [ $? != 0 ]; then
 	echo "Can't cd into: $TMP_DIR"
