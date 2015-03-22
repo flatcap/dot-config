@@ -23,7 +23,7 @@ cd "$DIR"
 
 for i in $DB_LIST; do
 	mkdir --parents "$i"
-	FILE="$i/${DATE}_laptop.sql"
+	FILE="$i/${DATE}_server.sql"
 	mysqldump $MYSQL_USER "$i" > "$FILE" 2> /dev/null
 	xz --best "$FILE"
 	gpg2 --encrypt --recipient "$RCPT" "$FILE.xz"
@@ -31,7 +31,7 @@ for i in $DB_LIST; do
 done
 
 # chown --recursive flatcap:flatcap ..
-chmod --silent 400 *
-chmod --silent 500 .
+# chmod --silent 400 *
+# chmod --silent 500 .
 # chattr +i -R .
 
