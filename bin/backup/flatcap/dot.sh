@@ -54,6 +54,7 @@ if [ ! -d "$TMP_DIR" ]; then
 	exit 1
 fi
 
+rm -f ".mozilla/firefox/*/lock"	# tmp workaround
 cp --recursive --dereference "$HOME"/.??* "$TMP_DIR"
 
 cd "$TMP_DIR" >& /dev/null
