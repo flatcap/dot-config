@@ -16,16 +16,17 @@ HOME="/home/flatcap"
 TMP_DIR="$HOME/dot.$$"
 BAK_DIR="/mnt/space/backup/flatcap/dot"
 TAR="$BAK_DIR/$DATE.tar.xz"
-BASE="$(cd ${0%/*}; pwd)"
+BASE="$(cd ${0%/*} >& /dev/null; pwd)"
 DONTDOT="$BASE/dontdot.txt"
 
-if [ ! -d $HOME ]; then
+if [ ! -d "$HOME" ]; then
 	echo "No home"
 	exit 1
 fi
 
-if [ ! -f $DONTDOT ]; then
+if [ ! -f "$DONTDOT" ]; then
 	echo "No dontdot.txt"
+	echo "$DONTDOT"
 	exit 1
 fi
 
@@ -53,25 +54,25 @@ if [ ! -d "$TMP_DIR" ]; then
 	exit 1
 fi
 
-cp --recursive --dereference $HOME/.??* $TMP_DIR
+cp --recursive --dereference "$HOME"/.??* "$TMP_DIR"
 
-cd $TMP_DIR >& /dev/null
+cd "$TMP_DIR" >& /dev/null
 
 if [ $? != 0 ]; then
 	echo "Can't cd into: $TMP_DIR"
 	exit 1
 fi
 
-rm --force --recursive $(cat $DONTDOT)
+rm --force --recursive $(cat "$DONTDOT")
 find . -name "*.sqlite" -exec sqlite3 {} VACUUM \;
 find . -type s -delete
 
-find -L $TMP_DIR -xdev -type l -delete
+find -L "$TMP_DIR" -xdev -type l -delete
 
-tar --create --xz --file $TAR .??*
-gpg2 --encrypt --recipient "$RCPT" --output $TAR.gpg $TAR
-rm $TAR
+tar --create --xz --file "$TAR" .??*
+gpg2 --encrypt --recipient "$RCPT" --output "$TAR.gpg" "$TAR"
+rm "$TAR"
 # chmod 400 $TAR.gpg
 
-rm --force --recursive $TMP_DIR
+rm --force --recursive "$TMP_DIR"
 
