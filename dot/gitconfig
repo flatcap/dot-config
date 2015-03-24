@@ -25,6 +25,7 @@
 	ls    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' --stat
 	lca   = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
 	p     = push
+	pa    = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
 	rebase= rebase --committer-date-is-author-date
 	s     = !git stash list && git status --short
 	sb    = !git branch --verbose --verbose & git stash list && git status --short
