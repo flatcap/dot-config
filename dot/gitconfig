@@ -21,7 +21,7 @@
 	j     = jump diff
 	l     = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' -n 30
 	ll    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset'
-	ln    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(black)<%an>%Creset' -n 30
+	ln    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(white dim)%an <%ae>%Creset' -n 30
 	ls    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' --stat
 	lca   = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
 	p     = push
