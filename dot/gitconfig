@@ -40,7 +40,7 @@
 
 	fixup  = !sh -c 'git commit --fixup  $(git log -n 1 --format='%h' --grep '^$@')'
 	sq     = !sh -c 'git commit --squash $(git log -n 1 --format='%h' --grep '^$@')'
-	ri     = rebase --interactive --autosquash
+	ri     = rebase --committer-date-is-author-date --interactive --autosquash
 
 	save   = stash save
 	pop    = stash pop
