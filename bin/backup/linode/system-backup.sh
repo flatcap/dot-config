@@ -12,18 +12,10 @@ umask 0077
 
 DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
-DIR="/backup/$DATE"
-GIT_TAR="/backup/${DATE}_git.tar"
+DIR="/backup/linode/$DATE"
 TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude shell/vim/backup --exclude shell/vim/swap --exclude shell/vim/undo"
 
 mkdir --parents $DIR
-
-# Run fsck and garbage collection on the git repos
-su - gitolite3 -c "bin/gr tidy >& /dev/null; reset-dates; drop-cache"
-
-cd /var/lib
-
-tar $TAR_OPTS --create --file "$GIT_TAR" gitolite3
 
 cd /
 
@@ -50,17 +42,12 @@ tar $TAR_OPTS --create --file $DIR/home.tar	\
 rpm --query --all | sort > $DIR/rpm_list
 rpm --query --all --last > $DIR/rpm_last
 
-cd /backup
+cd "$DIR"
 
-xz -6 -T0 *.tar $DIR/*.tar
+xz -6 -T0 *.tar
 
-for i in *.tar.xz $DIR/*; do
+for i in *.tar.xz; do
 	gpg2 --encrypt --recipient "$RCPT" "$i"
 	rm "$i"
 done
-
-chmod --silent 400 $DIR/* *.gpg
-chmod --silent 500 $DIR
-
-chattr +i $DIR/* $DIR *.gpg
 

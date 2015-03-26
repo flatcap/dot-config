@@ -1,12 +1,12 @@
 #!/bin/sh
 
 FROM="/var/log/ /var/named/data"
-TO="/backup/log"
+TO="/backup/linode/log"
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 
 # Move files from the log dirs into /backup/log (maintaining the directory hierarchy).
-rsync --archive --prune-empty-dirs --remove-source-files --include '*/' --include '*.gz'        --exclude '*' "$FROM" "$TO"
-rsync --archive --prune-empty-dirs --remove-source-files --include '*/' --include '*@*.journal' --exclude '*' "$FROM" "$TO"
+rsync --archive --prune-empty-dirs --remove-source-files --include '*/' --include '*.gz'        --exclude '*' $FROM $TO
+rsync --archive --prune-empty-dirs --remove-source-files --include '*/' --include '*@*.journal' --exclude '*' $FROM $TO
 
 find "$TO" -type f ! -name \*.gpg -print0 | xargs --no-run-if-empty -0 -n 1 gpg2 --encrypt --recipient "$RCPT"
 
