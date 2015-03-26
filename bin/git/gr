@@ -68,7 +68,7 @@ function git_pull()
 			if [ "$BARE" = "true" ]; then
 				git fetch origin master:master
 			else
-				git fetch
+				git fetch --quiet
 				MASTER=$(git rev-parse HEAD)
 				FETCH=$(git rev-parse FETCH_HEAD)
 				if [ $MASTER != $FETCH ]; then
