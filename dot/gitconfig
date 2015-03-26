@@ -12,12 +12,12 @@
 [alias]
 	a     = add
 	b     = branch --verbose --verbose
-	cam   = commit --all --message
-	camp  = "!f() { git commit --all --message \"$1\"; git push; }; f"
+	cam   = "!f() { git commit --all --message \"$*\"; }; f"
+	camp  = "!f() { git commit --all --message \"$*\"; git push; }; f"
 	cm    = commit --message
 	d     = diff
 	ds    = diff --stat
-	initm = "!f() { git init . && git commit --allow-empty --message \"$1\"; rm -f .git/hooks/*; }; f"
+	initm = "!f() { git init . && git commit --allow-empty --message \"$*\"; rm -f .git/hooks/*; }; f"
 	j     = jump diff
 	l     = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' -n 30
 	ll    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset'
