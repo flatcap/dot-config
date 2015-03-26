@@ -12,7 +12,7 @@ umask 0077
 
 DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
-DIR="/backup/git/$DATE"
+DIR="/backup/git"
 GIT_TAR="$DIR/${DATE}.tar"
 TAR_OPTS="--warning=no-file-changed"
 
