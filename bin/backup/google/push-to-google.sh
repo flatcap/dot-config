@@ -1,7 +1,5 @@
 #!/bin/bash
 
-PATH="/usr/bin:/usr/sbin:/mnt/space/bin-extra/"
-
 set -o errexit	# set -e
 set -o nounset	# set -u
 
