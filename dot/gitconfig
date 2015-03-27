@@ -17,7 +17,7 @@
 	cm    = commit --message
 	d     = diff
 	ds    = diff --stat
-	initm = "!f() { git init . && git commit --allow-empty --message \"$*\"; rm -f .git/hooks/*; }; f"
+	initm = "!f() { cd $GIT_PREFIX; git init . && git commit --allow-empty --message \"$*\"; rm -f .git/hooks/*; }; f"
 	j     = jump diff
 	l     = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' -n 30
 	ll    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset'
