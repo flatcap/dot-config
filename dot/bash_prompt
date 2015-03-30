@@ -197,7 +197,8 @@ function __prompt_dir()
 				dir="${dir/#$HOME/$tilde}"
 				local project="$(__get_project)"
 				local branch="$(__get_git_branch)"
-				dir="${dir/$project-$branch/$project}" ;;
+				[ -n "$project" -a -n "$branch" ] && dir="${dir/$project-$branch/$project}"
+				;;
 		"abbr"|*)	dir="${dir/$HOME/$tilde}" ;;
 	esac
 
