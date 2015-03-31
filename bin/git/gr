@@ -73,7 +73,7 @@ function git_pull()
 				FETCH=$(git rev-parse FETCH_HEAD)
 				if [ $MASTER != $FETCH ]; then
 					BRANCH=$(git branch | sed -n '/*/{s/^\* //;p}')
-					git ll $BRANCH^1..FETCH_HEAD
+					git --no-pager ll $BRANCH^1..FETCH_HEAD
 					git merge --ff --quiet FETCH_HEAD
 				fi
 			fi
