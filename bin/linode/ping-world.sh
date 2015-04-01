@@ -4,8 +4,8 @@
 #     tcping?
 #     dnstest?
 
-LOGFILE="/mnt/data/status/internet.txt"
-HOSTS="178.79.161.177 8.8.8.8"
+LOGFILE="/home/flatcap/flatcap.org/status_home.txt"
+HOSTS="home.russon.org home.russon.org home.russon.org"
 SLEEP="5s"
 
 function get_date ()
