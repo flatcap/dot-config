@@ -52,7 +52,7 @@ for i in "$@"; do
 		*.htm|*.html)
 			(firefox "$i" &) &> /dev/null
 			;;
-		*.jpg|*.jpeg|*.png|*.gif)
+		*.jpg|*.jpeg|*.png|*.gif|*.ico)
 			#(gthumb -n "$i" &) &> /dev/null
 			(display -title "$i" "$i" &) &> /dev/null
 			;;
