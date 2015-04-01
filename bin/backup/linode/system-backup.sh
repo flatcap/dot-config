@@ -31,8 +31,7 @@ tar $TAR_OPTS --create --file $DIR/home.tar	\
 	--exclude home/flatcap/torrent		\
 	--exclude home/flatcap/google		\
 	--exclude home/flatcap/books		\
-	--exclude home/flatcap/hikes		\
-	--exclude home/flatcap/oc		\
+	--exclude home/flatcap/static		\
 	--exclude home/flatcap/flatcap.org	\
 	--exclude home/flatcap/flatcap.xyz	\
 	--exclude home/flatcap/russon.org	\
