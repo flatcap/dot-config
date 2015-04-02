@@ -74,6 +74,7 @@ function git_pull()
 				if [ $MASTER != $FETCH ]; then
 					BRANCH=$(git branch | sed -n '/*/{s/^\* //;p}')
 					git --no-pager ll $BRANCH^1..FETCH_HEAD
+					echo
 					git merge --ff --quiet FETCH_HEAD
 				fi
 			fi
