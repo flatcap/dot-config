@@ -9,6 +9,12 @@ ionice --class 3     --pid $$ > /dev/null
 DIRS=""
 DATA_FILE="git.txt"
 
+function title2()
+{
+	type title >& /dev/null || return 0
+	title "$@"
+}
+
 function log()
 {
 	echo -e "\e[32m$1\e[0m"
@@ -36,7 +42,7 @@ function git_fetch()
 {
 	local i
 	for i in $DIRS; do
-		title git fetch $i
+		title2 git fetch $i
 		log $i
 		pushd $i > /dev/null
 		[ -n "$(git remote)" ] && git fetch origin master:master
@@ -48,7 +54,7 @@ function git_push()
 {
 	local i
 	for i in $DIRS; do
-		title git push $i
+		title2 git push $i
 		log $i
 		pushd $i > /dev/null
 		[ -n "$(git remote)" ] && git push
@@ -60,7 +66,7 @@ function git_pull()
 {
 	local i
 	for i in $DIRS; do
-		title git pull $i $@
+		title2 git pull $i $@
 		log $i
 		pushd $i > /dev/null
 		if [ -n "$(git remote)" ]; then
@@ -87,7 +93,7 @@ function git_status()
 {
 	local i
 	for i in $DIRS; do
-		title git status $i
+		title2 git status $i
 		log $i
 		pushd $i > /dev/null
 		BARE="$(git config --get core.bare)"
@@ -107,7 +113,7 @@ function git_clean()
 	echo
 	[ "$SURE" != "y" ] && return
 	for i in $DIRS; do
-		title git clean $i
+		title2 git clean $i
 		log $i
 		pushd $i > /dev/null
 		git clean -dxf
@@ -119,7 +125,7 @@ function git_tidy()
 {
 	local i
 	for i in $DIRS; do
-		title git tidy $i
+		title2 git tidy $i
 		log $i
 		pushd $i > /dev/null
 		git prune
@@ -140,7 +146,7 @@ function git_clone()
 		if [ -d $DIR ]; then
 			echo $DIR already exists
 		else
-			title git clone $DIR
+			title2 git clone $DIR
 			log $DIR
 			git clone $GIT $DIR
 		fi
@@ -155,7 +161,7 @@ function git_wipe()
 	echo
 	[ "$SURE" != "y" ] && return
 	for i in $DIRS; do
-		title git wipe $i
+		title2 git wipe $i
 		log $i
 		rm -fr $i
 	done
@@ -165,7 +171,7 @@ function git_redate()
 {
 	local i
 	for i in $DIRS; do
-		title git redate $i
+		title2 git redate $i
 		log $i
 		pushd $i > /dev/null
 		find . -name .git -prune -o \( ! -type l -print \) | while IFS="" read i; do touch -d "$(git log --format="%cd" -n1 --date=iso $i)" $i; done
@@ -202,5 +208,5 @@ case $ARG in
 		usage ;;
 esac
 
-title
+title2
 
