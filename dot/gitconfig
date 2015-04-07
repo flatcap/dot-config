@@ -1,14 +1,6 @@
-[user]
-	email = rich@flatcap.org
-	name = Richard Russon
-	signingkey = Richard Russon (Code Signing) <rich@flatcap.org>
-
-[github]
-	user  = flatcap
-	token = 87f49c3aebb08f1add7b59c1e3f57cd0
-
-[push]
-	default = matching
+[advice]
+	statusHints = false
+	detachedHead = false
 
 [alias]
 	a     = add
@@ -34,22 +26,14 @@
 	st    = status
 	tidy  = !git fsck --full --strict && git gc --aggressive
 	when  = log --diff-filter=A
-
 	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
 	hide   = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
-
 	fixup  = !sh -c 'git commit --fixup  $(git log -n 1 --format='%h' --grep '^$@')'
 	sq     = !sh -c 'git commit --squash $(git log -n 1 --format='%h' --grep '^$@')'
 	ri     = rebase --committer-date-is-author-date --interactive --autosquash
-
 	save   = stash save
 	pop    = stash pop
-
-[color]
-	branch = auto
-	diff   = auto
-	status = auto
 
 [color "branch"]
 	current = green
@@ -68,6 +52,14 @@
 	changed   = green
 	untracked = cyan
 
+[color]
+	branch = auto
+	diff   = auto
+	status = auto
+
+[commit]
+	template = ~/.gitmessage
+
 [core]
 	whitespace   = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
 	pager        = "less -eFfiqrX"
@@ -75,33 +67,39 @@
 	attributesfile = ~/.gitattributes
 	excludesfile = ~/.gitignore
 
+[diff "xz"]
+	textconv = xz --decompress --stdout
+
+[difftool]
+	prompt = no
+
 [diff]
 	mnemonicprefix = true
 	tool           = vimdiff
 	guitool        = vimdiff
 
-[difftool]
-	prompt = no
-
-[merge]
-	tool    = vimdiff
-	guitool = vimdiff
-
-[mergetool]
-	prompt = false
+[github]
+	user  = flatcap
+	token = 87f49c3aebb08f1add7b59c1e3f57cd0
 
 [gpg]
 	program = gpg2
 
-[interactive]
-	singlekey = true
-
-[advice]
-	statusHints = false
-	detachedHead = false
+[grep]
+	# lineNumber = true
+	extendedRegexp = true
 
 [help]
 	autocorrect = -1
+
+[include]
+	# path = ~/.gitconfig-private
+
+[init]
+	# templatedir = ~/.git_template
+
+[interactive]
+	singlekey = true
 
 [log]
 	abbrevCommit = true
@@ -110,23 +108,22 @@
 [mailmap]
 	file = ~/.gitmailmap
 
+[mergetool]
+	prompt = false
+
+[merge]
+	tool    = vimdiff
+	guitool = vimdiff
+
 [pretty]
 	tidy  = %Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset
 	named = %Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(white dim)%an <%ae>%Creset
 
-[commit]
-	template = ~/.gitmessage
+[push]
+	default = matching
 
-[diff "xz"]
-	textconv = xz --decompress --stdout
-
-[grep]
-	# lineNumber = true
-	extendedRegexp = true
-
-[include]
-	# path = ~/.gitconfig-private
-
-[init]
-	# templatedir = ~/.git_template
+[user]
+	email = rich@flatcap.org
+	name = Richard Russon
+	signingkey = Richard Russon (Code Signing) <rich@flatcap.org>
 
