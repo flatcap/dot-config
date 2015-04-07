@@ -5,35 +5,44 @@
 [alias]
 	a      = add
 	b      = branch --verbose --verbose
-	cam    = "!f() { git commit --all --message \"$*\"; }; f"
-	camp   = "!f() { git commit --all --message \"$*\"; X=$(git remote); [ -n \"$X\" ] && git push; }; f"
-	cm     = commit --message
 	d      = diff
 	ds     = diff --stat
-	fixup  = !sh -c 'git commit --fixup  $(git log -n 1 --format='%h' --grep '^$@')'
-	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
-	hide   = update-index --assume-unchanged
 	initm  = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	j      = jump diff
+	lca    = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-7; }; f"
+	p      = push
+	pr     = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
+	s      = "!f() { git stash list; git status --short \"$@\"; }; f"
+	sb     = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
+	st     = status
+	tidy   = "!f() { git fsck --full --strict; git gc --aggressive; }; f"
+	when   = log --diff-filter=A
+
+	# commit
+	cam    = "!f() { git commit --all --message \"$*\"; }; f"
+	camp   = "!f() { git commit --all --message \"$*\"; X=$(git remote); [ -n \"$X\" ] && git push; }; f"
+	cm     = "!f() { git commit --message \"$*\"; }; f"
+
+	# hiding
+	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
+	hide   = update-index --assume-unchanged
+	unhide = update-index --no-assume-unchanged
+
+	# logging
 	l      = log --branches --graph --abbrev-commit --pretty=tidy -n 30
-	lca    = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
 	ll     = log --branches --graph --abbrev-commit --pretty=tidy
 	ln     = log --branches --graph --abbrev-commit --pretty=named -n 30
 	ls     = log --branches --graph --abbrev-commit --pretty=tidy --stat
-	p      = push
-	pop    = stash pop
-	pr     = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
-	rebase = rebase --committer-date-is-author-date
+
+	# rebase
+	fixup  = !sh -c 'git commit --fixup $(git log -n 1 --format='%h' --grep '^$@')'
+	rb     = rebase --committer-date-is-author-date
 	ri     = rebase --committer-date-is-author-date --interactive --autosquash
-	s      = !git stash list && git status --short
-	save   = stash save
-	sb     = !git branch --verbose --verbose & git stash list && git status --short
-	since  = log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
 	sq     = !sh -c 'git commit --squash $(git log -n 1 --format='%h' --grep '^$@')'
-	st     = status
-	tidy   = !git fsck --full --strict && git gc --aggressive
-	unhide = update-index --no-assume-unchanged
-	when   = log --diff-filter=A
+
+	# stash
+	pop    = stash pop
+	save   = stash save
 
 [color "branch"]
 	current = green
