@@ -1,6 +1,7 @@
 [user]
 	email = rich@flatcap.org
 	name = Richard Russon
+	signingkey = Richard Russon (Code Signing) <rich@flatcap.org>
 
 [github]
 	user  = flatcap
@@ -19,10 +20,10 @@
 	ds    = diff --stat
 	initm = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	j     = jump diff
-	l     = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' -n 30
-	ll    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset'
-	ln    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(white dim)%an <%ae>%Creset' -n 30
-	ls    = log --branches --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' --stat
+	l     = log --branches --graph --abbrev-commit --pretty=tidy -n 30
+	ll    = log --branches --graph --abbrev-commit --pretty=tidy
+	ln    = log --branches --graph --abbrev-commit --pretty=named -n 30
+	ls    = log --branches --graph --abbrev-commit --pretty=tidy --stat
 	lca   = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
 	p     = push
 	pr    = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
@@ -31,7 +32,7 @@
 	sb    = !git branch --verbose --verbose & git stash list && git status --short
 	since = log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
 	st    = status
-	tidy  = !git prune && git gc --aggressive && git fsck --full --strict
+	tidy  = !git fsck --full --strict && git gc --aggressive
 	when  = log --diff-filter=A
 
 	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
@@ -70,8 +71,9 @@
 [core]
 	whitespace   = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
 	pager        = "less -eFfiqrX"
-	excludesfile = /home/flatcap/.gitignore
 	preloadindex = true
+	attributesfile = ~/.gitattributes
+	excludesfile = ~/.gitignore
 
 [diff]
 	mnemonicprefix = true
@@ -85,9 +87,46 @@
 	tool    = vimdiff
 	guitool = vimdiff
 
+[mergetool]
+	prompt = false
+
 [gpg]
 	program = gpg2
 
 [interactive]
 	singlekey = true
+
+[advice]
+	statusHints = false
+	detachedHead = false
+
+[help]
+	autocorrect = -1
+
+[log]
+	abbrevCommit = true
+	date = relative
+
+[mailmap]
+	file = ~/.gitmailmap
+
+[pretty]
+	tidy  = %Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset
+	named = %Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(white dim)%an <%ae>%Creset
+
+[commit]
+	template = ~/.gitmessage
+
+[diff "xz"]
+	textconv = xz --decompress --stdout
+
+[grep]
+	# lineNumber = true
+	extendedRegexp = true
+
+[include]
+	# path = ~/.gitconfig-private
+
+[init]
+	# templatedir = ~/.git_template
 
