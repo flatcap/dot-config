@@ -16,6 +16,7 @@
 	when   = log --diff-filter=A
 
 	# commit
+	amend  = commit --amend
 	cam    = "!f() { git commit --all --message \"$*\"; }; f"
 	camp   = "!f() { git commit --all --message \"$*\"; X=$(git remote); [ -n \"$X\" ] && git push; }; f"
 	cm     = "!f() { git commit --message \"$*\"; }; f"
@@ -34,8 +35,8 @@
 	# rebase
 	rb     = rebase --committer-date-is-author-date
 	ri     = rebase --committer-date-is-author-date --interactive --autosquash
-	fix    = "!f() { git commit --fixup  $(git log -n 1 --format='%h' --grep \"^$@\"); }; f"
-	sq     = "!f() { git commit --squash $(git log -n 1 --format='%h' --grep \"^$@\"); }; f"
+	fix    = "!f() { SEARCH=\"$1\"; shift; git commit --fixup  $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
+	sq     = "!f() { SEARCH=\"$1\"; shift; git commit --squash $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
 
 	# stash
 	pop    = stash pop
