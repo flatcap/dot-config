@@ -12,9 +12,6 @@
 	lca    = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-7; }; f"
 	p      = push
 	pr     = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
-	s      = "!f() { git stash list; git status --short \"$@\"; }; f"
-	sb     = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
-	st     = status
 	tidy   = "!f() { git fsck --full --strict; git gc --aggressive; }; f"
 	when   = log --diff-filter=A
 
@@ -24,25 +21,30 @@
 	cm     = "!f() { git commit --message \"$*\"; }; f"
 
 	# hiding
-	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
+	hidden = "!f() { git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'; }; f"
 	hide   = update-index --assume-unchanged
-	unhide = update-index --no-assume-unchanged
+	unhide = "!f() { git update-index --no-assume-unchanged; }; f"
 
-	# logging
+	# logs
 	l      = log --branches --graph --abbrev-commit --pretty=tidy -n 30
 	ll     = log --branches --graph --abbrev-commit --pretty=tidy
 	ln     = log --branches --graph --abbrev-commit --pretty=named -n 30
 	ls     = log --branches --graph --abbrev-commit --pretty=tidy --stat
 
 	# rebase
-	fixup  = !sh -c 'git commit --fixup $(git log -n 1 --format='%h' --grep '^$@')'
 	rb     = rebase --committer-date-is-author-date
 	ri     = rebase --committer-date-is-author-date --interactive --autosquash
-	sq     = !sh -c 'git commit --squash $(git log -n 1 --format='%h' --grep '^$@')'
+	fix    = "!f() { git commit --fixup  $(git log -n 1 --format='%h' --grep \"^$@\"); }; f"
+	sq     = "!f() { git commit --squash $(git log -n 1 --format='%h' --grep \"^$@\"); }; f"
 
 	# stash
 	pop    = stash pop
 	save   = stash save
+
+	# status
+	s      = "!f() { git stash list; git status --short \"$@\"; }; f"
+	sb     = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
+	st     = status
 
 [color "branch"]
 	current = green
