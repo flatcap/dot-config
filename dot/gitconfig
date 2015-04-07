@@ -4,19 +4,28 @@
 
 [alias]
 	a      = add
+	ap     = add --patch
 	b      = branch --verbose --verbose
 	d      = diff
 	ds     = diff --stat
 	initm  = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	j      = jump diff
 	lca    = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-7; }; f"
+	ls     = ls-files
 	p      = push
 	pr     = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
-	tidy   = "!f() { git fsck --full --strict; git gc --aggressive; }; f"
+	r      = remote --verbose
+	tidy   = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
 	when   = log --diff-filter=A
+
+	; grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
+	; git rev-list --all | xargs -I{} git grep --heading -e "fluffy" {} -- 'travel/*'
+	mkobject = hash-object --stdin -w
+	unstage = reset HEAD --
 
 	# commit
 	amend  = commit --amend
+	ce     = commit --allow-empty
 	cam    = "!f() { git commit --all --message \"$*\"; }; f"
 	camp   = "!f() { git commit --all --message \"$*\"; X=$(git remote); [ -n \"$X\" ] && git push; }; f"
 	cm     = "!f() { git commit --message \"$*\"; }; f"
