@@ -144,6 +144,9 @@
 [push]
 	default = matching
 
+[url "git://github.com/"]
+	insteadOf = "gh:"
+
 [user]
 	email = rich@flatcap.org
 	name = Richard Russon
