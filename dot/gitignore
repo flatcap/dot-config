@@ -1,12 +1,11 @@
 # junk
-.*sw[po]
-*.o
-tags
-.~*#
-*~
-.mrconfig
 *.bak
-core.[0-9]*
+*.o
+*~
+.*sw[po]
 .dep
 .obj
 .vimlocal
+.~*#
+core.[0-9]*
+tags

@@ -3,25 +3,25 @@
 	detachedHead = false
 
 [alias]
-	a        = add
-	ap       = add --patch
 	b        = branch --verbose --verbose
+	bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
 	d        = diff
 	ds       = diff --stat
 	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	j        = jump diff
 	lca      = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-7; }; f"
-	ls       = ls-files
 	p        = push
 	pr       = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
 	r        = remote --verbose
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
-	unstage  = reset HEAD --
-	when     = log --diff-filter=A
 
 	; grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
-	; git rev-list --all | xargs -I{} git grep --heading -e "fluffy" {} -- 'travel/*'
 	; mkobject = hash-object --stdin -w
+
+	# add
+	a        = add
+	ap       = add --patch
+	unstage  = reset HEAD --
 
 	# commit
 	amend    = commit --amend
@@ -36,10 +36,11 @@
 	unhide   = "!f() { git update-index --no-assume-unchanged; }; f"
 
 	# logs
-	l        = log --branches --graph --abbrev-commit --pretty=tidy -n 30
-	ll       = log --branches --graph --abbrev-commit --pretty=tidy
-	ln       = log --branches --graph --abbrev-commit --pretty=named -n 30
-	ls       = log --branches --graph --abbrev-commit --pretty=tidy --stat
+	l        = log --branches --graph --pretty=tidy -n 30
+	ll       = log --branches --graph --pretty=tidy
+	ln       = log --branches --graph --pretty=named
+	ls       = log --branches --graph --stat
+	when     = log --pretty=tidy --diff-filter=A
 
 	# rebase
 	rb       = rebase --committer-date-is-author-date
@@ -111,7 +112,7 @@
 	extendedRegexp = true
 
 [help]
-	autocorrect = -1
+	autocorrect = 0
 
 [include]
 	# path = ~/.gitconfig-private
