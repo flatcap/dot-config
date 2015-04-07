@@ -3,37 +3,37 @@
 	detachedHead = false
 
 [alias]
-	a     = add
-	b     = branch --verbose --verbose
-	cam   = "!f() { git commit --all --message \"$*\"; }; f"
-	camp  = "!f() { git commit --all --message \"$*\"; X=$(git remote); [ -n \"$X\" ] && git push; }; f"
-	cm    = commit --message
-	d     = diff
-	ds    = diff --stat
-	initm = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
-	j     = jump diff
-	l     = log --branches --graph --abbrev-commit --pretty=tidy -n 30
-	ll    = log --branches --graph --abbrev-commit --pretty=tidy
-	ln    = log --branches --graph --abbrev-commit --pretty=named -n 30
-	ls    = log --branches --graph --abbrev-commit --pretty=tidy --stat
-	lca   = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
-	p     = push
-	pr    = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
-	rebase= rebase --committer-date-is-author-date
-	s     = !git stash list && git status --short
-	sb    = !git branch --verbose --verbose & git stash list && git status --short
-	since = log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
-	st    = status
-	tidy  = !git fsck --full --strict && git gc --aggressive
-	when  = log --diff-filter=A
+	a      = add
+	b      = branch --verbose --verbose
+	cam    = "!f() { git commit --all --message \"$*\"; }; f"
+	camp   = "!f() { git commit --all --message \"$*\"; X=$(git remote); [ -n \"$X\" ] && git push; }; f"
+	cm     = commit --message
+	d      = diff
+	ds     = diff --stat
+	fixup  = !sh -c 'git commit --fixup  $(git log -n 1 --format='%h' --grep '^$@')'
 	hidden = "!git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'"
 	hide   = update-index --assume-unchanged
-	unhide = update-index --no-assume-unchanged
-	fixup  = !sh -c 'git commit --fixup  $(git log -n 1 --format='%h' --grep '^$@')'
-	sq     = !sh -c 'git commit --squash $(git log -n 1 --format='%h' --grep '^$@')'
-	ri     = rebase --committer-date-is-author-date --interactive --autosquash
-	save   = stash save
+	initm  = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
+	j      = jump diff
+	l      = log --branches --graph --abbrev-commit --pretty=tidy -n 30
+	lca    = !git merge-base master $(git rev-parse --abbrev-ref HEAD) | cut -b-7
+	ll     = log --branches --graph --abbrev-commit --pretty=tidy
+	ln     = log --branches --graph --abbrev-commit --pretty=named -n 30
+	ls     = log --branches --graph --abbrev-commit --pretty=tidy --stat
+	p      = push
 	pop    = stash pop
+	pr     = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
+	rebase = rebase --committer-date-is-author-date
+	ri     = rebase --committer-date-is-author-date --interactive --autosquash
+	s      = !git stash list && git status --short
+	save   = stash save
+	sb     = !git branch --verbose --verbose & git stash list && git status --short
+	since  = log --branches --pretty=format:'%Cred%h%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=relative --since
+	sq     = !sh -c 'git commit --squash $(git log -n 1 --format='%h' --grep '^$@')'
+	st     = status
+	tidy   = !git fsck --full --strict && git gc --aggressive
+	unhide = update-index --no-assume-unchanged
+	when   = log --diff-filter=A
 
 [color "branch"]
 	current = green
@@ -61,11 +61,11 @@
 	template = ~/.gitmessage
 
 [core]
-	whitespace   = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
-	pager        = "less -eFfiqrX"
-	preloadindex = true
+	whitespace     = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
+	pager          = "less -eFfiqrX"
+	preloadindex   = true
 	attributesfile = ~/.gitattributes
-	excludesfile = ~/.gitignore
+	excludesfile   = ~/.gitignore
 
 [diff "xz"]
 	textconv = xz --decompress --stdout
