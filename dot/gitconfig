@@ -144,6 +144,9 @@
 [push]
 	default = matching
 
+[rerere]
+	enabled = true
+
 [url "git://github.com/"]
 	insteadOf = "gh:"
 
