@@ -153,6 +153,9 @@
 [url "git://github.com/"]
 	insteadOf = "gh:"
 
+[url "git://github.com/flatcap/"]
+	insteadOf = "rich:"
+
 [user]
 	email = rich@flatcap.org
 	name = Richard Russon
