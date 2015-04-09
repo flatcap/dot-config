@@ -1,18 +1,230 @@
+# ------------------------------------------------------------------------------
+# Variables
+
+# Never ring any sort of bell during line reading
 set bell-style none
+
+# Add a trailing slash for completed symlink directories
 set mark-symlinked-directories on
 
-"\M-f" forward-char
-"\M-b" backward-char
-"\C-f" forward-word
-"\C-b" backward-word
-"\M-l" redraw-current-line
+# Show multiple completions on first tab press
+set show-all-if-ambiguous on
 
-#"\C-i" dump-functions
-#"\C-i" dump-variables
-#"\C-i" dump-macros 
+# Show me up to 5000 completion items
+set completion-query-items 5000
 
-# Ctrl-{left,right}-arrow
-"\e[1;5D" backward-word
-"\e[1;5C" forward-word
+# Be more intelligent when autocompleting by also looking at the text after
+# the cursor. For example, when the current line is "cd ~/src/mozil", and
+# the cursor is on the "z", pressing Tab will not autocomplete it to "cd
+# ~/src/mozillail", but to "cd ~/src/mozilla".
+set skip-completed-text on
 
-#"\C-l" "clear; ls\n"
+# Highlight the opening parenthesis
+set blink-matching-paren on
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on
+set colored-stats on
+
+# Ignore case when matching and completing paths
+set completion-ignore-case on
+
+# Treat underscores and hyphens the same way for completion purposes
+set completion-map-case on
+
+# Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+set match-hidden-files off
+
+# set completion-prefix-display-length 5
+set completion-query-items 0
+set page-completions off
+
+# set mark-modified-lines on
+
+# set revert-all-at-newline on
+
+# Expand tilde to full path on completion
+# set expand-tilde on
+
+# ------------------------------------------------------------------------------
+
+$if Bash
+	#do history expansion when space entered
+	Space: magic-space
+$endif
+
+# "\M-l" redraw-current-line
+
+"\M-k" forward-backward-delete-char
+
+# ------------------------------------------------------------------------------
+# Mappings
+
+# Dump
+	# escape-d-f, escape-d-m, escape-d-v
+	"\edf": dump-functions
+	"\edm": dump-macros
+	"\edv": dump-variables
+
+# Modify
+	# escape-c, alt-c
+	"\ec":  capitalize-word
+	# escape-l, alt-l
+	"\el":  downcase-word
+	# escape-u, alt-u
+	"\eu":  upcase-word
+
+	# ctrl-t
+	"\C-t": transpose-chars
+	# escape-t, alt-t
+	"\et":  transpose-words
+
+	# escape-#, alt-#
+	"\e#":  insert-comment
+
+# Edit
+	# ctrl-_, ctrl-x-ctrl-u
+	"\C-_":     undo
+	"\C-x\C-u": undo
+	# escape-r, alt-r, escape-ctrl-r
+	"\er":      revert-line
+	"\e\C-r":   revert-line
+	# ctrl-x-ctrl-e
+	"\C-x\C-e": edit-and-execute-command
+
+# Macros
+	# ctrl-x-(
+	"\C-x(": start-kbd-macro
+	# ctrl-x-)
+	"\C-x)": end-kbd-macro
+	# ctrl-x-e
+	"\C-xe": call-last-kbd-macro
+	# print-last-kbd-macro
+
+# Moving
+	# right-arrow
+	"\eOC":    forward-char
+
+	# ctrl-f, ctrl-right-arrow
+	"\C-f":    forward-word
+	"\e[1;5C": forward-word
+
+	# left-arrow
+	"\eOD":    backward-char
+
+	# ctrl-b, ctrl-left-arrow
+	"\C-b":    backward-word
+	"\e[1;5D": backward-word
+
+	# ctrl-a, home
+	"\C-a":    beginning-of-line
+	"\eOH":    beginning-of-line
+
+	# ctrl-e, end
+	"\C-e":    end-of-line
+	"\eOF":    end-of-line
+
+# Kill
+	# ctrl-h, ctrl-?
+	"\C-h":     backward-delete-char
+	"\C-?":     backward-delete-char
+
+	# ctrl-u, ctrl-x-ctrl-? - delete to beginning of line
+	"\C-u":     unix-line-discard
+	"\C-x\C-?": backward-kill-line
+	# ctrl-w, escape-ctrl-h, escape-ctrl-? - delete previous word
+	"\C-w":     unix-word-rubout
+	"\e\C-h":   backward-kill-word
+	"\e\C-?":   backward-kill-word
+	# ctrl-k - delete to end of line
+	"\C-k":     kill-line
+
+# History
+	# escape-<, alt-<
+	"\e<":  beginning-of-history
+	# escape->, alt->
+	"\e>":  end-of-history
+
+	# ctrl-s
+	"\C-s": forward-search-history
+	# ctrl-n, down-arrow
+	"\C-n": next-history
+	"\eOB": next-history
+	# ctrl-p, up-arrow
+	"\C-p": previous-history
+	"\eOA": previous-history
+	# ctrl-r
+	"\C-r": reverse-search-history
+
+# Execute
+	# enter, ctrl-j, ctrl-m
+	"\C-j": accept-line
+	"\C-m": accept-line
+	# ctrl-o
+	"\C-o": operate-and-get-next
+
+# Marks
+	# ctrl-@
+	"\C-@":     set-mark
+	# escape-space
+	"\e ":      set-mark
+	# ctrl-x-ctrl-x
+	"\C-x\C-x": exchange-point-and-mark
+
+# Misc
+	# ctrl-x-ctrl-r
+	"\C-x\C-r": re-read-init-file
+	# ctrl-q, ctrl-v
+	"\C-q":     quoted-insert
+	"\C-v":     quoted-insert
+
+# Yank
+	# ctrl-y
+	"\C-y": yank
+	# escape-., escape-_
+	"\e.":  yank-last-arg
+	"\e_":  yank-last-arg
+	# escape-y, alt-y
+	"\ey":  yank-pop
+
+# Possible Completion
+	# escape-=, escape-?
+	"\e=": possible-completions
+	"\e?": possible-completions
+
+	# ctrl-x-!
+	"\C-x!": possible-command-completions
+	# ctrl-x-/
+	"\C-x/": possible-filename-completions
+	# ctrl-x-@ - complete from /etc/hosts
+	"\C-x@": possible-hostname-completions
+	# ctrl-x-~ - complete from /etc/passwd
+	"\C-x~": possible-username-completions
+	# ctrl-x-$
+	"\C-x$": possible-variable-completions
+
+# Complete
+	# tab - to cycle through possible completions
+	"\t": menu-complete
+	# shift-tab - (same thing backwards)
+	"\e[Z": "\e-1\C-i"
+
+	# escape-escape
+	"\e\e": complete
+
+	# escape-!
+	"\e!":  complete-command
+	# escape-/
+	"\e/":  complete-filename
+	# escape-@ - complete from /etc/hosts
+	"\e@":  complete-hostname
+	# escape-~ - complete from /etc/passwd
+	"\e~":  complete-username
+	# escape-$
+	"\e$":  complete-variable
+
+	# escape-{
+	"\e{":  complete-into-braces
+
+# ------------------------------------------------------------------------------
+
