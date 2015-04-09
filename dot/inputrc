@@ -205,9 +205,9 @@ $endif
 
 # Complete
 	# tab - to cycle through possible completions
-	"\t": menu-complete
+	# "\t": menu-complete
 	# shift-tab - (same thing backwards)
-	"\e[Z": "\e-1\C-i"
+	# "\e[Z": "\e-1\C-i"
 
 	# escape-escape
 	"\e\e": complete
