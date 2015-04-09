@@ -11,7 +11,6 @@ alias df="df --print-type --exclude-type rootfs --exclude-type devtmpfs --exclud
 alias diff="diff --exclude CVS --exclude .svn --exclude tags --exclude .git"
 alias easytag="_wrapdot /usr/bin/easytag"
 alias file="file -sL"
-alias g=git
 alias grep="grep --colour=auto --directories=skip --binary-files=without-match --exclude=tags --exclude=*~"
 alias gthumb="_wrapdot /usr/bin/gthumb"
 alias h="history2"
