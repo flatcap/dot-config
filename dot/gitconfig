@@ -152,12 +152,14 @@
 
 [url "git@gist.github.com:/"]
 	insteadOf = "gist:"
+	pushInsteadOf = "https://gist.github.com/"
 
 [url "git://github.com/"]
 	insteadOf = "gh:"
 
-[url "git://github.com/flatcap/"]
+[url "git@github.com:flatcap/"]
 	insteadOf = "rich:"
+	pushInsteadOf = "https://github.com/flatcap/"
 
 [user]
 	email = rich@flatcap.org
