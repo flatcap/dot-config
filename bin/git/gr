@@ -23,7 +23,7 @@ function log()
 function usage()
 {
 	echo "Usage:"
-	echo "    ${0##*/} [pull|push|{fetch|f}|{status|st|s}|clean|{tidy|t}|clone|wipe|redate]"
+	echo "    ${0##*/} [pull|push|{fetch|f}|{status|st|s}|clean|{tidy|t}|clone|wipe|redate|{remote|r}]"
 	exit 1
 }
 
@@ -179,6 +179,21 @@ function git_redate()
 	done
 }
 
+function git_remote()
+{
+	local i
+	for i in $DIRS; do
+		title2 git remote $i
+		pushd $i > /dev/null
+		local REMOTE=$(git remote -v | awk '/(fetch)/{ printf ("\t%s\n", $2); }')
+		if [ -n "$REMOTE" ]; then
+			log $i
+			echo "$REMOTE"
+		fi
+		popd > /dev/null
+	done
+}
+
 
 get_dirs
 
@@ -204,6 +219,8 @@ case $ARG in
 		git_wipe ;;
 	redate)
 		git_redate ;;
+	remote|r)
+		git_remote ;;
 	*)
 		usage ;;
 esac

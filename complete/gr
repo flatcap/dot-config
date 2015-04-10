@@ -3,7 +3,7 @@ _gr_complete ()
     local cur
     _get_comp_words_by_ref cur
 
-    COMPREPLY=( $( compgen -W 'clean clone fetch pull push redate status tidy wipe' -- "$cur" ) )
+    COMPREPLY=( $( compgen -W 'clean clone fetch pull push redate remote status tidy wipe' -- "$cur" ) )
 }
 
 complete -F _gr_complete gr
