@@ -55,7 +55,13 @@ $endif
 
 # "\M-l" redraw-current-line
 
-"\M-k" forward-backward-delete-char
+# "\M-k" forward-backward-delete-char
+
+# RSI prevention:
+#   alt-j = hyphen
+#   alt-k = underscore
+"\ej" "-"
+"\ek" "_"
 
 # ------------------------------------------------------------------------------
 # Mappings

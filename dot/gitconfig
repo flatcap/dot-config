@@ -144,6 +144,9 @@
 [push]
 	default = matching
 
+[rebase]
+	autosquash = true
+
 [rerere]
 	enabled = true
 
