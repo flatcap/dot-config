@@ -19,13 +19,22 @@ while [ $# -gt 0 ]; do
 				exit 1
 			fi
 
-			if [[ ! "$2" =~ ^[0-9]+$ ]]; then
-				echo "INDENT '$2' must be an integer"
+			if [[ ! "$2" =~ ^-*[0-9]+$ ]]; then
+				echo "INDENT '$2' must be an non-zero integer"
 				usage
 				exit 1
 			fi
 
-			INDENT="$2"
+			INDENT="$(($2))"
+			SIGN="${INDENT%%[0-9]*}"
+			INDENT="${INDENT#-}"
+
+			if [ "$INDENT" = 0 ]; then
+				echo "INDENT '$2' must be an non-zero integer"
+				usage
+				exit 1
+			fi
+
 			shift 2
 			;;
 		-r)
@@ -54,12 +63,17 @@ while [ $# -gt 0 ]; do
 	esac
 done
 
-STR=$(printf "%*s" $INDENT)
-if [ -n "$REGEX" ]; then
-	SED="/$REGEX/s/^/$STR/"
+if [ -n "$SIGN" ]; then
+	SED="s/^ \{,$INDENT\}//"
 else
-	SED="s/^/$STR/"
+	STR=$(printf "%*s" $INDENT)
+	if [ -n "$REGEX" ]; then
+		SED="/$REGEX/s/^/$STR/"
+	else
+		SED="s/^/$STR/"
+	fi
 fi
+
 
 if [ -n "$FILES" ]; then
 	cat "${FILES[@]}" | sed "$SED"
