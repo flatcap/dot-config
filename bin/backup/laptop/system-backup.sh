@@ -31,8 +31,8 @@ cd "$DIR"
 
 xz -9 *.tar
 
-rpm --query --all | sort > rpm_list
-rpm --query --all --last > rpm_last
+rpm --query --all | sort > rpm-list
+rpm --query --all --last > rpm-last
 
 for i in *; do
 	gpg2 --encrypt --recipient "$RCPT" "$i"
