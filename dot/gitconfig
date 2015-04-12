@@ -7,7 +7,7 @@
 	bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
 	d        = diff
 	ds       = diff --stat
-	initm    = "!f() { cd ${GIT_PREFIX:-.} >& /dev/null; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
+	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	j        = jump diff
 	lca      = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-7; }; f"
 	p        = push
@@ -15,11 +15,11 @@
 	r        = remote --verbose
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
 
-	; grep-all = "!f() { cd ${GIT_PREFIX:-.} >& /dev/null; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
+	; grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
 	; mkobject = hash-object --stdin -w
 
 	# add
-	a        = "!f() { cd ${GIT_PREFIX:-.} >& /dev/null; git add \"${@:-.}\"; }; f"
+	a        = "!f() { cd ${GIT_PREFIX:-.}; git add \"${@:-.}\"; }; f"
 	ap       = add --patch
 	unstage  = reset HEAD --
 
