@@ -38,8 +38,8 @@ tar $TAR_OPTS --create --file $DIR/home.tar	\
 	--exclude home/flatcap/.cache		\
 	home
 
-rpm --query --all | sort > $DIR/rpm_list
-rpm --query --all --last > $DIR/rpm_last
+rpm --query --all | sort > $DIR/rpm-list
+rpm --query --all --last > $DIR/rpm-last
 
 cd "$DIR"
 
