@@ -30,12 +30,12 @@ function usage()
 function get_dirs()
 {
 	local i
-	local dir_list="$(find . -type d -name .git | sort | cut -b3-)"
+	local dir_list="$(find . -type d -name .git | LANG=C sort | cut -b3-)"
 	for i in $dir_list; do
 		[ "$i" = ".git" ] && i=.
 		DIRS="$DIRS ${i%/*}"
 	done
-	DIRS="$DIRS $(find . -type d -name "?*.git" | sort | cut -b3-)"
+	DIRS="$DIRS $(find . -type d -name "?*.git" | LANG=C sort | cut -b3-)"
 }
 
 function git_fetch()
