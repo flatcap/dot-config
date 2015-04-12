@@ -224,7 +224,7 @@ function __prompt_ident()
 function __prompt_command()
 {
 	_history_sync
-	export PS1="$(__prompt_user)$(__prompt_git)$(__prompt_dir)$(__prompt_ident)"
+	PS1="$(__prompt_user)$(__prompt_git)$(__prompt_dir)$(__prompt_ident)"
 
 	local cfg_title="${PROMPT_CFG_TITLE:-no}"
 	local hostname="$(hostname)"
@@ -250,5 +250,5 @@ function __prompt_command()
 }
 
 
-export PROMPT_COMMAND=__prompt_command
+PROMPT_COMMAND=__prompt_command
 

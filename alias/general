@@ -15,7 +15,7 @@ alias grep="grep --colour=auto --directories=skip --binary-files=without-match -
 alias gthumb="_wrapdot /usr/bin/gthumb"
 alias h="history2"
 alias jobs="jobs -l"
-alias keep="export IGNOREEOF=999"
+alias keep="IGNOREEOF=999"
 alias killall="killall --ignore-case"
 alias man="_wrapsimple /usr/bin/man"
 alias mkdir="mkdir --parents"

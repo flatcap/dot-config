@@ -24,3 +24,4 @@ repeat()
 	[ $fail -gt 0 ] && echo "$i/$fail/$count"
 }
 
+export -f repeat

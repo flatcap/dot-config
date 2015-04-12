@@ -15,12 +15,3 @@ PROMPT_CFG_USER=yes
 [[   $HOSTNAME =~ ^(laptop.flatcap.org|desktop.flatcap.org|www.russon.org)$ ]] && PROMPT_CFG_GIT="yes"
 [[   $SSH_CLIENT                                                            ]] && PROMPT_CFG_USER="yes"
 
-export PROMPT_CFG_COLOUR
-export PROMPT_CFG_DIR
-export PROMPT_CFG_DIR_TYPE
-export PROMPT_CFG_GIT
-export PROMPT_CFG_GIT_ABBR
-export PROMPT_CFG_IDENT
-export PROMPT_CFG_TITLE
-export PROMPT_CFG_USER
-

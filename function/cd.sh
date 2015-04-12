@@ -98,7 +98,7 @@ function cddir ()
 {
 	[ -n "$1" ] && builtin cd "$1" >& /dev/null
 	CDDIR=$(pwd -P)
-	export IGNOREEOF=999
+	IGNOREEOF=999
 }
 
 function . ()
