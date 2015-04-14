@@ -57,6 +57,7 @@
 	s        = "!f() { git stash list; git status --short \"$@\"; }; f"
 	sb       = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
 	st       = status
+	stats    = "!f() { W=$(git rev-list --count --max-age $(date -d \"-1 week\" +%s) HEAD); M=$(git rev-list --count --max-age $(date -d \"-1 month\" +%s) HEAD); A=$(git rev-list --count HEAD); echo $W/$M/$A commits; }; f"
 
 [color "branch"]
 	current = green
