@@ -131,15 +131,18 @@ function git_tidy()
 		git gc #--aggressive
 		git prune
 		[ -d .git ] && cd .git
-		rm -f hooks/*.sample
-		rm -f GIT_COLA_MSG
-		rm -f gitk.cache
 		rm -f COMMIT_EDITMSG
-		rm -f qgit_cache.dat
-		rm -f ORIG_HEAD
 		rm -f FETCH_HEAD
+		rm -f gitk.cache
+		rm -f GIT_COLA_MSG
+		rm -f gl-*
+		rm -f hooks/*.sample
+		rm -f info/exclude
+		rm -f ORIG_HEAD
+		rm -f qgit_cache.dat
 		rm -fr rr-cache
 		rm -fr logs
+		chmod -x config
 		popd > /dev/null
 	done
 }
