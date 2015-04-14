@@ -40,6 +40,7 @@
 	ll       = log --branches --graph --pretty=tidy
 	ln       = log --branches --graph --pretty=named
 	ls       = log --branches --graph --stat
+	since    = log --branches --graph --pretty=tidy --since
 	when     = log --pretty=tidy --diff-filter=A
 
 	# rebase
