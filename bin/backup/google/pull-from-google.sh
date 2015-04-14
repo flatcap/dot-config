@@ -9,5 +9,7 @@ ionice --class 3     --pid $$ > /dev/null
 echo "Pulling changes from google:"
 echo
 
+cd /mnt/space/google
+
 rclone --stats=10s copy gdrive: .
 
