@@ -37,9 +37,6 @@ alias xz="_compress /usr/bin/xz"
 alias yyum="yum -y"
 alias ~="cd $HOME; clear; ls"
 
-alias root="if screen -S root -Q select . >& /dev/null; then screen -S root -r; else screen -S root su -; fi"
-alias ~="cd $HOME; clear; ls"
-
 if [ -n "$DISPLAY" ]; then
 	alias vi="gvim -v"
 	alias vim="gvim -v"
