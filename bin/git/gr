@@ -127,14 +127,19 @@ function git_tidy()
 		title2 git tidy $i
 		log $i
 		pushd $i > /dev/null
-		git prune
-		git gc #--aggressive
 		git fsck --full --strict
-		if [ -d .git ]; then
-			rm -f .git/hooks/*.sample .git/GIT_COLA_MSG .git/gitk.cache .git/COMMIT_EDITMSG .git/qgit_cache.dat
-		else
-			rm -f hooks/*.sample GIT_COLA_MSG gitk.cache COMMIT_EDITMSG qgit_cache.dat
-		fi
+		git gc #--aggressive
+		git prune
+		[ -d .git ] && cd .git
+		rm -f hooks/*.sample
+		rm -f GIT_COLA_MSG
+		rm -f gitk.cache
+		rm -f COMMIT_EDITMSG
+		rm -f qgit_cache.dat
+		rm -f ORIG_HEAD
+		rm -f FETCH_HEAD
+		rm -fr rr-cache
+		rm -fr logs
 		popd > /dev/null
 	done
 }
