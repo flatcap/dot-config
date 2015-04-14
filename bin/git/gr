@@ -135,7 +135,6 @@ function git_tidy()
 		rm -f FETCH_HEAD
 		rm -f gitk.cache
 		rm -f GIT_COLA_MSG
-		rm -f gl-*
 		rm -f hooks/*.sample
 		rm -f info/exclude
 		rm -f ORIG_HEAD
