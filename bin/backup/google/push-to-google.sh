@@ -9,5 +9,5 @@ ionice --class 3     --pid $$ > /dev/null
 echo "Pushing files to google:"
 echo
 
-rclone copy . gdrive:
+/mnt/space/bin-extra/rclone --stats=10s copy . gdrive:
 
