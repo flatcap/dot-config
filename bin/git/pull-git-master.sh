@@ -3,7 +3,7 @@
 PATH="/usr/bin:/usr/sbin"
 
 GIT_ROOT="/mnt/space/git/"
-GIT_REPO="git-repo:repositories/"
+GIT_REPO="git-pull:repositories/"
 
 set -o errexit	# set -e
 set -o nounset	# set -u
