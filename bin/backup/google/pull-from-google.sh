@@ -11,5 +11,5 @@ echo
 
 cd /mnt/space/google
 
-/mnt/space/bin-extra/rclone --stats=10s copy gdrive: .
+rclone --stats=10s copy gdrive: .
 
