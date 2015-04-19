@@ -9,5 +9,5 @@ ionice --class 3     --pid $$ > /dev/null
 echo "Checking for differences from google:"
 echo
 
-rclone check gdrive: .
+rclone --stats=10s check gdrive: .
 
