@@ -1,1 +1,8 @@
-*.xz diff=xz
+*.xz		diff=xz
+gitconfig	diff=dosini
+# fruit.txt	filter=openssl diff=openssl
+# fruit.txt	merge=theirs
+# fruit.txt	merge=ours
+*.png		diff=identify
+# *.vim		filter=tabspace2
+# *.db		filter=serial

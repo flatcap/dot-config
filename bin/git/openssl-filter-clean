@@ -1,0 +1,5 @@
+#!/bin/bash
+# echo $0 $@ >> /dev/pts/0
+SALT_FIXED=$(head -c 1000 /dev/random | sha1sum | cut -b 1-16)
+PASS_FIXED="Mary had a little lamb"
+openssl enc -base64 -aes-256-ecb -S "$SALT_FIXED" -k "$PASS_FIXED"

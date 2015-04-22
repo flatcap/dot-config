@@ -1,0 +1,7 @@
+#!/bin/bash
+# echo $0 $@ >> /dev/pts/0
+# No salt is needed for decryption.
+PASS_FIXED="Mary had a little lamb"
+# If decryption fails, use `cat` instead.
+# Error messages are redirected to /dev/null.
+openssl enc -d -base64 -aes-256-ecb -k "$PASS_FIXED" 2> /dev/null || cat

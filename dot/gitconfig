@@ -91,6 +91,16 @@
 	attributesfile = ~/.gitattributes
 	excludesfile   = ~/.gitignore
 
+[diff "dosini"]
+	xfuncname = "^(\\[.*\\])$"
+
+[diff "identify"]
+	textconv = identify -verbose
+	cachetextconv = true
+
+[diff "openssl"]
+	textconv = diff-filter-openssl
+
 [diff "xz"]
 	textconv = xz --decompress --stdout
 
@@ -101,6 +111,18 @@
 	mnemonicprefix = true
 	tool           = vimdiff
 	guitool        = vimdiff
+
+[filter "serial"]
+	clean = sed -e 's/\\<[0-9]\\{10\\}\\>/0000000000/'
+	smudge = cat
+
+[filter "openssl"]
+	smudge = smudge-filter-openssl
+	clean = clean-filter-openssl
+
+[filter "tabspace2"]
+	smudge = unexpand --tabs=2 --first-only
+	clean = expand --tabs=2 --initial
 
 [github]
 	user  = flatcap
@@ -132,12 +154,19 @@
 [mailmap]
 	file = ~/.gitmailmap
 
+[merge]
+	tool        = vimdiff
+	guitool     = vimdiff
+	renormalize = true
+
+[merge "ours"]
+	name = Always keep ours during merge
+	driver = git-merge-keep-ours.sh %O %A %B
+[merge "theirs"]
+	name = Always keep theirs during merge
+	driver = git-merge-keep-theirs.sh %O %A %B
 [mergetool]
 	prompt = false
-
-[merge]
-	tool    = vimdiff
-	guitool = vimdiff
 
 [pretty]
 	tidy  = %Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset
