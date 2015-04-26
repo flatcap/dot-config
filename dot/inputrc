@@ -60,8 +60,12 @@ $endif
 # RSI prevention:
 #   alt-j = hyphen
 #   alt-k = underscore
+#   alt-f = plus
+#   alt-d = equals
 "\ej" "-"
 "\ek" "_"
+"\ef" "+"
+"\ed" "="
 
 # ------------------------------------------------------------------------------
 # Mappings
