@@ -57,6 +57,8 @@
 .vim/.git
 .vim/backup
 .vim/bundle/*/.git
+.vim/bundle/color_coded/bin
+.vim/bundle/color_coded/build
 .vim/swap
 .vim/undo
 .vim/view
