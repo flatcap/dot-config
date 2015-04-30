@@ -200,6 +200,22 @@ function git_remote()
 	done
 }
 
+function git_diff()
+{
+	local i
+	for i in $DIRS; do
+		title2 git diff $i
+		pushd $i > /dev/null
+		local DIFF=$(git diff --color "$@")
+		if [ -n "$DIFF" ]; then
+			log $i
+			echo "$DIFF"
+		fi
+
+		popd > /dev/null
+	done
+}
+
 
 get_dirs
 
@@ -227,6 +243,10 @@ case $ARG in
 		git_redate ;;
 	remote|r)
 		git_remote ;;
+	diff|d)
+		git_diff ;;
+	ds)
+		git_diff --stat ;;
 	*)
 		usage ;;
 esac
