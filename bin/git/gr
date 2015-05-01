@@ -226,7 +226,7 @@ case $ARG in
 		git_push ;;
 	pull)
 		shift
-		git_pull $@ ;;
+		git_pull "$@" ;;
 	fetch|f)
 		git_fetch ;;
 	status|st|s)
@@ -244,9 +244,11 @@ case $ARG in
 	remote|r)
 		git_remote ;;
 	diff|d)
-		git_diff ;;
+		shift
+		git_diff "$@" ;;
 	ds)
-		git_diff --stat ;;
+		shift
+		git_diff --stat "$@" ;;
 	*)
 		usage ;;
 esac
