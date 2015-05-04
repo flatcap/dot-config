@@ -169,8 +169,8 @@
 	prompt = false
 
 [pretty]
-	tidy  = %Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset
-	named = %Cred%h%Creset %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(white dim)%an <%ae>%Creset
+	tidy  = %Cred%h%Creset %s %Cgreen(%ar)%Creset%C(yellow)%d%Creset
+	named = %Cred%h%Creset %s %Cgreen(%ar)%Creset%C(yellow)%d%Creset %C(white dim)%an <%ae>%Creset
 
 [push]
 	default = matching
