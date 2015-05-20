@@ -32,8 +32,8 @@
 
 	# hiding
 	hidden   = "!f() { git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'; }; f"
-	hide     = update-index --assume-unchanged
-	unhide   = "!f() { git update-index --no-assume-unchanged; }; f"
+	hide     = "!f() { git update-index --assume-unchanged \"$@\"; }; f"
+	unhide   = "!f() { git update-index --no-assume-unchanged \"$@\"; }; f"
 
 	# logs
 	l        = log --branches --graph --pretty=tidy -n 30
