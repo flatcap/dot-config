@@ -28,7 +28,7 @@ for DIR in "$@"; do
 	find "$DIR" ! -type d ! -path "*/.git*" -print0					\
 		| sort --zero-terminated						\
 		| tar --create --file - --null --files-from - --sparse --selinux --acls	\
-		| xz --best								\
+		| xz --best --threads 0							\
 		| gpg2 --encrypt --recipient "$RCPT" --output "$TAR"
 
 	echo "$TAR"
