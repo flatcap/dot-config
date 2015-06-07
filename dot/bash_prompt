@@ -82,10 +82,17 @@ function __virtual_machine()
 }
 
 
+function __prompt_ip()
+{
+	local IP=$(ifdata -pa eth0 2> /dev/null)
+	__virtual_machine && echo ${IP##*.}
+}
+
 function __prompt_user()
 {
 	local cfg_user="${PROMPT_CFG_USER:-no}"
 	local cfg_colour="${PROMPT_CFG_COLOUR:-no}"
+	local cfg_ip="${PROMPT_CFG_IP:-no}"
 	local prompt=""
 	local prompt_colour=""
 
@@ -97,7 +104,7 @@ function __prompt_user()
 		prompt="${USER^^}"
 		prompt="${prompt:0:1}"
 	fi
-	prompt="[$prompt]"
+	prompt="[$prompt$(__prompt_ip)]"
 
 	if [ "$cfg_colour" = "yes" ]; then
 		__virtual_machine && HOSTNAME=dummy.vm.flatcap.org
