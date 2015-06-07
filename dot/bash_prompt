@@ -85,6 +85,7 @@ function __virtual_machine()
 function __prompt_ip()
 {
 	local IP=$(ifdata -pa eth0 2> /dev/null)
+	[ -z "$IP" -o "$IP" = "NON-IP" ] && return
 	__virtual_machine && echo ${IP##*.}
 }
 
