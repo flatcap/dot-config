@@ -1,5 +1,5 @@
 #!/bin/bash
-[[ $- != *i* ]] && exit 0
+[ -t 0 ] || exit 0
 echo -en "\e[18t" # returns \e[8;??;??t
 IFS='[;'
 read -d t -s esc params
