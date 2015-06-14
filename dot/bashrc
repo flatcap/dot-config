@@ -20,7 +20,7 @@ for dir in env function complete alias; do
 	done
 done
 
-[[ $TERM =~ ^(xterm|vt100|linux)$ ]] && bind Space:magic-space
+[ -n "$PS1" ] && bind Space:magic-space
 
 [[ $TERM =~ ^xterm ]] && export TERM=xterm-256color
 
