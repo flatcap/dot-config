@@ -8,8 +8,8 @@ _comp_ssh()
 	FILE=/var/lib/libvirt/dnsmasq/hosts
 	[ -f $FILE ] && LIST="$LIST $(sed 's/.* //' $FILE)"
 
-	FILE=~/.ssh/known_hosts
-	[ -f $FILE ] && LIST="$LIST $(sed 's/[, ].*//' $FILE)"
+	# FILE=~/.ssh/known_hosts
+	# [ -f $FILE ] && LIST="$LIST $(sed 's/[, ].*//' $FILE)"
 
 	if [[ "$cur" =~ @ ]]; then
 		local REPLACE="${cur%@*}@"		# Just keep the 'user@' bit
