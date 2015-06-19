@@ -10,22 +10,22 @@ Y=$(sed 's/.*y:\([0-9]\+\).*/\1/' <<< "$COORDS")
 # │      │      │
 # │     .│.     │
 # └──────┴──────┘
-if [ $X -lt 683 ]; then
-	xdotool mousemove 700 750
-else
-	xdotool mousemove 660 750
-fi
+# if [ $X -lt 683 ]; then
+# 	xdotool mousemove 700 750
+# else
+# 	xdotool mousemove 660 750
+# fi
 
 # Monitor: 1920x1080
 # ┌──────┬──────┐
 # │      │      │
 # │     .│.     │
 # └──────┴──────┘
-# if [ $X -lt 960 ]; then
-# 	xdotool mousemove 977 1064
-# else
-# 	xdotool mousemove 943 1064
-# fi
+if [ $X -lt 960 ]; then
+	xdotool mousemove 977 1064
+else
+	xdotool mousemove 943 1064
+fi
 
 # Monitor/Laptop: 3286x1080
 # ┌─────────────┐

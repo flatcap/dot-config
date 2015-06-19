@@ -11,3 +11,5 @@ for file in *; do
 	ln -sf $DIR/$file ~/.$file
 done
 
+touch ~/.hushlogin
+

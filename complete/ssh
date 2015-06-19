@@ -22,4 +22,5 @@ _comp_ssh()
 }
 
 complete -F _comp_ssh ssh
+complete -F _comp_ssh host
 
