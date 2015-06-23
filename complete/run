@@ -1,0 +1,13 @@
+function _comp_run()
+{
+	local cur=${COMP_WORDS[COMP_CWORD]}
+
+	local LIST
+
+	LIST=$(echo [a-z]*.qcow2)
+
+	COMPREPLY=( $(compgen -W "$LIST" $cur) )
+}
+
+complete -F _comp_run run
+
