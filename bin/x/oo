@@ -25,6 +25,12 @@ for i in "$@"; do
 		*.pdf)
 			(evince "$i" &) &> /dev/null
 			;;
+		# *.dot|*.gv)
+			#(dotty "$i" &) &> /dev/null
+			#xdotool search --name ${i%.*} windowkill
+			#(dot -Tpng $i | display -resize 70% -title ${i%.*} - &) >& /dev/null
+			# (neato -Tpng $i | display -geometry -1366+0 -title ${i%.*} - &) >& /dev/null
+			# ;;
 		*.svg|*.dot|*.gv)
 			#(inkscape "$i" &) &> /dev/null
 			#(display -resize 70% -negate -title ${i%.*} "$i" &) >& /dev/null
@@ -43,12 +49,6 @@ for i in "$@"; do
 			(cat "$i" > /dev/null) &> /dev/null
 			(cat "$i" > /dev/null) &> /dev/null
 			;;
-		#*.dot|*.gv)
-			#(dotty "$i" &) &> /dev/null
-			#xdotool search --name ${i%.*} windowkill
-			#(dot -Tpng $i | display -resize 70% -title ${i%.*} - &) >& /dev/null
-			#(dot -Tpng $i | display -title ${i%.*} - &) >& /dev/null
-			#;;
 		*.htm|*.html)
 			(firefox "$i" &) &> /dev/null
 			;;
