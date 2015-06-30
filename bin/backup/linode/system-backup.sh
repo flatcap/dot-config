@@ -13,7 +13,7 @@ umask 0077
 DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 DIR="/backup/linode/$DATE"
-TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude shell/vim/backup --exclude shell/vim/swap --exclude shell/vim/undo"
+TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude .gnupg/S.gpg-agent"
 
 mkdir --parents $DIR
 
@@ -29,12 +29,6 @@ tar $TAR_OPTS --create --file $DIR/www.tar				var/www
 
 tar $TAR_OPTS --create --file $DIR/home.tar	\
 	--exclude home/flatcap/torrent		\
-	--exclude home/flatcap/google		\
-	--exclude home/flatcap/books		\
-	--exclude home/flatcap/static		\
-	--exclude home/flatcap/flatcap.org	\
-	--exclude home/flatcap/flatcap.xyz	\
-	--exclude home/flatcap/russon.org	\
 	--exclude home/flatcap/.cache		\
 	home
 
@@ -43,7 +37,7 @@ rpm --query --all --last > $DIR/rpm-last
 
 cd "$DIR"
 
-xz -6 -T0 *.tar
+xz -9 -T0 *.tar
 
 for i in *.tar.xz; do
 	gpg2 --encrypt --recipient "$RCPT" "$i"
