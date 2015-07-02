@@ -3,7 +3,7 @@
 SUDO=""
 export PATH="/bin:/usr/bin:/sbin:/usr/sbin"
 
-if [ "$UID" != 0 -a "$HOSTNAME" = "laptop.flatcap.org" ]; then
+if [ "$UID" != 0 ]; then
 	SUDO="/usr/bin/sudo"
 fi
 
