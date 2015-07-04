@@ -1,0 +1,14 @@
+#!/bin/bash
+
+IP=$(ifdata -pa eth0)
+[ ! $IP = 'NON-IP' ] && exit
+
+for ((i = 0; i < 60; i++)); do
+	IP=$(ifdata -pa eth0)
+	if [ ! $IP = 'NON-IP' ]; then
+		title $(hostname) $IP
+		break
+	fi
+	sleep 1
+done
+
