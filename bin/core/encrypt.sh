@@ -14,5 +14,5 @@ umask 0077
 
 for i in "$@"; do
 	echo $i
-	gpg2 -e -R "$RCPT" "$i"
+	gpg2 --encrypt --hidden-recipient "$RCPT" "$i"
 done

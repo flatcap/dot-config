@@ -54,5 +54,6 @@ if [ $1 = 1366 ]; then
 	laptop
 else
 	monitor_laptop
+	# monitor
 fi
 
