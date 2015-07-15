@@ -12,6 +12,6 @@ umask 0022
 
 cd /srv/www/
 
-gr pull >& /dev/null
-gr tidy >& /dev/null
+gr pull
+gr tidy
 
