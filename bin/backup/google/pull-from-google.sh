@@ -10,6 +10,7 @@ echo "Pulling changes from google:"
 echo
 
 cd /mnt/space/google
+umask 077
 
 rclone --stats=10s copy gdrive: .
 
