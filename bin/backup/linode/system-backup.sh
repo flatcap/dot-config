@@ -20,7 +20,7 @@ mkdir --parents $DIR
 cd /
 
 tar $TAR_OPTS --create --file $DIR/cron.tar				var/spool/cron
-tar $TAR_OPTS --create --file $DIR/etc.tar				etc
+tar $TAR_OPTS --create --file $DIR/etc.tar   --exclude S.gpg-agent	etc
 tar $TAR_OPTS --create --file $DIR/mysql.tar --exclude mysql.sock	var/lib/mysql
 tar $TAR_OPTS --create --file $DIR/root.tar				root
 # tar $TAR_OPTS --create --file $DIR/usr_local.tar			usr/local
