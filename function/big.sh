@@ -4,6 +4,6 @@ big()
 
 	local LINES=$(($(tput lines) - 3))
 
-	du -sm * .??* | sort -nr | head -n $LINES
+	du -sk * .??* | sort -nr | head -n $LINES
 }
 
