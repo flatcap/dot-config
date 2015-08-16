@@ -18,7 +18,7 @@ title()
 		;;
 	esac
 
-	echo -ne "\033]2;${title}\007" > /dev/stderr
+	[ -w /dev/stderr ] && echo -ne "\033]2;${title}\007" > /dev/stderr
 	# PROMPT_COMMAND="echo -n ; $prompt"
 }
 
