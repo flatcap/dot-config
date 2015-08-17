@@ -1,5 +1,15 @@
 #!/bin/bash
 
+PATH="/usr/bin:/usr/sbin"
+
+set -o errexit	# set -e
+set -o nounset	# set -u
+
+renice --priority 19 --pid $$ > /dev/null
+ionice --class 3     --pid $$ > /dev/null
+
+umask 0077
+
 for i in m{1..3}; do
 	if [ -f $i ]; then
 		echo "file exists: $i"
