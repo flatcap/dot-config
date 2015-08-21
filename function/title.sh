@@ -1,5 +1,7 @@
 title()
 {
+	[ -w /dev/stderr ] || return 0
+
 	local prompt=""
 	local title=""
 
@@ -18,8 +20,7 @@ title()
 		;;
 	esac
 
-	[ -w /dev/stderr ] && echo -ne "\033]2;${title}\007" > /dev/stderr
-	# PROMPT_COMMAND="echo -n ; $prompt"
+	echo -ne "\033]2;${title}\007" > /dev/stderr
 }
 
 export -f title
