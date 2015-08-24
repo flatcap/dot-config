@@ -4,6 +4,6 @@ big()
 
 	local LINES=$(($(tput lines) - 3))
 
-	du --summarize --block-size=1K --one-file-system * .??* | sort --numeric-sort --reverse | head --lines $LINES
+	du --summarize --block-size=1K --one-file-system * .??* | sort --numeric-sort --reverse | head --lines $LINES | column --table
 }
 
