@@ -15,5 +15,5 @@ umask 0077
 
 cd "$DELUGE_ROOT"
 
-rsync -av "$DELUGE_REPO" .
+rsync -avzSP "$DELUGE_REPO" .
 
