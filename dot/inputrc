@@ -62,11 +62,14 @@ $endif
 #   alt-k = underscore
 #   alt-f = plus
 #   alt-d = equals
+#   alt-h = tilda
+#   alt-m = return
 "\ej" "-"
 "\ek" "_"
 "\ef" "+"
 "\ed" "="
 "\eh" "~"
+"\em" "\n"
 
 # ------------------------------------------------------------------------------
 # Mappings
