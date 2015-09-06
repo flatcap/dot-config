@@ -1,0 +1,7 @@
+#!/bin/bash
+
+/usr/bin/dict "$1" | \
+	sed	-e "/^\s\+[ac?]*[0-9]\{4\}\(-[0-9]\{1,4\}\)*:.*/d" \
+		-e 's/^[ \t]\+$//' \
+		-e '/^From Oxford English Dictionary/d' | cat -s
+
