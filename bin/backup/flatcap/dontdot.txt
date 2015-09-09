@@ -28,7 +28,7 @@
 .java
 .kozo
 .lesshst
-.local/share/evolution/addressbook/system/log.*
+.local/share/evolution
 .local/share/gpaste/images
 .local/share/rhythmbox
 .local/share/tracker
