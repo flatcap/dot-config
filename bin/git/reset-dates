@@ -3,7 +3,7 @@
 set -o errexit	# set -e
 set -o nounset	# set -u
 
-cd ~/repositories
+cd ~gitolite3/repositories
 
 for i in $(find . -name \*.git | sort); do
 	# echo ${i#*/}
