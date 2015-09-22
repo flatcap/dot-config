@@ -5,6 +5,7 @@
 DATE=$(date '+%F')
 
 for ARG in "$@"; do
+	ARG=${ARG%/}
 	if [[ $ARG =~ / ]]; then
 		FILE="${ARG##*/}"
 		DIR="${ARG%/*}/"
