@@ -13,12 +13,14 @@ for ARG in "$@"; do
 		FILE="$ARG"
 		DIR=""
 	fi
-	if [[ "$FILE" =~ ^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]_ ]]; then
+	if [[ "$FILE" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}_ ]]; then
 		NEW=${DATE}_${FILE:11}
 	else
 		NEW="${DATE}_$FILE"
 	fi
-	mv "$DIR$FILE" "$DIR$NEW"
-	echo "$NEW"
+	if [ ! "$FILE" = "$NEW" ]; then
+		mv "$DIR$FILE" "$DIR$NEW"
+		echo "$NEW"
+	fi
 done
 
