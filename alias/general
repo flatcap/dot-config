@@ -25,15 +25,13 @@ alias odw="LANG=C hexdump -f ~/.format2"
 alias rar="unrar"
 alias rmdir="rmdir --ignore-fail-on-non-empty --parents"
 alias root="ssh root"
-alias ssh-helper='ssh-add $(find ~/.ssh -name \*.pub | sed "s/\.pub//")'
 alias tar="_wrapsimple /bin/tar"
 alias tree="tree -C"
 alias vi="vim -X"
-alias vm='sudo /usr/bin/virt-manager'
+alias vm='virt-manager'
 alias vo="vi -O"
-alias vs='sudo /usr/bin/virsh'
+alias vs='virsh'
 alias xz="_compress /usr/bin/xz"
-alias yyum="yum -y"
 alias ~="cd $HOME; clear; ls"
 
 if [ -n "$DISPLAY" ]; then
