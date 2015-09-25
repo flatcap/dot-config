@@ -13,7 +13,7 @@ umask 0077
 DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 DIR="/mnt/space/backup/laptop/$DATE"
-TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude shell/vim/backup --exclude shell/vim/swap --exclude shell/vim/undo"
+TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude .gnupg/S.*"
 
 cd /
 
@@ -21,7 +21,7 @@ mkdir --parents "$DIR"
 
 tar $TAR_OPTS --create --file "$DIR"/cron.tar                       var/spool/cron
 tar $TAR_OPTS --create --file "$DIR"/etc.tar                        etc
-tar $TAR_OPTS --create --file "$DIR"/mysql.tar --exclude mysql.sock var/lib/mysql
+# tar $TAR_OPTS --create --file "$DIR"/mysql.tar --exclude mysql.sock var/lib/mysql
 tar $TAR_OPTS --create --file "$DIR"/root.tar                       root
 #tar $TAR_OPTS --create --file "$DIR"/usr_local.tar                  usr/local
 tar $TAR_OPTS --create --file "$DIR"/var_log.tar                    var/log
