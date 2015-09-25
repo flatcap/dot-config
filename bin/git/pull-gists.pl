@@ -11,6 +11,8 @@ use JSON qw(decode_json);
 
 my $url = 'https://api.github.com/users/flatcap/gists';
 
+chdir ("/var/lib/gitolite3/repositories/gists") or die "$!";
+
 my $json = get ($url);
 
 my $decoded_json = decode_json ($json);
