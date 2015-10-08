@@ -73,9 +73,20 @@ $endif
 "\es" "*"
 "\ew" "\\*"
 
+"\eC" "| column -t "
+"\eD" "| uniq -d "
+"\eE" "| uniq -c "
+"\eL" "| nl -nrz -w4 "
+"\eN" "| sort -n "
+"\eR" "| rev "
+"\eS" "| sort -f "
+"\eT" "| tac "
+"\eU" "| uniq "
+"\eX" "| shuf "
+"\eZ" "| cat -s "
+
 "\eW" " | wc -l\n"
-"\eL" " | less\n"
-"\eS" " | sort\n"
+"\eM" " | less\n"
 
 # ------------------------------------------------------------------------------
 # Mappings
