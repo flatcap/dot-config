@@ -1,0 +1,11 @@
+function bc()
+{
+	local PROG="/usr/bin/bc --quiet --mathlib"
+
+	if [ $# -gt 0 ]; then
+		echo "$@" | $PROG
+	else
+		$PROG
+	fi
+}
+
