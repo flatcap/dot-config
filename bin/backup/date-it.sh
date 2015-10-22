@@ -19,8 +19,7 @@ for ARG in "$@"; do
 		NEW="${DATE}_$FILE"
 	fi
 	if [ ! "$FILE" = "$NEW" ]; then
-		mv "$DIR$FILE" "$DIR$NEW"
-		echo "$NEW"
+		mv -vi -- "$DIR$FILE" "$DIR$NEW"
 	fi
 done
 
