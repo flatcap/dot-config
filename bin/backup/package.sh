@@ -29,7 +29,7 @@ for DIR in "$@"; do
 		| sort --zero-terminated						\
 		| tar --create --file - --null --files-from - --sparse --selinux --acls	\
 		| xz --best --threads 0							\
-		| gpg2 --encrypt --recipient "$RCPT" --output "$TAR"
+		| gpg2 --encrypt --hidden-recipient "$RCPT" --output "$TAR"
 
 	echo "$TAR"
 done
