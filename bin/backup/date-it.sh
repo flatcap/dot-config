@@ -23,3 +23,6 @@ for ARG in "$@"; do
 	fi
 done
 
+# Compressed function version: 232 characters
+# di(){ T=$(date '+%F');for A in "$@";do A=${A%/};if [[ $A =~ / ]];then F="${A##*/}";D="${A%/*}/";else F="$A";D="";fi;[[ "$F" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}_ ]]&&N=${T}_${F:11}||N="${T}_$F";[ "$F" = "$N" ]||mv -vi "$D$F" "$D$N";done;}
+
