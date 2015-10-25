@@ -2,7 +2,7 @@ function big()
 {
 	shopt -s nullglob
 
-	local LINES=$(($(tput lines) - 3))
+	local LINES=$(($(tput lines) - 4))
 	local LIST=(* .??*)
 	local WORK=()
 	local HERE=$(pwd -P)
@@ -13,6 +13,7 @@ function big()
 		[ "${i##*/}" = "lost+found" ] && continue
 		grep -q " $HERE/$i " /proc/mounts || WORK+=("$i")
 	done
+	df -h . | sed 1d
 	du --summarize --block-size=1K --one-file-system "${WORK[@]}" | sort --numeric-sort --reverse | head --lines $LINES
 }
 
