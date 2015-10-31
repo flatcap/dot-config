@@ -13,7 +13,7 @@ umask 0077
 DATE=$(date "+%Y-%m-%d")
 RCPT="Rich Russon (backup) <rich@flatcap.org>"
 DIR="/backup/linode/$DATE"
-TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude .gnupg/S.gpg-agent"
+TAR_OPTS="--warning=no-file-changed --exclude .git* --exclude .ssh/*@* --exclude .gnupg/S.*"
 
 mkdir --parents $DIR
 
