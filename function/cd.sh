@@ -110,3 +110,8 @@ function . ()
 	fi
 }
 
+function - ()
+{
+	cd -
+}
+
