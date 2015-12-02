@@ -76,17 +76,17 @@ $endif
 "\eC" "| column -t "
 "\eD" "| uniq -d "
 "\eE" "| uniq -c "
+"\eH" "| head"
 "\eL" "| nl -nrz -w4 "
+"\eM" "| less\n"
 "\eN" "| sort -n "
 "\eR" "| rev "
 "\eS" "| sort -f "
 "\eT" "| tac "
 "\eU" "| uniq "
+"\eW" "| wc -l\n"
 "\eX" "| shuf "
 "\eZ" "| cat -s "
-
-"\eW" " | wc -l\n"
-"\eM" " | less\n"
 
 "\ei" " -iname "
 
