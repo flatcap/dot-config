@@ -10,8 +10,8 @@ set mark-symlinked-directories on
 # Show multiple completions on first tab press
 set show-all-if-ambiguous on
 
-# Show me up to 5000 completion items
-set completion-query-items 5000
+# Show me up to 50 completion items
+set completion-query-items 50
 
 # Be more intelligent when autocompleting by also looking at the text after
 # the cursor. For example, when the current line is "cd ~/src/mozil", and
