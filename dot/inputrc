@@ -36,8 +36,8 @@ set completion-map-case on
 set match-hidden-files off
 
 # set completion-prefix-display-length 5
-set completion-query-items 0
-set page-completions off
+# set completion-query-items 0
+# set page-completions off
 
 # set mark-modified-lines on
 
