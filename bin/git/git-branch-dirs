@@ -11,7 +11,14 @@ BRANCHES="$(git branch | sed 's/[ \*]//g' | grep -v master)"
 
 [ -n "$BRANCHES" ] || exit 1
 
+popd
+
 for b in $BRANCHES; do
-	[ -d "$DIR-$b" ] || git-new-workdir . "../$DIR-$b" $b
+	[ -d "$DIR-$b" ] && continue
+	
+	git clone -s "$DIR" "$DIR-$b"
+	pushd "$DIR-$b"
+	git checkout "$b"
+	popd
 done
 
