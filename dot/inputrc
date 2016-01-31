@@ -73,6 +73,7 @@ $endif
 "\es" "*"
 "\ew" "\\*"
 
+"\eA" "$(!!) "
 "\eC" "| column -t "
 "\eD" "| uniq -d "
 "\eE" "| uniq -c "
