@@ -77,7 +77,7 @@ $endif
 "\eC" "| column -t "
 "\eD" "| uniq -d "
 "\eE" "| uniq -c "
-"\eG" "| grep "
+"\eG" "| grep -i "
 "\eH" "| head "
 "\eL" "| nl -nrz -w4 "
 "\eM" "| less\n"
