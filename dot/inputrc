@@ -86,6 +86,7 @@ $endif
 "\eS" "| sort -f "
 "\eT" "| tac "
 "\eU" "| uniq "
+"\eV" "| grep -v "
 "\eW" "| wc -l\n"
 "\eX" "| shuf "
 "\eZ" "| cat -s "
