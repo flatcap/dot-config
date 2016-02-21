@@ -79,7 +79,7 @@ $endif
 "\eE" "| uniq -c "
 "\eG" "| grep -i "
 "\eH" "| head "
-"\eL" "| nl -nrz -w4 "
+"\eL" "| nl -nrz -w4 -ba "
 "\eM" "| less\n"
 "\eN" "| sort -n "
 "\eR" "| rev "
