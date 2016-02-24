@@ -36,6 +36,11 @@ function get_dirs()
 		DIRS="$DIRS ${i%/*}"
 	done
 	DIRS="$DIRS $(find . -type d -name "?*.git" | LANG=C sort | cut -b3-)"
+
+	local HERE=$(pwd)
+	if [[ "$HERE" =~ \.git$ ]]; then
+		DIRS="$DIRS ."
+	fi
 }
 
 function git_fetch()
@@ -141,6 +146,7 @@ function git_tidy()
 		rm -f qgit_cache.dat
 		rm -fr rr-cache
 		rm -fr logs
+		find refs/ -mindepth 1 -delete
 		chmod -x config
 		popd > /dev/null
 	done
