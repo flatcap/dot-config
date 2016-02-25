@@ -1,0 +1,7 @@
+#!/bin/bash
+
+swapoff -a
+systemctl start dev-disk-by\\x2duuid-780e98b8\\x2d17de\\x2d423b\\x2db4b5\\x2d127bac17991a.swap
+sync
+echo 3 > /proc/sys/vm/drop_caches
+
