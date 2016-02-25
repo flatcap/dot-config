@@ -142,10 +142,11 @@ function git_tidy()
 		rm -f GIT_COLA_MSG
 		rm -f hooks/*.sample
 		rm -f info/exclude
+		rm -f MERGE_RR
 		rm -f ORIG_HEAD
 		rm -f qgit_cache.dat
-		rm -fr rr-cache
 		rm -fr logs
+		rm -fr rr-cache
 		find refs/ -mindepth 1 -delete
 		chmod -x config
 		popd > /dev/null
