@@ -25,7 +25,7 @@ for i in $DB_LIST; do
 	mkdir --parents "$i"
 	FILE="$i/${DATE}_server.sql"
 	mysqldump $MYSQL_USER "$i" > "$FILE" 2> /dev/null
-	xz --best "$FILE"
+	xz -6 "$FILE"
 	gpg2 --encrypt --recipient "$RCPT" "$FILE.xz"
 	rm "$FILE.xz"
 done

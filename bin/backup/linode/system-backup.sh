@@ -37,7 +37,7 @@ rpm --query --all --last > $DIR/rpm-last
 
 cd "$DIR"
 
-xz -9 -T0 *.tar
+xz -6 -T0 *.tar
 
 for i in *.tar.xz; do
 	gpg2 --encrypt --recipient "$RCPT" "$i"
