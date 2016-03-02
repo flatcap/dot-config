@@ -23,7 +23,7 @@ function log()
 function usage()
 {
 	echo "Usage:"
-	echo "    ${0##*/} [pull|push|{fetch|f}|{status|st|s}|clean|{tidy|t}|clone|wipe|redate|{remote|r}]"
+	echo "    ${0##*/} [clean|clone|ds|prune|pull|push|redate|wipe|{diff|d}|{fetch|f}|{remote|r}|{status|st|s}|{tidy|t}]"
 	exit 1
 }
 
@@ -50,7 +50,19 @@ function git_fetch()
 		title2 git fetch $i
 		log $i
 		pushd $i > /dev/null
-		[ -n "$(git remote)" ] && git fetch origin master:master
+		[ -n "$(git remote)" ] && git fetch
+		popd > /dev/null
+	done
+}
+
+function git_prune()
+{
+	local i
+	for i in $DIRS; do
+		title2 git prune $i
+		log $i
+		pushd $i > /dev/null
+		[ -n "$(git remote)" ] && git prune
 		popd > /dev/null
 	done
 }
@@ -236,6 +248,8 @@ case $ARG in
 		git_pull "$@" ;;
 	fetch|f)
 		git_fetch ;;
+	prune)
+		git_prune ;;
 	status|st|s)
 		git_status ;;
 	clean)
