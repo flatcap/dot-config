@@ -1,0 +1,55 @@
+function firstb()
+{
+	if [ ${#FIRST_BRANCHES[@]} -gt 0 ]; then
+		echo Already in use:
+		for i in "${FIRST_BRANCHES[@]}"; do
+			echo -e "\t$i"
+		done
+		return
+	fi
+
+	if [ $# -gt 0 ]; then
+		FIRST_BRANCHES=("$@")
+	else
+		FIRST_BRANCHES=($(git branch | cut -b3-))
+	fi
+	FIRST_SAVE="$(git branch | sed -n '/^*/s/^..//p')"
+	FIRST_INDEX=0
+
+	BRANCH="${FIRST_BRANCHES[$FIRST_INDEX]}"
+	git checkout --quiet "$BRANCH"
+
+	alias n="nextb"
+	alias p="prevb"
+}
+
+function lastb()
+{
+	[ -n "$FIRST_SAVE" ] && git checkout --quiet "$FIRST_SAVE"
+
+	unset FIRST_BRANCHES
+	unset FIRST_INDEX
+	unset FIRST_SAVE
+
+	unalias n >& /dev/null
+	unalias p >& /dev/null
+}
+
+function nextb()
+{
+	local COUNT=${#FIRST_BRANCHES[@]}
+	FIRST_INDEX=$(((FIRST_INDEX+1)%COUNT))
+
+	BRANCH="${FIRST_BRANCHES[$FIRST_INDEX]}"
+	git checkout --quiet "$BRANCH"
+}
+
+function prevb()
+{
+	local COUNT=${#FIRST_BRANCHES[@]}
+	FIRST_INDEX=$(((FIRST_INDEX+COUNT-1)%COUNT))
+
+	BRANCH="${FIRST_BRANCHES[$FIRST_INDEX]}"
+	git checkout --quiet "$BRANCH"
+}
+
