@@ -5,14 +5,18 @@
 [alias]
 	b        = branch --verbose --verbose
 	bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
+	co       = checkout
+	cp       = cherry-pick
 	d        = diff
 	ds       = diff --stat
 	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
-	j        = jump diff
+	; j        = jump diff
+	j        = jump merge
 	lca      = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-7; }; f"
 	p        = push
 	pr       = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
 	r        = remote --verbose
+	t        = tag
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
 
 	; grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
@@ -36,14 +40,24 @@
 	unhide   = "!f() { git update-index --no-assume-unchanged \"$@\"; }; f"
 
 	# logs
-	l        = log --branches --graph --pretty=tidy -n 30
+	l        = log --branches --graph --pretty=tidy -n 20
+	; l        = log --graph --pretty=tidy -n 20
+	; lg       = log --graph --pretty=tidy -n 20
+	; l        = log --graph --pretty=tidy origin/mutt/1.5.24^..
+	; l        = log --branches --graph --pretty=tidy terry^..
+	; l        = log --pretty=tidyd -n 20
+	; l        = log --branches --graph --pretty=tidy origin/mutt/1.5.24^..
+	l1       = log --oneline --graph
 	ll       = log --branches --graph --pretty=tidy
+	lt       = log --pretty=tidy
+	; ll       = log --pretty=tidyd
 	ln       = log --branches --graph --pretty=named
 	ls       = log --branches --graph --stat
 	since    = log --branches --graph --pretty=tidy --since
 	when     = log --pretty=tidy --diff-filter=A
 
 	# rebase
+	# --preserve-merges
 	rb       = rebase --committer-date-is-author-date
 	ri       = rebase --committer-date-is-author-date --interactive --autosquash
 	fix      = "!f() { SEARCH=\"$1\"; shift; git commit --fixup  $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
@@ -59,22 +73,31 @@
 	st       = status
 	stats    = "!f() { W=$(git rev-list --count --max-age $(date -d \"-1 week\" +%s) HEAD); M=$(git rev-list --count --max-age $(date -d \"-1 month\" +%s) HEAD); A=$(git rev-list --count HEAD); echo $W/$M/$A commits; }; f"
 
+[clean]
+	requireforce = no
+
 [color "branch"]
-	current = green
-	local   = white
-	remote  = cyan
+	current  = 47
+	local    = white
+	remote   = 123
+	upstream = 214
+	plain    = white
 
 [color "diff"]
-	meta       = green
-	frag       = cyan
-	old        = red
-	new        = yellow
-	whitespace = red reverse
+	meta       = 47
+	frag       = 123
+	old        = 204
+	new        = 228
+	whitespace = 204 reverse
 
 [color "status"]
-	added     = yellow
-	changed   = green
-	untracked = cyan
+	header    = white
+	added     = 228
+	changed   = 47
+	untracked = 123
+	branch    = 47
+	nobranch  = 204 reverse
+	unmerged  = 204
 
 [color]
 	branch = auto
@@ -85,7 +108,8 @@
 	template = ~/.gitmessage
 
 [core]
-	whitespace     = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
+	; whitespace     = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
+	whitespace     = -blank-at-eol,-space-before-tab,-blank-at-eof
 	pager          = "less -eFfiqrX"
 	preloadindex   = true
 	attributesfile = ~/.gitattributes
@@ -98,11 +122,17 @@
 	textconv = identify -verbose
 	cachetextconv = true
 
+[diff "nodiff"]
+	command = /bin/true
+
 [diff "openssl"]
 	textconv = diff-filter-openssl
 
 [diff "xz"]
 	textconv = xz --decompress --stdout
+
+[diff "manual"]
+	xfuncname = "^(<(sect[0-9]|chapter|example|table) .*)"
 
 [difftool]
 	prompt = no
@@ -111,6 +141,11 @@
 	mnemonicprefix = true
 	tool           = vimdiff
 	guitool        = vimdiff
+
+[filter "patches"]
+	# clean = cat
+	clean = sed -e 's/\\<[0-9]\\{8\\}\\>/UNKNOWN/'
+	smudge = sed -e 's/UNKNOWN/'$(date "+%Y%m%d/")
 
 [filter "serial"]
 	clean = sed -e 's/\\<[0-9]\\{10\\}\\>/1970010101/'
@@ -158,19 +193,36 @@
 	tool        = vimdiff
 	guitool     = vimdiff
 	renormalize = true
+	ff          = true
+	log         = 999
+	branchdesc  = true
+	stat        = false
 
 [merge "ours"]
 	name = Always keep ours during merge
-	driver = git-merge-keep-ours.sh %O %A %B
+	driver = merge-keep-ours.sh %O %A %B
+
 [merge "theirs"]
 	name = Always keep theirs during merge
-	driver = git-merge-keep-theirs.sh %O %A %B
+	driver = merge-keep-theirs.sh %O %A %B
+
+[merge "patches"]
+	name = Concatenate PATCHES
+	driver = git-merge-patches %P %A %B
+
+[merge "manual"]
+	name = Merge XML manual
+	driver = git-merge-manual %P %A
+
 [mergetool]
 	prompt = false
 
 [pretty]
-	tidy  = %Cred%h%Creset %s %Cgreen(%ar)%Creset%C(yellow)%d%Creset
-	named = %Cred%h%Creset %s %Cgreen(%ar)%Creset%C(yellow)%d%Creset %C(white dim)%an <%ae>%Creset
+	tidy  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset
+	nodec = %C(204)%h%Creset %s %C(47)(%ar)%Creset
+	dtidy = %C(204)%h%Creset %s %C(47)(%ad)%Creset%C(228)%d%Creset
+	named = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%an <%ae>%Creset
+	sdate = %C(204)%h%Creset %C(47)%ad%Creset %s
 
 [push]
 	default = matching
@@ -191,6 +243,10 @@
 [url "git@github.com:flatcap/"]
 	insteadOf = "rich:"
 	pushInsteadOf = "https://github.com/flatcap/"
+
+[url "git@github.com:neomutt/"]
+	insteadOf = "rich:"
+	pushInsteadOf = "https://github.com/neomutt/"
 
 [user]
 	email = rich@flatcap.org
