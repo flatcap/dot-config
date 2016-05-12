@@ -210,7 +210,7 @@ function git_remote()
 	for i in $DIRS; do
 		title2 git remote $i
 		pushd $i > /dev/null
-		local REMOTE=$(git remote -v | awk '/(push)/{ printf ("\t%s\n", $2); }')
+		local REMOTE=$(git remote -v | awk '/(fetch)/{ printf ("\t%s\n", $2); }')
 		if [ -n "$REMOTE" ]; then
 			log $i
 			echo "$REMOTE"
