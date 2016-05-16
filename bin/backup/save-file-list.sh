@@ -58,7 +58,7 @@ if [ -d "$DIR" ]; then
 	chattr +i "${FILE}.xz"
 fi
 
-DIR="$MEDIA/flatcap/trans"
+DIR="$MEDIA/flatcap/transcend"
 if [ -d "$DIR" ]; then
 	cd "$DIR"
 
