@@ -4,11 +4,13 @@
 
 [alias]
 	b        = branch --verbose --verbose
+	b2       = "!f() { git branch --verbose --verbose --color | red '\\(ahead\\|behind\\) [0-9]\\+'; }; f"
 	bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
 	co       = checkout
 	cp       = cherry-pick
 	d        = diff
 	ds       = diff --stat
+	fp       = format-patch
 	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	; j        = jump diff
 	j        = jump merge
@@ -41,15 +43,14 @@
 
 	# logs
 	l        = log --branches --graph --pretty=tidy -n 20
-	; l        = log --graph --pretty=tidy -n 20
 	; lg       = log --graph --pretty=tidy -n 20
 	; l        = log --graph --pretty=tidy origin/mutt/1.5.24^..
-	; l        = log --branches --graph --pretty=tidy terry^..
+	; l        = log --branches --graph --pretty=tidy tree^..
 	; l        = log --pretty=tidyd -n 20
 	; l        = log --branches --graph --pretty=tidy origin/mutt/1.5.24^..
 	l1       = log --oneline --graph
 	ll       = log --branches --graph --pretty=tidy
-	lt       = log --pretty=tidy
+	lt       = log --pretty=tidy --no-merges
 	; ll       = log --pretty=tidyd
 	ln       = log --branches --graph --pretty=named
 	ls       = log --branches --graph --stat
@@ -68,8 +69,9 @@
 	save     = stash save
 
 	# status
+	bs       = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
 	s        = "!f() { git stash list; git status --short \"$@\"; }; f"
-	sb       = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
+	sb       = show-branch
 	st       = status
 	stats    = "!f() { W=$(git rev-list --count --max-age $(date -d \"-1 week\" +%s) HEAD); M=$(git rev-list --count --max-age $(date -d \"-1 month\" +%s) HEAD); A=$(git rev-list --count HEAD); echo $W/$M/$A commits; }; f"
 
@@ -190,13 +192,13 @@
 	file = ~/.gitmailmap
 
 [merge]
-	tool        = vimdiff
-	guitool     = vimdiff
-	renormalize = true
-	ff          = true
-	log         = 999
 	branchdesc  = true
+	ff          = true
+	guitool     = vimdiff
+	log         = 999
+	renormalize = true
 	stat        = false
+	tool        = vimdiff
 
 [merge "ours"]
 	name = Always keep ours during merge
