@@ -20,6 +20,7 @@
 	r        = remote --verbose
 	t        = tag
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
+	upstream = "!f() { git rev-parse --abbrev-ref --symbolic-full-name $1@{u}; }; f"
 
 	; grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
 	; mkobject = hash-object --stdin -w
@@ -45,7 +46,7 @@
 	l        = log --branches --graph --pretty=tidy -n 20
 	; lg       = log --graph --pretty=tidy -n 20
 	; l        = log --graph --pretty=tidy origin/mutt/1.5.24^..
-	; l        = log --branches --graph --pretty=tidy tree^..
+	; l        = log --branches --graph --pretty=tidy base^..
 	; l        = log --pretty=tidyd -n 20
 	; l        = log --branches --graph --pretty=tidy origin/mutt/1.5.24^..
 	l1       = log --oneline --graph
@@ -84,6 +85,7 @@
 	remote   = 123
 	upstream = 214
 	plain    = white
+	ui = always
 
 [color "diff"]
 	meta       = 47
