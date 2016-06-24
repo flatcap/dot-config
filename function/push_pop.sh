@@ -31,9 +31,18 @@ function first()
 
 	alias n='pushd -0; clear; ls'
 	alias p='pushd +1; clear; ls'
+	# alias n='pushd -0; clear; echo "${PWD##*/}"; echo; git log --pretty=tidy -n 10; echo'
+	# alias p='pushd +1; clear; echo "${PWD##*/}"; echo; git log --pretty=tidy -n 10; echo'
+	# alias n='pushd -0; clear; echo "${PWD##*/}"; echo; git branch -vv; echo'
+	# alias p='pushd +1; clear; echo "${PWD##*/}"; echo; git branch -vv; echo'
 
 	clear
 	ls --color=auto -l
+	# echo "${PWD##*/}"
+	# echo
+	# git branch -vv
+	# git log --pretty=tidy -n 10
+	# echo
 }
 
 function last()
