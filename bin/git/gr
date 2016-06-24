@@ -145,8 +145,9 @@ function git_tidy()
 		log $i
 		pushd $i > /dev/null
 		git fsck --full --strict
-		git gc #--aggressive
-		git prune
+		git gc --prune=now
+		git reflog expire --expire=now --all
+		git repack -adf --window=250 --depth=250
 		[ -d .git ] && cd .git
 		rm -f COMMIT_EDITMSG
 		rm -f FETCH_HEAD
