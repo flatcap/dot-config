@@ -125,8 +125,10 @@ $endif
 	# escape-r, alt-r, escape-ctrl-r
 	"\er":      revert-line
 	"\e\C-r":   revert-line
+$if Bash
 	# ctrl-x-ctrl-e
 	"\C-x\C-e": edit-and-execute-command
+$endif
 
 # Macros
 	# ctrl-x-(
@@ -192,12 +194,16 @@ $endif
 	# ctrl-r
 	"\C-r": reverse-search-history
 
+
+
+$if Bash
 # Execute
 	# enter, ctrl-j, ctrl-m
 	"\C-j": accept-line
 	"\C-m": accept-line
 	# ctrl-o
 	"\C-o": operate-and-get-next
+$endif
 
 # Marks
 	# ctrl-@
@@ -223,6 +229,7 @@ $endif
 	# escape-y, alt-y
 	"\ey":  yank-pop
 
+$if Bash
 # Possible Completion
 	# escape-=, escape-?
 	"\e=": possible-completions
@@ -238,6 +245,7 @@ $endif
 	"\C-x~": possible-username-completions
 	# ctrl-x-$
 	"\C-x$": possible-variable-completions
+$endif
 
 # Complete
 	# tab - to cycle through possible completions
@@ -248,6 +256,7 @@ $endif
 	# escape-escape
 	"\e\e": complete
 
+$if Bash
 	# escape-!
 	"\e!":  complete-command
 	# escape-/
@@ -258,9 +267,9 @@ $endif
 	"\e~":  complete-username
 	# escape-$
 	"\e$":  complete-variable
-
 	# escape-{
 	"\e{":  complete-into-braces
+$endif
 
 # ------------------------------------------------------------------------------
 
