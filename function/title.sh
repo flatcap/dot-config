@@ -1,26 +1,36 @@
-title()
-{
-	[ -w /dev/stderr ] || return 0
+title () 
+{ 
+	local FD
+	if [ -t 2 ]; then
+		# Use /dev/stderr unless redirected, or
+		FD=2
+	elif [ -t 1 ]; then
+		# Use /dev/stdout unless redirected, or
+		FD=1
+	else
+		# Give up
+		return 0
+	fi
 
-	local prompt=""
-	local title=""
-
-	case "${1:-}" in
-	"")
-		title="${PWD/#$HOME/~}"
-		prompt='echo -ne "\033]2;${PWD/#$HOME/~}$(parse_git_branch)\007"'
+	local title="";
+	case "${1:-}" in 
+		"")
+			title="${PWD/#$HOME/~}";
 		;;
-	"-")
+		"-")
 		;;
-	"done")
-		title="done"
+		"done")
+			title="done"
 		;;
-	*)
-		title="$*"
+		*)
+			title="$*"
 		;;
-	esac
-
-	echo -ne "\033]2;${title}\007" > /dev/stderr
+	esac;
+	if [ $FD = 2 ]; then
+		echo -ne "\033]2;${title}\007" >&2
+	else
+		echo -ne "\033]2;${title}\007"
+	fi
 }
 
 export -f title
