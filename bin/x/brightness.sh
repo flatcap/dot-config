@@ -18,7 +18,10 @@ valid_percentage()
 
 function get_brightness()
 {
-	sudo intel_backlight | sed 's/current backlight value: \([0-9]\+\)%/\1/'
+	local BRIGHT
+
+	BRIGHT=$(xbacklight -get)
+	echo ${BRIGHT%.*}
 }
 
 function set_brightness()
@@ -26,7 +29,7 @@ function set_brightness()
 	[ $# = 1 ] || return 1
 	valid_percentage "$1" || return 1
 
-	sudo intel_backlight $1 >& /dev/null
+	xbacklight -set $1 >& /dev/null
 	return 0
 }
 
@@ -52,6 +55,11 @@ function default_jump()
 	echo 6
 }
 
+function calc()
+{
+	echo "$@" | bc | cut -d. -f1
+}
+
 
 if [ $# = 0 ]; then
 	get_brightness
@@ -66,22 +74,24 @@ case "$1" in
 		ADD="${1:1:99}"
 		[ -z "$ADD" ] && ADD=$(default_jump $BRIGHT)
 		numeric "$ADD" || usage_quit "Invalid increase: $1"
-		BRIGHT=$((BRIGHT+ADD))
+		BRIGHT=$(calc $BRIGHT+$ADD)
+		echo $BRIGHT
 		[ $BRIGHT -gt 100 ] && BRIGHT=100
 		set_brightness "$BRIGHT"
 		NEW=$(get_brightness)
-		[ $NEW -le $BRIGHT ] && set_brightness $((BRIGHT+1))
+		[ $NEW -le $BRIGHT ] && set_brightness $(calc $BRIGHT+1)
 		;;
 	-*)
 		BRIGHT=$(get_brightness)
 		SUB="${1:1:99}"
 		[ -z "$SUB" ] && SUB=$(default_jump $BRIGHT)
 		numeric "$SUB" || usage_quit "Invalid decrease: $1"
-		BRIGHT=$((BRIGHT-SUB))
+		BRIGHT=$(calc $BRIGHT-$SUB)
+		echo $BRIGHT
 		[ $BRIGHT -lt 0 ] && BRIGHT=0
 		set_brightness "$BRIGHT"
 		NEW=$(get_brightness)
-		[ $NEW -ge $BRIGHT ] && set_brightness $((BRIGHT-1))
+		[ $NEW -ge $BRIGHT ] && set_brightness $(calc $BRIGHT-1)
 		;;
 	[0-9]*)
 		set_brightness "$1" || usage_quit "Invalid brightness: $1"
