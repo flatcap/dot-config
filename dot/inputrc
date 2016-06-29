@@ -93,6 +93,16 @@ $endif
 
 "\ei" " -iname "
 
+# F8 - mapping for use in macro (below)
+"^[[19~" vi-backward-bigword
+
+# Alt-F, create $(cat ) wrapper
+# Alt-J, wrap around existing arg
+"\eF" "$(cat )\eOD"
+"\eJ" "^[[19~$(cat \C-e)"
+
+# Remaining letters: BKOPQY
+
 # ------------------------------------------------------------------------------
 # Mappings
 
