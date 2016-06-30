@@ -47,13 +47,29 @@ function monitor_laptop()
 	fi
 }
 
+function monitor_new_laptop()
+{
+	# Monitor/Laptop: 3840x1080
+	# ┌─────────────┐ ┌─────────────┐
+	# │             │ │             │
+	# │            .│ │.            │
+	# └─────────────┘ └─────────────┘
+	if [ $X -lt 1920 ]; then
+		xdotool mousemove 1940 1050
+	else
+		xdotool mousemove 1854 1050
+	fi
+}
 
-set -- $(xdotool getdisplaygeometry)
 
-if [ $1 = 1366 ]; then
-	laptop
+#set -- $(xdotool getdisplaygeometry)
+set -- $(xrandr | grep -w connected | wc -l)
+
+if [ $1 = 1 ]; then
+	# Same as laptop
+	monitor
 else
-	monitor_laptop
-	# monitor
+	# monitor_laptop
+	monitor_new_laptop
 fi
 
