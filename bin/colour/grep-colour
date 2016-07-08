@@ -24,6 +24,7 @@ function read_col()
 		cyan)      add_col "1;36" ;;
 		grey)      add_col "1;30" ;;
 		black)     add_col "0;30" ;;
+		bold)      add_col "1"    ;;
 		underline) add_col "4"    ;;
 		reverse)   add_col "7"    ;;
 		*)         ;;
