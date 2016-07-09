@@ -3,8 +3,8 @@
 	detachedHead = false
 
 [alias]
-	b        = branch --verbose --verbose
-	b2       = "!f() { git branch --verbose --verbose --color | red '\\(ahead\\|behind\\) [0-9]\\+'; }; f"
+	ahead    = "!f() { git branch --verbose --verbose --color | grep --color=never -e ahead -e behind | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
+	b        = "!f() { git branch --verbose --verbose --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
 	bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
 	co       = checkout
 	cp       = cherry-pick
@@ -137,6 +137,9 @@
 
 [diff "manual"]
 	xfuncname = "^(<(sect[0-9]|chapter|example|table) .*)"
+
+[diff "markdown"]
+	xfuncname = "^(#+ .*)"
 
 [difftool]
 	prompt = no
