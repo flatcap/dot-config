@@ -1,0 +1,21 @@
+#!/bin/bash
+
+FEATURES=($(git branch -r | grep -v HEAD | cut -d/ -f2-))
+REGEX="${1:-.}"
+
+if [ ${#FEATURES[@]} = 0 ]; then
+	echo No branches
+	exit 1
+fi
+
+for b in ${FEATURES[@]}; do
+	if [[ "$b" =~ $REGEX ]]; then
+		if git rev-parse --verify --quiet "$b" > /dev/null; then
+			echo "Branch $b already exists"
+		else
+			git branch -q $b origin/$b
+			git branch --set-upstream-to=origin/$b $b
+		fi
+	fi
+done
+
