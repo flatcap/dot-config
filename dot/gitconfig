@@ -6,6 +6,7 @@
 	ahead    = "!f() { git branch --verbose --verbose --color | grep --color=never -e ahead -e behind | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
 	b        = "!f() { git branch --verbose --verbose --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
 	bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
+	bn       = rev-parse --abbrev-ref --symbolic-full-name HEAD
 	co       = checkout
 	cp       = cherry-pick
 	d        = diff
@@ -55,8 +56,8 @@
 	; ll       = log --pretty=tidyd
 	ln       = log --branches --graph --pretty=named
 	ls       = log --branches --graph --stat
-	since    = log --branches --graph --pretty=tidy --since
-	when     = log --pretty=tidy --diff-filter=A
+	since    = log --branches --graph --format=tidy --since
+	when     = log --format=tidy --diff-filter=A
 
 	# rebase
 	# --preserve-merges
@@ -227,6 +228,7 @@
 [pretty]
 	tidy  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset
 	nodec = %C(204)%h%Creset %s %C(47)(%ar)%Creset
+	nodate= %C(204)%h%Creset %s%C(white dim)%d%Creset
 	dtidy = %C(204)%h%Creset %s %C(47)(%ad)%Creset%C(228)%d%Creset
 	named = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%an <%ae>%Creset
 	sdate = %C(204)%h%Creset %C(47)%ad%Creset %s

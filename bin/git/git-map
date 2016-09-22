@@ -1,21 +1,35 @@
 #!/bin/bash
 
-FEATURES=($(git branch -r | grep -v HEAD | cut -d/ -f2-))
-REGEX="${1:-.}"
+if [ $# -gt 1 ]; then
+	REMOTE="$1"
+	shift
+else
+	REMOTE="origin"
+fi
 
-if [ ${#FEATURES[@]} = 0 ]; then
-	echo No branches
+git remote | grep -q "^$REMOTE\>"
+if [ $? -ne 0 ]; then
+	echo "Remote '$REMOTE' doesn't exist"
 	exit 1
 fi
 
-for b in ${FEATURES[@]}; do
-	if [[ "$b" =~ $REGEX ]]; then
-		if git rev-parse --verify --quiet "$b" > /dev/null; then
-			echo "Branch $b already exists"
-		else
-			git branch -q $b origin/$b
-			git branch --set-upstream-to=origin/$b $b
-		fi
+for REGEX in "$@"; do
+	BRANCH_LIST=($(git branch -r | grep " $REMOTE/" | cut -d/ -f2-))
+
+	if [ ${#BRANCH_LIST[@]} = 0 ]; then
+		echo "No branches on remote '$r'"
+		continue
 	fi
+
+	for BRANCH in ${BRANCH_LIST[@]}; do
+		if [[ "$BRANCH" =~ $REGEX ]]; then
+			if git rev-parse --verify --quiet "$BRANCH" > /dev/null; then
+				echo "Branch $BRANCH already exists"
+			else
+				git branch -q $BRANCH $REMOTE/$BRANCH
+				git branch --set-upstream-to=$REMOTE/$BRANCH $BRANCH
+			fi
+		fi
+	done
 done
 
