@@ -100,8 +100,9 @@ $endif
 # Alt-J, wrap around existing arg
 "\eF" "$(cat )\eOD"
 "\eJ" "^[[19~$(cat \C-e)"
+"\eK" "^[[19~$(\C-e)"
 
-# Remaining letters: BKOPQY
+# Remaining letters: BOPQY
 
 # ------------------------------------------------------------------------------
 # Mappings
