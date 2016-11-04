@@ -90,6 +90,7 @@ $endif
 "\eW" "| wc -l\n"
 "\eX" "| shuf "
 "\eZ" "| cat -s "
+"\e0" "> /dev/null "
 
 "\ei" " -iname "
 
