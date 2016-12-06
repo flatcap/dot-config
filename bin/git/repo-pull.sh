@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH="/usr/bin:/usr/sbin:~/.shell/bash/bin/git"
+PATH="/usr/bin:/usr/sbin:~/.dot/bash/bin/git"
 
 set -o errexit	# set -e
 set -o nounset	# set -u

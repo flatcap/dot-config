@@ -6,6 +6,8 @@
 .config/deluge/state/*
 .config/google-chrome
 .dbus
+.dot/bash/.git
+.dot/vim
 .esd_auth
 .fontconfig
 .fonts
@@ -47,8 +49,6 @@
 .qt
 .recently-used.xbel
 .setroubleshoot
-.shell/bash/.git
-.shell/vim
 .slocdata
 .sqlite_history
 .ssh-agent

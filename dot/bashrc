@@ -13,9 +13,9 @@ shopt -s progcomp
 
 unalias -a
 for dir in env function complete alias; do
-	[ -d $HOME/.shell/bash/$dir/ ] || continue;
+	[ -d $HOME/.dot/bash/$dir/ ] || continue;
 
-	for i in $HOME/.shell/bash/$dir/*; do
+	for i in $HOME/.dot/bash/$dir/*; do
 		source $i
 	done
 done
