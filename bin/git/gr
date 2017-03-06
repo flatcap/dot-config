@@ -50,7 +50,7 @@ function git_fetch()
 		title2 git fetch $i
 		log $i
 		pushd $i > /dev/null
-		[ -n "$(git remote)" ] && git fetch
+		[ -n "$(git remote)" ] && git fetch --all
 		popd > /dev/null
 	done
 }
