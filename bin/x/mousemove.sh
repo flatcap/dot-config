@@ -55,7 +55,7 @@ function monitor_new_laptop()
 	# │            .│ │.            │
 	# └─────────────┘ └─────────────┘
 	if [ $X -lt 1920 ]; then
-		xdotool mousemove 1940 1050
+		xdotool mousemove 1940 900
 	else
 		xdotool mousemove 1854 1050
 	fi
@@ -70,6 +70,7 @@ if [ $1 = 1 ]; then
 	monitor
 else
 	# monitor_laptop
+	# monitor
 	monitor_new_laptop
 fi
 
