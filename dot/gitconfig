@@ -4,18 +4,22 @@
 
 [alias]
 	ahead    = "!f() { git branch --verbose --verbose --color | grep --color=never -e ahead -e behind | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
-	b        = "!f() { git branch --verbose --verbose --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
+	b        = "!f() { git branch --verbose --verbose --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
 	bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
 	bn       = rev-parse --abbrev-ref --symbolic-full-name HEAD
 	co       = checkout
 	cp       = cherry-pick
 	d        = diff
 	ds       = diff --stat
+	dsl      = "!f() { git diff --stat \"$@\" | sed -e 's/ \\([^ ]\\+\\).*/\\1/' -e '$d'; }; f"
+	f        = fetch
+	fa       = fetch --all --no-tags --prune
 	fp       = format-patch
 	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	; j        = jump diff
 	j        = jump merge
 	lca      = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-7; }; f"
+	neo      = "!f() { git clone -s ~/neomutt.git ${1:-neo}; cd ${1:-neo}; git remote add github https://github.com/neomutt/neomutt; }; f"
 	p        = push
 	pr       = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
 	r        = remote --verbose
@@ -32,6 +36,7 @@
 	unstage  = reset HEAD --
 
 	# commit
+	aa       = commit --amend -a
 	amend    = commit --amend
 	ce       = commit --allow-empty
 	cam      = "!f() { git commit --all --message \"$*\"; }; f"
@@ -50,12 +55,13 @@
 	; l        = log --branches --graph --pretty=tidy base^..
 	; l        = log --pretty=tidyd -n 20
 	; l        = log --branches --graph --pretty=tidy origin/mutt/1.5.24^..
+	l        = log --branches --graph --format=tidy -n 20
 	l1       = log --oneline --graph
-	ll       = log --branches --graph --pretty=tidy
-	lt       = log --pretty=tidy --no-merges
-	; ll       = log --pretty=tidyd
-	ln       = log --branches --graph --pretty=named
-	ls       = log --branches --graph --stat
+	ll       = log --branches --graph --format=tidy
+	lt       = log --format=tidy
+	ln       = log --graph --format=named
+	lq       = log --format=quiet
+	ls       = log --graph --stat
 	since    = log --branches --graph --format=tidy --since
 	when     = log --format=tidy --diff-filter=A
 
@@ -73,9 +79,13 @@
 	# status
 	bs       = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
 	s        = "!f() { git stash list; git status --short \"$@\"; }; f"
-	sb       = show-branch
+	sb       = "!f() { local C; [ $# = 1 ] && C='--current'; git show-branch $C \"$@\"; }; f"
 	st       = status
 	stats    = "!f() { W=$(git rev-list --count --max-age $(date -d \"-1 week\" +%s) HEAD); M=$(git rev-list --count --max-age $(date -d \"-1 month\" +%s) HEAD); A=$(git rev-list --count HEAD); echo $W/$M/$A commits; }; f"
+
+	# git-repo
+	bb       = repo bb
+	hub      = repo hub
 
 [clean]
 	requireforce = no
@@ -86,7 +96,7 @@
 	remote   = 123
 	upstream = 214
 	plain    = white
-	ui = always
+	ui       = always
 
 [color "diff"]
 	meta       = 47
@@ -113,9 +123,10 @@
 	template = ~/.gitmessage
 
 [core]
-	; whitespace     = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
+	# whitespace     = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
 	whitespace     = -blank-at-eol,-space-before-tab,-blank-at-eof
-	pager          = "less -eFfiqrX"
+	# pager          = "less -eFfiqrX"
+	pager          = diff-so-fancy | less --tabs=8 -RFX
 	preloadindex   = true
 	attributesfile = ~/.gitattributes
 	excludesfile   = ~/.gitignore
@@ -146,9 +157,10 @@
 	prompt = no
 
 [diff]
-	mnemonicprefix = true
-	tool           = vimdiff
-	guitool        = vimdiff
+	mnemonicprefix      = true
+	tool                = vimdiff
+	guitool             = vimdiff
+	compactionHeuristic = true
 
 [filter "patches"]
 	# clean = cat
@@ -216,22 +228,24 @@
 
 [merge "patches"]
 	name = Concatenate PATCHES
-	driver = git-merge-patches %P %A %B
+	driver = git-merge-patches-sort %P %A %B
 
 [merge "manual"]
 	name = Merge XML manual
-	driver = git-merge-manual %P %A
+	driver = git-merge-manual %O %A %B %P
 
 [mergetool]
 	prompt = false
 
 [pretty]
-	tidy  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset
-	nodec = %C(204)%h%Creset %s %C(47)(%ar)%Creset
-	nodate= %C(204)%h%Creset %s%C(white dim)%d%Creset
-	dtidy = %C(204)%h%Creset %s %C(47)(%ad)%Creset%C(228)%d%Creset
-	named = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%an <%ae>%Creset
-	sdate = %C(204)%h%Creset %C(47)%ad%Creset %s
+	tidy   = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset
+	quiet  = %C(204)%h%Creset %s
+	nodec  = %C(204)%h%Creset %s %C(47)(%ar)%Creset
+	nodate = %C(204)%h%Creset %s%C(white dim)%d%Creset
+	dtidy  = %C(204)%h%Creset %s %C(47)(%ad)%Creset%C(228)%d%Creset
+	named  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%an <%ae>%Creset
+	sdate  = %C(204)%h%Creset %C(47)%ad%Creset %s
+	sndate = %C(204)%h%Creset %C(47)%ad%Creset %C(white dim)%an <%ae>%Creset %s
 
 [push]
 	default = matching
@@ -253,12 +267,12 @@
 	insteadOf = "rich:"
 	pushInsteadOf = "https://github.com/flatcap/"
 
-[url "git@github.com:neomutt/"]
+[url "git@github.com:"]
 	insteadOf = "rich:"
-	pushInsteadOf = "https://github.com/neomutt/"
+	pushInsteadOf = "https://github.com/"
 
 [user]
-	email = rich@flatcap.org
-	name = Richard Russon
-	signingkey = Richard Russon (Code Signing) <rich@flatcap.org>
+	email      = "rich@flatcap.org"
+	name       = "Richard Russon"
+	signingkey = "Richard Russon (NeoMutt) <rich@flatcap.org>"
 
