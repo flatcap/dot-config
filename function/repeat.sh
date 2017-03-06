@@ -4,6 +4,7 @@ repeat()
 	local count=$1
 	local fail=0
 	local tstr
+	local retval
 	shift
 
 	if [[ ! "$count" =~ ^[0-9]+$ ]]; then
@@ -18,10 +19,12 @@ repeat()
 			tstr="$i/$count"
 		fi
 		declare -f title > /dev/null && title "$tstr - $@"
-		"$@" || : $((fail++))
-		[ $fail -gt 0 ] && break;
+		"$@"
+		retval=$?
+		[ $retval != 0 ] && : $((fail++))
+		[ $retval = 127 ] && break
 	done
-	[ $fail -gt 0 ] && echo "$i/$fail/$count"
+	[ $fail -gt 0 ] && echo "$count/$fail/$count"
 }
 
 export -f repeat
