@@ -2,7 +2,7 @@
 
 PATH="/usr/bin:/usr/sbin"
 
-DELUGE_ROOT="/mnt/space/torrent/"
+eval DELUGE_ROOT="~/torrent/"
 DELUGE_REPO="deluge-pull:torrent/"
 
 set -o errexit	# set -e
