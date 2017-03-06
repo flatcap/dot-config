@@ -34,7 +34,7 @@ for i in "$@"; do
 		*.svg|*.dot|*.gv)
 			#(inkscape "$i" &) &> /dev/null
 			#(display -resize 70% -negate -title ${i%.*} "$i" &) >& /dev/null
-			(display -title ${i%.*} "$i" &) >& /dev/null
+			(display -geometry -1366+0 -title ${i%.*} "$i" &) >& /dev/null
 			;;
 		*.avi|*.mpg|*.wmv|*.mp4|*.mkv|*.ogg|*.mov|*.mp3|*.flv)
 			#(totem --fullscreen --enqueue "$i" &) &> /dev/null
