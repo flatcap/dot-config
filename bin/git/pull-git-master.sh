@@ -2,7 +2,7 @@
 
 PATH="/usr/bin:/usr/sbin"
 
-GIT_ROOT="/mnt/space/git/"
+GIT_ROOT="/home/git/"
 GIT_REPO="git-pull:repositories/"
 
 set -o errexit	# set -e
