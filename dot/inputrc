@@ -82,6 +82,7 @@ $endif
 "\eL" "| nl -nrz -w4 -ba "
 "\eM" "| less\n"
 "\eN" "| sort -n "
+"\eP" "$(pwd) "
 "\eR" "| rev "
 "\eS" "| sort -f "
 "\eT" "| tac "
@@ -103,7 +104,7 @@ $endif
 "\eJ" "^[[19~$(cat \C-e)"
 "\eK" "^[[19~$(\C-e)"
 
-# Remaining letters: BOPQY
+# Remaining letters: BOQY
 
 # ------------------------------------------------------------------------------
 # Mappings
