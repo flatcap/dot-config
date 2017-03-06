@@ -4,7 +4,7 @@ if [ $# -gt 1 ]; then
 	REMOTE="$1"
 	shift
 else
-	REMOTE="origin"
+	REMOTE="github"
 fi
 
 git remote | grep -q "^$REMOTE\>"
