@@ -4,7 +4,7 @@ set -o errexit	# set -e
 set -o nounset	# set -u
 
 MEDIA="/run/media"
-RESULT="/home/space"
+RESULT="/mnt/space"
 
 [ -d "$MEDIA" ] || exit 0
 

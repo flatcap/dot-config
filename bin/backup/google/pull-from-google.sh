@@ -9,7 +9,7 @@ ionice --class 3     --pid $$ > /dev/null
 echo "Pulling changes from google:"
 echo
 
-cd /home/google
+cd /mnt/space/google
 umask 077
 
 rclone --stats=10s copy gdrive: .
