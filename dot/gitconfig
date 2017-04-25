@@ -10,11 +10,17 @@
 	co       = checkout
 	cp       = cherry-pick
 	d        = diff
+	d0       = diff -U0
+	d1       = "!f() { git diff ${1:-HEAD}~..${1:-HEAD}; }; f"
+	ds1      = "!f() { git diff --stat ${1:-HEAD}~..${1:-HEAD}; }; f"
+	dc       = diff --cached
 	ds       = diff --stat
-	dsl      = "!f() { git diff --stat \"$@\" | sed -e 's/ \\([^ ]\\+\\).*/\\1/' -e '$d'; }; f"
+	dl       = diff --name-only
 	f        = fetch
 	fa       = fetch --all --no-tags --prune
 	fp       = format-patch
+	fp1      = "!f() { git format-patch ${1:-HEAD}~..${1:-HEAD}; }; f"
+	dc       = diff --cached
 	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	; j        = jump diff
 	j        = jump merge
@@ -26,6 +32,9 @@
 	t        = tag
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
 	upstream = "!f() { git rev-parse --abbrev-ref --symbolic-full-name $1@{u}; }; f"
+
+	origin   = "!f() { git remote add origin ~/neomutt.git; git remote --verbose; }; f"
+	github   = "!f() { git remote add github ~/neomutt.git; git remote --verbose; }; f"
 
 	; grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
 	; mkobject = hash-object --stdin -w
@@ -49,16 +58,19 @@
 	unhide   = "!f() { git update-index --no-assume-unchanged \"$@\"; }; f"
 
 	# logs
-	l        = log --branches --graph --pretty=tidy -n 20
+	; l        = log --branches --graph --pretty=tidy -n 20
 	; lg       = log --graph --pretty=tidy -n 20
 	; l        = log --graph --pretty=tidy origin/mutt/1.5.24^..
 	; l        = log --branches --graph --pretty=tidy base^..
 	; l        = log --pretty=tidyd -n 20
 	; l        = log --branches --graph --pretty=tidy origin/mutt/1.5.24^..
-	l        = log --branches --graph --format=tidy -n 20
-	l1       = log --oneline --graph
+	; l        = log --branches --graph --format=tidy -n 20
+	; l1       = log --oneline --graph
+	l1       = log --oneline
+	; ll       = log --branches --graph --format=tidy
 	ll       = log --branches --graph --format=tidy
 	lt       = log --format=tidy
+	; lt       = log --format=tidy master.. --reverse
 	ln       = log --graph --format=named
 	lq       = log --format=quiet
 	ls       = log --graph --stat
@@ -243,9 +255,9 @@
 	nodec  = %C(204)%h%Creset %s %C(47)(%ar)%Creset
 	nodate = %C(204)%h%Creset %s%C(white dim)%d%Creset
 	dtidy  = %C(204)%h%Creset %s %C(47)(%ad)%Creset%C(228)%d%Creset
-	named  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%an <%ae>%Creset
+	named  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%aN <%aE>%Creset
 	sdate  = %C(204)%h%Creset %C(47)%ad%Creset %s
-	sndate = %C(204)%h%Creset %C(47)%ad%Creset %C(white dim)%an <%ae>%Creset %s
+	sndate = %C(204)%h%Creset %C(47)%ad%Creset %C(white dim)%aN <%aE>%Creset %s
 
 [push]
 	default = matching
