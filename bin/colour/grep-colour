@@ -78,5 +78,5 @@ case "$1" in
 		;;
 esac
 
-GREP_COLORS="ms=$COL" exec grep --line-buffered --color=yes $OPTS "$SEARCH" $EXTRA
+GREP_COLORS="ms=$COL" exec grep --ignore-case --line-buffered --color=yes $OPTS "$SEARCH" $EXTRA
 
