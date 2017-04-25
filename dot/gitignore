@@ -96,3 +96,8 @@ txt2c
 # /imap
 
 *.patch
+
+*.gcda
+*.gcno
+callgrind.out.*
+*.diff
