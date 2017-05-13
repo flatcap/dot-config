@@ -1,4 +1,4 @@
 alias backup="cd backup; clear; ls"
-alias eg="cd examples; clear; ls -C"
+alias eg="cd example; clear; ls -C"
 alias music="cd music; clear; ls"
 alias t="cd torrent; clear; ls -gG"
