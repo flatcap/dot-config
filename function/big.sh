@@ -27,7 +27,7 @@ function big()
 		[ "${i##*/}" = "lost+found" ] && continue
 		grep -q " $HERE/$i " /proc/mounts || WORK+=("$i")
 	done
-	df -h . | sed 1d
+	du -sh
 	du --summarize --block-size=1K --one-file-system "${WORK[@]}" | sort --numeric-sort --reverse | head --lines $LINES
 	[ -n "$DIR" ] && popd >& /dev/null
 }
