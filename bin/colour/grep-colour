@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) Richard Russon (FlatCap)
+# Released under the GPLv3 (see LICENSE.md)
 
 COL=""
 
