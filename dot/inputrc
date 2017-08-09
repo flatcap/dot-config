@@ -57,39 +57,34 @@ $endif
 
 # "\M-k" forward-backward-delete-char
 
-# RSI prevention:
-#   alt-j = hyphen
-#   alt-k = underscore
-#   alt-f = plus
-#   alt-d = equals
-#   alt-h = tilda
-#   alt-m = return
-"\ej" "-"
-"\ek" "_"
-"\ef" "+"
-"\ed" "="
-"\eh" "~"
-"\em" "\n"
-"\es" "*"
-"\ew" "\\*"
+# RSI prevention (Alt lower-case letter):
+"\ej" "-"       # <Alt-j> = hyphen     
+"\ek" "_"       # <Alt-k> = underscore 
+"\ef" "+"       # <Alt-f> = plus       
+"\ed" "="       # <Alt-d> = equals     
+"\eh" "~"       # <Alt-h> = tilda      
+"\em" "\n"      # <Alt-m> = return     
+"\es" "*"       # <Alt-s> = star
+"\ew" "\\*"     # <Alt-w> = backslash-star
 
-"\eA" "$(!!) "
+# Shortcuts for common Unix filters (Alt upper-case letter):
+"\eA" "$(!!) "                  # ALL the previous command
 "\eC" "| column -t "
-"\eD" "| uniq -d "
-"\eE" "| uniq -c "
+"\eD" "| uniq -d "              # show Duplicates
+"\eE" "| uniq -c "              # Enumerate (count uniq)
 "\eG" "| grep -i "
 "\eH" "| head "
-"\eL" "| nl -nrz -w4 -ba "
+"\eL" "| nl -nrz -w4 -ba "      # Line numbers
 "\eM" "| less\n"
 "\eN" "| sort -n "
 "\eP" "$(pwd) "
-"\eR" "| rev "
+"\eR" "| rev "                  # Reverse lines
 "\eS" "| sort -f "
-"\eT" "| tac "
-"\eU" "| uniq "
+"\eT" "| tac "                  # Reverse file
+"\eU" "| uniq "                 # Uniq-ify
 "\eV" "| grep -v "
 "\eW" "| wc -l\n"
-"\eX" "| shuf "
+"\eX" "| shuf "                 # miX up
 "\eZ" "| cat -s "
 "\e0" "> /dev/null "
 
