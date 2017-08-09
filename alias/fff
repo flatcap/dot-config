@@ -1,6 +1,6 @@
 
 alias  ffd="find . -name .git -prune -o \( -type d                                                       -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
-alias  fff="find . -name .git -prune -o \( -type f                                                       -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
+alias  fff="find . -name .git -prune -o -name tags -prune -o \( -type f                                  -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 alias  ffl="find . -name .git -prune -o \( -type l                                                       -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 
 alias  ffef="find . -name .git -prune -o \( -type f -empty                                               -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
@@ -11,6 +11,7 @@ alias ffch="find . -name .git -prune -o \( -type f \( -name '*.[ch]' -o -name '*
 alias  ffh="find . -name .git -prune -o \( -type f    -name '*.h'                                        -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 
 alias  ffa="find . -name .git -prune -o \( -type f -name '*.awk'                                         -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
+alias ffco="find . -name .git -prune -o \( -type f -name '*.cocci'                                       -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 alias  ffj="find . -name .git -prune -o \( -type f -name '*.js' ! -name 'jq*'                            -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 alias  ffk="find . -name .git -prune -o \( -type f -name '*.kml'                                         -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 alias  ffm="find . -name .git -prune -o \( -type f -iname 'Makefile*'                                    -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
