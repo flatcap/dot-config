@@ -5,21 +5,26 @@
 [alias]
 	ahead    = "!f() { git branch --verbose --verbose --color | grep --color=never -e ahead -e behind | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
 	b        = "!f() { git branch --verbose --verbose --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
-	bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
+	bd       = "!f() { git branch --verbose --verbose --sort=-committerdate --color \"$@\" | head -20 | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
+	; bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
 	bn       = rev-parse --abbrev-ref --symbolic-full-name HEAD
+	bl       = for-each-ref --format='%(refname:short)' refs/heads/
 	co       = checkout
 	cp       = cherry-pick
+	cp1      = "!f() { git cherry-pick ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
 	d        = diff
 	d0       = diff -U0
-	d1       = "!f() { git diff ${1:-HEAD}~..${1:-HEAD}; }; f"
-	ds1      = "!f() { git diff --stat ${1:-HEAD}~..${1:-HEAD}; }; f"
+	d1       = "!f() { git diff ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
+	ds1      = "!f() { git diff --stat ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
 	dc       = diff --cached
 	ds       = diff --stat
-	dl       = diff --name-only
+	dl       = "!f() { git diff --name-only | xargs --no-run-if-empty \"$@\"; }; f"
+	dl1      = "!f() { git diff --name-only ${1:-HEAD}~..${1:-HEAD}; }; f"
+	dc       = diff --cached
 	f        = fetch
 	fa       = fetch --all --no-tags --prune
-	fp       = format-patch
-	fp1      = "!f() { git format-patch ${1:-HEAD}~..${1:-HEAD}; }; f"
+	fp       = format-patch --no-signature
+	fp1      = "!f() { git format-patch --no-signature ${1:-HEAD}~..${1:-HEAD}; }; f"
 	dc       = diff --cached
 	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	; j        = jump diff
@@ -29,12 +34,16 @@
 	p        = push
 	pr       = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
 	r        = remote --verbose
+	sl       = shortlog --numbered --summary
 	t        = tag
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
 	upstream = "!f() { git rev-parse --abbrev-ref --symbolic-full-name $1@{u}; }; f"
 
 	origin   = "!f() { git remote add origin ~/neomutt.git; git remote --verbose; }; f"
-	github   = "!f() { git remote add github ~/neomutt.git; git remote --verbose; }; f"
+	github   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=$1; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/neomutt; git remote --verbose; }; f"
+
+	good     = bisect good
+	bad      = bisect bad
 
 	; grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
 	; mkobject = hash-object --stdin -w
@@ -45,7 +54,8 @@
 	unstage  = reset HEAD --
 
 	# commit
-	aa       = commit --amend -a
+	; aa       = commit --amend --all --verbose
+	aa       = commit --amend --all
 	amend    = commit --amend
 	ce       = commit --allow-empty
 	cam      = "!f() { git commit --all --message \"$*\"; }; f"
@@ -70,10 +80,11 @@
 	; ll       = log --branches --graph --format=tidy
 	ll       = log --branches --graph --format=tidy
 	lt       = log --format=tidy
+	lg       = log --format=tidy --graph
 	; lt       = log --format=tidy master.. --reverse
 	ln       = log --graph --format=named
 	lq       = log --format=quiet
-	ls       = log --graph --stat
+	ls       = log --stat
 	since    = log --branches --graph --format=tidy --since
 	when     = log --format=tidy --diff-filter=A
 
@@ -91,7 +102,7 @@
 	# status
 	bs       = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
 	s        = "!f() { git stash list; git status --short \"$@\"; }; f"
-	sb       = "!f() { local C; [ $# = 1 ] && C='--current'; git show-branch $C \"$@\"; }; f"
+	sb       = "!f() { git show-branch --sha1-name $([ $# = 1 ] && echo '--current') \"$@\"; }; f"
 	st       = status
 	stats    = "!f() { W=$(git rev-list --count --max-age $(date -d \"-1 week\" +%s) HEAD); M=$(git rev-list --count --max-age $(date -d \"-1 month\" +%s) HEAD); A=$(git rev-list --count HEAD); echo $W/$M/$A commits; }; f"
 
@@ -217,6 +228,7 @@
 [log]
 	abbrevCommit = true
 	date = relative
+	mailmap = true
 
 [mailmap]
 	file = ~/.gitmailmap
@@ -255,9 +267,13 @@
 	nodec  = %C(204)%h%Creset %s %C(47)(%ar)%Creset
 	nodate = %C(204)%h%Creset %s%C(white dim)%d%Creset
 	dtidy  = %C(204)%h%Creset %s %C(47)(%ad)%Creset%C(228)%d%Creset
-	named  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%aN <%aE>%Creset
+	; named  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%aN <%aE>%Creset
+	; named  = %C(204)%h%Creset %s -- %C(white dim)%aN <%aE>%Creset
 	sdate  = %C(204)%h%Creset %C(47)%ad%Creset %s
 	sndate = %C(204)%h%Creset %C(47)%ad%Creset %C(white dim)%aN <%aE>%Creset %s
+
+	named = %C(204)%h%Creset %s %C(white dim)(%aN)%Creset
+	column = %C(204)%h% C(white dim)%<(12,trunc)%aN%Creset %s
 
 [push]
 	default = matching
@@ -280,7 +296,6 @@
 	pushInsteadOf = "https://github.com/flatcap/"
 
 [url "git@github.com:"]
-	insteadOf = "rich:"
 	pushInsteadOf = "https://github.com/"
 
 [user]
