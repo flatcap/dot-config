@@ -6,6 +6,9 @@
 	ahead    = "!f() { git branch --verbose --verbose --color | grep --color=never -e ahead -e behind | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
 	b        = "!f() { git branch --verbose --verbose --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
 	bd       = "!f() { git branch --verbose --verbose --sort=-committerdate --color \"$@\" | head -20 | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
+	bda      = "!f() { git branch --verbose --verbose --sort=-committerdate --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
+	bg       = branch --remote --list 'github/devel/*'
+	bo       = branch --remote --list 'origin/devel/*'
 	; bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
 	bn       = rev-parse --abbrev-ref --symbolic-full-name HEAD
 	bl       = for-each-ref --format='%(refname:short)' refs/heads/
@@ -13,34 +16,40 @@
 	cp       = cherry-pick
 	cp1      = "!f() { git cherry-pick ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
 	d        = diff
+	dm       = diff master
 	d0       = diff -U0
 	d1       = "!f() { git diff ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
 	ds1      = "!f() { git diff --stat ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
 	dc       = diff --cached
 	ds       = diff --stat
-	dl       = "!f() { git diff --name-only | xargs --no-run-if-empty \"$@\"; }; f"
-	dl1      = "!f() { git diff --name-only ${1:-HEAD}~..${1:-HEAD}; }; f"
+	dsm      = diff --stat master
+	dl       = "!f() { cd ${GIT_PREFIX:-.}; git diff --name-only --relative | xargs --no-run-if-empty \"$@\"; }; f"
+	dl1      = "!f() { cd ${GIT_PREFIX:-.}; git diff --name-only --relative ${1:-HEAD}~..${1:-HEAD}; }; f"
 	dc       = diff --cached
-	f        = fetch
+	f        = fetch --no-tags
 	fa       = fetch --all --no-tags --prune
 	fp       = format-patch --no-signature
 	fp1      = "!f() { git format-patch --no-signature ${1:-HEAD}~..${1:-HEAD}; }; f"
+	fpm      = format-patch --no-signature master..
 	dc       = diff --cached
 	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
 	; j        = jump diff
 	j        = jump merge
 	lca      = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-7; }; f"
 	neo      = "!f() { git clone -s ~/neomutt.git ${1:-neo}; cd ${1:-neo}; git remote add github https://github.com/neomutt/neomutt; }; f"
+	mutt     = "!f() { git clone --ref ~/neomutt.git https://github.com/neomutt/upstream-mutt ${1:-mutt}; cd ${1:-mutt}; git remote rename origin github; git map default; }; f"
 	p        = push
 	pr       = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
 	r        = remote --verbose
 	sl       = shortlog --numbered --summary
+	slm      = shortlog --numbered --summary master..
 	t        = tag
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
+	u        = "!f() { git rev-parse --abbrev-ref --symbolic-full-name $1@{u}; }; f"
 	upstream = "!f() { git rev-parse --abbrev-ref --symbolic-full-name $1@{u}; }; f"
 
 	origin   = "!f() { git remote add origin ~/neomutt.git; git remote --verbose; }; f"
-	github   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=$1; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/neomutt; git remote --verbose; }; f"
+	github   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/neomutt; git remote --verbose; }; f"
 
 	good     = bisect good
 	bad      = bisect bad
@@ -80,18 +89,29 @@
 	; ll       = log --branches --graph --format=tidy
 	ll       = log --branches --graph --format=tidy
 	lt       = log --format=tidy
+	ltm      = log --format=tidy master..
+	ltu      = "!f() { git log --format=tidy $(git upstream)..; }; f"
+	lt1      = "!f() { git log --format=tidy ${1:-HEAD} -n1 \"$@\"; }; f"
+	log1     = "!f() { git log ${1:-HEAD} -n1 \"$@\"; }; f"
+	logm     = log master..
 	lg       = log --format=tidy --graph
+	lgm      = log --format=tidy --graph master..
 	; lt       = log --format=tidy master.. --reverse
 	ln       = log --graph --format=named
+	lnm      = log --graph --format=named master..
 	lq       = log --format=quiet
+	lqm      = log --format=quiet master..
 	ls       = log --stat
+	lsm      = log --stat master..
 	since    = log --branches --graph --format=tidy --since
 	when     = log --format=tidy --diff-filter=A
 
 	# rebase
 	# --preserve-merges
 	rb       = rebase --committer-date-is-author-date
+	rbm      = rebase --committer-date-is-author-date master
 	ri       = rebase --committer-date-is-author-date --interactive --autosquash
+	rim      = rebase --committer-date-is-author-date --interactive --autosquash master
 	fix      = "!f() { SEARCH=\"$1\"; shift; git commit --fixup  $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
 	sq       = "!f() { SEARCH=\"$1\"; shift; git commit --squash $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
 
@@ -103,6 +123,7 @@
 	bs       = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
 	s        = "!f() { git stash list; git status --short \"$@\"; }; f"
 	sb       = "!f() { git show-branch --sha1-name $([ $# = 1 ] && echo '--current') \"$@\"; }; f"
+	sbm      = "!f() { git show-branch --sha1-name --current master \"$@\"; }; f"
 	st       = status
 	stats    = "!f() { W=$(git rev-list --count --max-age $(date -d \"-1 week\" +%s) HEAD); M=$(git rev-list --count --max-age $(date -d \"-1 month\" +%s) HEAD); A=$(git rev-list --count HEAD); echo $W/$M/$A commits; }; f"
 
@@ -144,6 +165,7 @@
 
 [commit]
 	template = ~/.gitmessage
+	verbose  = false
 
 [core]
 	# whitespace     = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
@@ -261,6 +283,9 @@
 [mergetool]
 	prompt = false
 
+; [pager]
+; 	diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
+
 [pretty]
 	tidy   = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset
 	quiet  = %C(204)%h%Creset %s
@@ -303,3 +328,5 @@
 	name       = "Richard Russon"
 	signingkey = "Richard Russon (NeoMutt) <rich@flatcap.org>"
 
+; [remote "github"]
+; 	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
