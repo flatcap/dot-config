@@ -6,8 +6,8 @@ alias  ffl="find . -name .git -prune -o \( -type l                              
 alias  ffef="find . -name .git -prune -o \( -type f -empty                                               -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 alias  ffed="find . -name .git -prune -o \( -type d -empty                                               -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 
-alias  ffc="find . -name .git -prune -o \( -type f \( -name '*.c'    -o -name '*.cc' -o -name '*.cpp' \) -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
-alias ffch="find . -name .git -prune -o \( -type f \( -name '*.[ch]' -o -name '*.cc' -o -name '*.cpp' \) -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
+alias  ffc="find . -name .git -prune -o \( -type f \( -name '*.c'    ! -name jimsh0.c -o -name '*.cpp' \) -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
+alias ffch="find . -name .git -prune -o \( -type f \( -name '*.[ch]' ! -name jimsh0.c -o -name '*.cpp' \) -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 alias  ffh="find . -name .git -prune -o \( -type f    -name '*.h'                                        -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
 
 alias  ffa="find . -name .git -prune -o \( -type f -name '*.awk'                                         -print0 \) | sort --zero-terminated | xargs --no-run-if-empty --null"
