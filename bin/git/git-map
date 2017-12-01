@@ -7,8 +7,9 @@ else
 	REMOTE="github"
 fi
 
-git remote | grep -q "^$REMOTE\>"
-if [ $? -ne 0 ]; then
+# git remote | grep -q "^$REMOTE\>"
+# if [ $? -ne 0 ]; then
+if [ ! -d .git/refs/remotes/$REMOTE ]; then
 	echo "Remote '$REMOTE' doesn't exist"
 	exit 1
 fi

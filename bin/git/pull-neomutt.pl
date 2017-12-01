@@ -25,6 +25,14 @@ foreach (@{$decoded_json}) {
 	my $name = $repo->{'name'};
 	my $desc = $repo->{'description'};
 
+	if (defined $desc) {
+		$desc =~ tr/\x20-\x7f//cd;
+		$desc =~ s/^:[a-z]+:/ /g;
+		$desc =~ s/^\s+//;
+	} else {
+		$desc = '[NONE]';
+	}
+
 	printf "%s %s\n", $name, $desc;
 
 	my $dir = $name . '.git';
