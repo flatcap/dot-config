@@ -1,5 +1,5 @@
 export HTML_TIDY="$HOME/.tidy"
 export KBUILD_VERBOSE="0"
 export MAKEFLAGS="-j4"
-# export MANSECT="2:2x:3:3p:3x:0p:1:1p:1x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:n"
+export MANSECT="3:3p:3x:2:2x:0p:1:1p:1x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:n"
 # export PATH=".:~/bin:/usr/bin:/usr/local/bin:/usr/sbin"

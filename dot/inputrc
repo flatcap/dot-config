@@ -62,6 +62,7 @@ $endif
 "\ek" "_"       # <Alt-k> = underscore 
 "\ef" "+"       # <Alt-f> = plus       
 "\ed" "="       # <Alt-d> = equals     
+"\eg" "^"       # <Alt-g> = caret      
 "\eh" "~"       # <Alt-h> = tilda      
 "\em" "\n"      # <Alt-m> = return     
 "\es" "*"       # <Alt-s> = star

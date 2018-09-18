@@ -8,7 +8,7 @@ RESULT="/mnt/space"
 
 [ -d "$MEDIA" ] || exit 0
 
-DIR="$MEDIA/flatcap/TOSHIBA EXT"
+DIR="$MEDIA/flatcap/toshiba"
 if [ -d "$DIR" ]; then
 	cd "$DIR"
 

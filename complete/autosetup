@@ -3,10 +3,10 @@ _autosetup_complete()
     local cur
     _get_comp_words_by_ref cur
 
-    COMPREPLY=( $( compgen -W '--help --prefix= --logging --disable-doc --full-doc --flock --disable-fcntl --fmemopen --locales-fix --disable-pgp --disable-smime --mixmaster --homespool --ssl --gnutls --gpgme --gss --sasl --lua --notmuch --disable-nls --disable-idn --bdb --gdbm --kyotocabinet --lmdb --qdbm --tokyocabinet --everything' -- "$cur" ) )
+    COMPREPLY=( $( compgen -W '--help --prefix= --disable-doc --full-doc --flock --disable-fcntl --fmemopen --locales-fix --disable-pgp --disable-smime --mixmaster --homespool --ssl --gnutls --gpgme --gss --sasl --lua --notmuch --disable-nls --disable-idn --bdb --gdbm --kyotocabinet --lmdb --qdbm --tokyocabinet --everything' -- "$cur" ) )
 }
 
-complete -F _autosetup_complete configure.autosetup
+complete -F _autosetup_complete configure
 
 # --with-ui
 # --with-ncurses=path

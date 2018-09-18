@@ -7,10 +7,10 @@ exec 2> /dev/null	# Turn off stderr
 for i in "$@"; do
 	[ -d "$i" ] && continue
 
-	if [ ! -f "$i" ]; then
-		echo "file not found: $i"
-		continue
-	fi
+	# if [ ! -f "$i" ]; then
+	# 	echo "file not found: $i"
+	# 	continue
+	# fi
 
 	case "$i" in
 		*.doc|*.odt|*.rtf|*.ott)
@@ -29,14 +29,15 @@ for i in "$@"; do
 			#(dotty "$i" &) &> /dev/null
 			#xdotool search --name ${i%.*} windowkill
 			#(dot -Tpng $i | display -resize 70% -title ${i%.*} - &) >& /dev/null
-			# (neato -Tpng $i | display -geometry -1366+0 -title ${i%.*} - &) >& /dev/null
+			# (neato -Tpng $i | display -geometry -1920+0 -title ${i%.*} - &) >& /dev/null
 			# ;;
 		*.svg|*.dot|*.gv)
 			#(inkscape "$i" &) &> /dev/null
 			#(display -resize 70% -negate -title ${i%.*} "$i" &) >& /dev/null
-			(display -geometry -1366+0 -title ${i%.*} "$i" &) >& /dev/null
+			(display -geometry -1920+0 -title ${i%.*} "$i" &) >& /dev/null
+			# (circo -Tsvg $i | display -geometry -1920+0 -title ${i%.*} - &) >& /dev/null
 			;;
-		*.avi|*.mpg|*.wmv|*.mp4|*.mkv|*.ogg|*.mov|*.mp3|*.flv)
+		*.avi|*.mpg|*.wmv|*.m4a|*.mkv|*.ogg|*.mov|*.mp3|*.flv|*.mp4)
 			#(totem --fullscreen --enqueue "$i" &) &> /dev/null
 			#(totem --enqueue "$i" &) &> /dev/null
 			#(totem --no-existing-session "$i" &) &> /dev/null
@@ -49,7 +50,7 @@ for i in "$@"; do
 			(cat "$i" > /dev/null) &> /dev/null
 			(cat "$i" > /dev/null) &> /dev/null
 			;;
-		*.htm|*.html)
+		*.htm|*.html|http://*|https://*)
 			(firefox "$i" &) &> /dev/null
 			;;
 		*.jpg|*.jpeg|*.png|*.gif|*.ico)

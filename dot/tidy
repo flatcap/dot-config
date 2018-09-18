@@ -1,7 +1,12 @@
-indent: yes
+indent: auto
 write-back: yes
 clean: yes
 error-file: /dev/tty
 wrap: 999
 tidy-mark: no
 indent-spaces: 2
+
+# new-inline-tags: emphasis
+# new-blocklevel-tags: para
+# new-empty-tags: 
+# new-pre-tags: screen

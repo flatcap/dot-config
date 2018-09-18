@@ -136,7 +136,7 @@ function __prompt_git()
 	[ "$cfg_git" = "yes" ] || return
 
 	local git_status="$(git status -unormal 2>&1)"
-	[[ "$git_status" =~ "Not a git repo" ]] && return
+	[[ "$git_status" =~ "not a git repo" ]] && return
 
 	# in a bare directory, make up some plausible reposonse
 	[ -f config -a -d refs -a -f HEAD ] && git_status="nothing to commit On branch bare"

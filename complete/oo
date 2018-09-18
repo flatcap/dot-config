@@ -1,1 +1,1 @@
-complete -o dirnames -f -X '!*.@(avi|csv|dia|doc|dot|epub|flv|gif|glade|gv|htm|html|jpeg|jpg|markdown|md|mkv|mobi|mov|mp3|mp4|mpg|ods|odt|ogg|ott|pcap|pcapng|pdf|png|prc|rm|rtf|svg|torrent|txt|vik|wmv|xcf|xls)' oo
+complete -o dirnames -f -X '!*.@(avi|csv|dia|doc|dot|epub|flv|gif|glade|gv|htm|html|jpeg|jpg|m4a|markdown|md|mkv|mobi|mov|mp3|mp4|mpg|ods|odt|ogg|ott|pcap|pcapng|pdf|png|prc|rm|rtf|svg|torrent|txt|vik|wmv|xcf|xls)' oo
