@@ -30,12 +30,12 @@ function usage()
 function get_dirs()
 {
 	local i
-	local dir_list="$(find . -type d -name .git | LANG=C sort | cut -b3-)"
+	local dir_list="$(find -L . -type d -name .git | LANG=C sort | cut -b3-)"
 	for i in $dir_list; do
 		[ "$i" = ".git" ] && i=.
 		DIRS="$DIRS ${i%/*}"
 	done
-	DIRS="$DIRS $(find . -type d -name "?*.git" | LANG=C sort | cut -b3-)"
+	DIRS="$DIRS $(find -L . -type d -name "?*.git" | LANG=C sort | cut -b3-)"
 
 	local HERE=$(pwd)
 	if [[ "$HERE" =~ \.git$ ]]; then
@@ -89,7 +89,8 @@ function git_pull()
 		if [ -n "$(git remote)" ]; then
 			BARE="$(git config --get core.bare)"
 			if [ "$BARE" = "true" ]; then
-				git fetch --tags origin master:master
+				BRANCH=$(sed 's!.*/!!' HEAD)
+				git fetch --tags origin $BRANCH:$BRANCH
 			else
 				git fetch --tags --quiet
 				MASTER=$(git rev-parse HEAD)
@@ -154,13 +155,13 @@ function git_tidy()
 		rm -f gitk.cache
 		rm -f GIT_COLA_MSG
 		rm -f hooks/*.sample
-		rm -f info/exclude
+		# rm -f info/exclude
 		rm -f MERGE_RR
 		rm -f ORIG_HEAD
 		rm -f qgit_cache.dat
 		rm -fr logs
 		rm -fr rr-cache
-		find refs/ -mindepth 1 -delete
+		find -L refs/ -mindepth 1 -delete
 		chmod -x config
 		popd > /dev/null
 	done
@@ -169,7 +170,7 @@ function git_tidy()
 function git_clone()
 {
 	cat "$DATA_FILE" | while read DIR GIT; do
-		if [ -d $DIR ]; then
+		if [ -d $DIR ] || [ -d $DIR.git ]; then
 			echo $DIR already exists
 		else
 			title2 git clone $DIR
@@ -200,7 +201,7 @@ function git_redate()
 		title2 git redate $i
 		log $i
 		pushd $i > /dev/null
-		find . -name .git -prune -o \( ! -type l -print \) | while IFS="" read i; do touch -d "$(git log --format="%cd" -n1 --date=iso $i)" $i; done
+		find -L . -name .git -prune -o \( ! -type l -print \) | while IFS="" read i; do touch -d "$(git log --format="%cd" -n1 --date=iso $i)" $i; done
 		popd > /dev/null
 	done
 }

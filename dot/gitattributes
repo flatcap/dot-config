@@ -6,3 +6,25 @@ gitconfig	diff=dosini
 *.png		diff=identify
 # *.vim		filter=tabspace2
 # *.db		filter=serial
+# PATCHES		filter=patches
+PATCHES		merge=patches
+# PATCHES		merge=ours
+
+# .hg*		diff=nodiff
+# hg-*		diff=nodiff
+# build-release	diff=nodiff
+# .travis.yml	diff=nodiff
+
+VERSION		merge=ours
+.travis.yml	merge=ours
+
+# *.po		merge=theirs
+# *.po		filter=po
+
+*.md		diff=markdown
+
+manual.xml.*	diff=manual
+# manual.xml.head	merge=manual
+# manual.xml.head	merge=theirs
+
+*.txt		diff=text
