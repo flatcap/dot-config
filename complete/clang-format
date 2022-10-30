@@ -1,0 +1,2 @@
+complete -o dirnames -f -X '!*.@(c)' clang-format
+complete -o dirnames -f -X '!*.@(c)' cf

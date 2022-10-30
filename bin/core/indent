@@ -67,6 +67,7 @@ if [ -n "$SIGN" ]; then
 	SED="s/^ \{,$INDENT\}//"
 else
 	STR=$(printf "%*s" $INDENT)
+	STR="${STR//        /	}"
 	if [ -n "$REGEX" ]; then
 		SED="/$REGEX/s/^/$STR/"
 	else

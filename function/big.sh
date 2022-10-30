@@ -3,10 +3,10 @@ function big()
 	shopt -s nullglob
 
 	local DIR
-	local LINES
+	local ROWS
 	for i in "$@"; do
 		if [[ "$i" =~ ^[0-9]+$ ]]; then
-			LINES="$i"
+			ROWS="$i"
 		elif [ -d "$i" ]; then
 			DIR="$i"
 		else
@@ -14,7 +14,7 @@ function big()
 		fi
 	done
 
-	[ -z "$LINES" ] && LINES=$(($(tput lines) - 4))
+	[ -z "$ROWS" ] && ROWS=$(($(tput lines) - 4))
 
 	[ -n "$DIR" ] && pushd "$DIR" >& /dev/null
 	local LIST=(* .??*)
@@ -27,8 +27,8 @@ function big()
 		[ "${i##*/}" = "lost+found" ] && continue
 		grep -q " $HERE/$i " /proc/mounts || WORK+=("$i")
 	done
-	du -sh
-	du --summarize --block-size=1K --one-file-system "${WORK[@]}" | sort --numeric-sort --reverse | head --lines $LINES
+ 	df -h . | sed 1d
+	du --summarize --block-size=1K --one-file-system "${WORK[@]}" | sort --numeric-sort --reverse | head --lines $ROWS
 	[ -n "$DIR" ] && popd >& /dev/null
 }
 

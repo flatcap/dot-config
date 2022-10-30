@@ -7,7 +7,7 @@ DIR="${1%/}"
 
 pushd "$DIR" >& /dev/null
 
-BRANCHES="$(git branch | sed 's/[ \*]//g' | grep -v master)"
+BRANCHES="$(git branch | sed 's/[ \*]//g' | grep -v main)"
 
 [ -n "$BRANCHES" ] || exit 1
 

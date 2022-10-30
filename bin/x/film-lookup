@@ -5,7 +5,8 @@ shopt -s nullglob
 FILES=${@:-*}
 
 for i in $FILES; do
-	title=${i%.???}
+	title=${i##*/}
+	title=${title%.???}
 	title=${title//\./+}
 	echo $title
 	firefox "http://www.imdb.com/find?q=$title&s=tt"

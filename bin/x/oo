@@ -13,6 +13,9 @@ for i in "$@"; do
 	# fi
 
 	case "$i" in
+		http://*|https://*)
+			(firefox "$i" &) &> /dev/null
+			;;
 		*.doc|*.odt|*.rtf|*.ott)
 			(oowriter "$i" &) &> /dev/null
 			;;
@@ -30,12 +33,17 @@ for i in "$@"; do
 			#xdotool search --name ${i%.*} windowkill
 			#(dot -Tpng $i | display -resize 70% -title ${i%.*} - &) >& /dev/null
 			# (neato -Tpng $i | display -geometry -1920+0 -title ${i%.*} - &) >& /dev/null
+			# (circo -Tsvg $i | display -geometry -1920+0 -title ${i%.*} - &) >& /dev/null
 			# ;;
+		*/[0-9]*.gv)
+			TITLE="${i%.*}"
+			TITLE="${TITLE##*/}"
+			(display -resize 75% -title "$TITLE" "$i" &) >& /dev/null
+			;;
 		*.svg|*.dot|*.gv)
 			#(inkscape "$i" &) &> /dev/null
 			#(display -resize 70% -negate -title ${i%.*} "$i" &) >& /dev/null
 			(display -geometry -1920+0 -title ${i%.*} "$i" &) >& /dev/null
-			# (circo -Tsvg $i | display -geometry -1920+0 -title ${i%.*} - &) >& /dev/null
 			;;
 		*.avi|*.mpg|*.wmv|*.m4a|*.mkv|*.ogg|*.mov|*.mp3|*.flv|*.mp4)
 			#(totem --fullscreen --enqueue "$i" &) &> /dev/null
@@ -49,6 +57,9 @@ for i in "$@"; do
 			(cat "$i" > /dev/null) &> /dev/null
 			(cat "$i" > /dev/null) &> /dev/null
 			(cat "$i" > /dev/null) &> /dev/null
+			;;
+		*.mm)
+			(freemind "$i" &) &> /dev/null
 			;;
 		*.htm|*.html|http://*|https://*)
 			(firefox "$i" &) &> /dev/null

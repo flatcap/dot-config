@@ -110,6 +110,7 @@ function __prompt_user()
 	if [ "$cfg_colour" = "yes" ]; then
 		__virtual_machine && HOSTNAME=dummy.vm.flatcap.org
 		case "$HOSTNAME" in
+			vivo.flatcap.org)	prompt_colour="32" ;;	# green
 			laptop.flatcap.org)	prompt_colour="32" ;;	# green
 			desktop.flatcap.org)	prompt_colour="36" ;;	# cyan
 			flatcap.org)		prompt_colour="31" ;;	# red
@@ -158,7 +159,7 @@ function __prompt_git()
 
 	if [[ "$git_status" =~ "On branch "([^[:space:]]+) ]]; then
 		branch="${BASH_REMATCH[1]}"
-		if [ "$cfg_git_abbr" = "yes" -a \( "$branch" = "master" -o "$branch" = "bare" \) ]; then
+		if [ "$cfg_git_abbr" = "yes" -a \( "$branch" = "main" -o "$branch" = "bare" \) ]; then
 			branch="$state"
 		else
 			[ "$cfg_colour" != "yes" ] && branch="$branch$state"
@@ -244,6 +245,8 @@ function __prompt_command()
 		hostname="{${hostname%%.*}$IP} "
 	else
 		if [[ $hostname =~ ^laptop.flatcap.org$ ]]; then
+			hostname=""
+		elif [[ $hostname =~ ^vivo.flatcap.org$ ]]; then
 			hostname=""
 		else
 			hostname="{${hostname%%.*}} "

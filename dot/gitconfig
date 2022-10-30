@@ -1,58 +1,78 @@
 [advice]
-	statusHints = false
-	detachedHead = false
+	addEmptyPathspec   = false
+	addIgnoredFile     = false
+	detachedHead       = false
+	skippedCherryPicks = false
+	statusHints        = false
 
 [alias]
 	ahead    = "!f() { git branch --verbose --verbose --color | grep --color=never -e ahead -e behind | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+'; }; f"
 	amc      = am --continue
-	b        = "!f() { git branch --verbose --verbose --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
+	b        = "!f() { git branch --verbose --verbose --color \"$@\" | bold 'main' | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
 	bd       = "!f() { git branch --verbose --verbose --sort=-committerdate --color \"$@\" | head -20 | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
 	bda      = "!f() { git branch --verbose --verbose --sort=-committerdate --color \"$@\" | green 'ahead [0-9]\\+' | red 'behind [0-9]\\+' | reverse 'gone'; }; f"
-	bg       = branch --remote --list 'github/devel/*'
-	bo       = branch --remote --list 'origin/devel/*'
-	; bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
+	bg       = branch --color=never --remote --list 'github/devel/*'
+	bo       = branch --color=never --remote --list 'origin/devel/*'
+	# bd       = !git branch --merged | grep -v \"*\" | xargs -n1 git branch -d
 	bn       = rev-parse --abbrev-ref --symbolic-full-name HEAD
 	bl       = for-each-ref --format='%(refname:short)' refs/heads/
+	cat      = cat-file -p
+	cc       = commit -C
+	cca      = commit --amend -C
 	co       = checkout
-	cp       = cherry-pick
-	cpc      = cherry-pick --continue
-	cp1      = "!f() { git cherry-pick ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
+	cp       = cherry-pick --allow-empty
+	cpc      = cherry-pick --allow-empty --continue
+	cp1      = "!f() { git cherry-pick --allow-empty ${1:-HEAD}^! \"$@\"; }; f"
 	d        = diff
-	dm       = diff master
+	# dm       = diff main
+	dm       = "!f() { git diff $(git lca main) \"$@\"; }; f"
+	dr       = "!f() { git diff $(git describe --abbrev=0) \"$@\"; }; f"
 	d0       = diff -U0
-	d1       = "!f() { git diff ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
-	ds1      = "!f() { git diff --stat ${1:-HEAD}~..${1:-HEAD} \"$@\"; }; f"
+	d1       = "!f() { COMMIT=\"${1:-HEAD}\"; [ -n \"$1\" ] && shift; git diff $COMMIT~..$COMMIT \"$@\"; }; f"
+	ds1      = "!f() { COMMIT=\"${1:-HEAD}\"; [ -n \"$1\" ] && shift; git diff --stat $COMMIT~..$COMMIT \"$@\"; }; f"
+	; d1       = "!f() { git diff ${1:-HEAD}^! \"$@\"; }; f"
+	; ds1      = "!f() { git diff --stat ${1:-HEAD}^! \"$@\"; }; f"
 	dc       = diff --cached
 	ds       = diff --stat
 	dsb      = diff --stat base
-	dsm      = diff --stat master
+	# dsm      = diff --stat main
+	dsm      = "!f() { git diff --stat $(git lca main) \"$@\"; }; f"
 	dsn      = diff --stat --name-only
 	dsu      = "!f() { git diff --stat $(git upstream)..; }; f"
+	du       = "!f() { git diff $(git upstream).. \"$@\"; }; f"
 	dl       = "!f() { cd ${GIT_PREFIX:-.}; git diff --name-only --relative | xargs --no-run-if-empty \"$@\"; }; f"
-	dl1      = "!f() { cd ${GIT_PREFIX:-.}; git diff --name-only --relative ${1:-HEAD}~..${1:-HEAD}; }; f"
-	dc       = diff --cached
+	dl1      = "!f() { cd ${GIT_PREFIX:-.}; git diff --name-only --relative ${1:-HEAD}^!; }; f"
 	f        = fetch --no-tags
 	fa       = fetch --all --no-tags --prune
-	fp       = format-patch --no-signature
-	; fp1      = "!f() { git format-patch --no-signature ${1:-HEAD}~..${1:-HEAD}; }; f"
-	fp1      = "!f() { X=${1:-HEAD}~..${1:-HEAD}; shift; git format-patch --no-signature $X \"$@\"; }; f"
-	fpm      = format-patch --no-signature master..
+	fg       = fetch --no-tags --prune github
+	fm       = fetch --no-tags --prune github main:main
+	# fp       = format-patch --no-signature
+	fp       = "!f() { COMMIT=\"$1\"; [ -n \"$1\" ] && shift; [[ \"$COMMIT\" =~ ^[0-9]{1,4}$ ]] && COMMIT=\"HEAD~$COMMIT..HEAD\"; git format-patch --no-signature \"$COMMIT\" \"$@\"; }; f"
+	# fp1      = "!f() { git format-patch --no-signature ${1:-HEAD}~..${1:-HEAD}; }; f"
+	fp1      = "!f() { X=${1:-HEAD}^!; [ -n \"$1\" ] && shift; git format-patch --no-signature $X \"$@\"; }; f"
+	fpm      = format-patch --no-signature main..
 	fpu      = "!f() { git format-patch --no-signature $(git upstream)..; }; f"
-	dc       = diff --cached
 	initm    = "!f() { cd ${GIT_PREFIX:-.}; git init --template= && git commit --allow-empty --message \"$*\"; }; f"
-	; j        = jump diff
+	# j        = jump diff
 	j        = jump merge
-	lca      = "!f() { git merge-base ${1:-master} ${2:-HEAD} | cut -b-8; }; f"
-	neo      = "!f() { git clone -s ~/neomutt.git ${1:-neo}; cd ${1:-neo}; git remote add github https://github.com/neomutt/neomutt; }; f"
+	lca      = "!f() { git merge-base ${1:-main} ${2:-HEAD} | cut -b-8; }; f"
+	neo      = "!f() { git clone -s /home/github/neomutt/source/neomutt ${1:-neo}; cd ${1:-neo}; git remote add github https://github.com/neomutt/neomutt; }; f"
 	mutt     = "!f() { git clone --ref ~/neomutt.git https://github.com/neomutt/upstream-mutt ${1:-mutt}; cd ${1:-mutt}; git remote rename origin github; git map default; }; f"
+	# oo       = "!f() { X=$(git remote get-url github); echo \"$X\"; echo \"$X\" > ~flatcap/oo; }; f"
+	oo       = "!f() { X=$(git remote get-url github); X=\"${X%.git}\"; echo \"$X\"; echo \"$X/settings/branch_protection_rules/new\" > ~flatcap/oo; }; f"
 	mt       = mergetool
 	p        = push
 	pm       = "!f() { L=$(git bn); R=$(git upstream); git push    ${R%%/*} $L:${R#*/}; }; f"
 	pmf      = "!f() { L=$(git bn); R=$(git upstream); git push -f ${R%%/*} $L:${R#*/}; }; f"
 	pr       = "!f() { git remote | xargs -n1 git push --verbose --tags; }; f"
 	r        = remote --verbose
+	rd       = range-diff
+	rdu      = range-diff main @ @{U}
+	rhu      = reset --hard @{U}
 	sl       = shortlog --numbered --summary
-	slm      = shortlog --numbered --summary master..
+	slm      = shortlog --numbered --summary main..
+	slr      = "!f() { git shortlog --numbered --summary $(git describe --abbrev=0).. \"$@\"; }; f"
+	sw       = switch
 	t        = tag
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
 	u        = "!f() { git rev-parse --abbrev-ref --symbolic-full-name $1@{u}; }; f"
@@ -61,17 +81,18 @@
 	wta      = "!f() { git worktree add ../${1##*/} $1; }; f"
 
 	origin   = "!f() { git remote add origin ~/neomutt.git; git remote --verbose; }; f"
-	; github   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/neomutt; git remote --verbose; }; f"
+	# github   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/neomutt; git remote --verbose; }; f"
 	github   = "!f() { DIR=$(git remote get-url github 2> /dev/null); DIR=${DIR##*/}; if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/${DIR:-neomutt}; git remote --verbose; }; f"
-	; gitlab   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=lab; fi; git remote add $REMOTE https://gitlab.com/$USER/neomutt.git/; git remote --verbose; }; f"
+	# gitlab   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=lab; fi; git remote add $REMOTE https://gitlab.com/$USER/neomutt.git/; git remote --verbose; }; f"
 
-	build    = "!f() { git rebase -i -p --exec 'git clean -xdfq; git log --oneline -n1 | cyan .; build' ${1:-master}; }; f"
+	build    = "!f() { COMMIT=\"${1:-main}\"; [[ $COMMIT =~ ^[0-9]{1,4}$ ]] && COMMIT=\"HEAD~$COMMIT\"; git rebase --exec 'git clean -xdfq; git lq1; build' \"$COMMIT\"; }; f"
+	buildi   = "!f() { COMMIT=\"${1:-main}\"; [[ $COMMIT =~ ^[0-9]{1,4}$ ]] && COMMIT=\"HEAD~$COMMIT\"; git rebase --interactive --exec 'git clean -xdfq; git lq1; build' \"$COMMIT\"; }; f"
 
 	good     = bisect good
 	bad      = bisect bad
 
-	; grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
-	; mkobject = hash-object --stdin -w
+	# grep-all = "!f() { cd ${GIT_PREFIX:-.}; STRING=\"$1\"; shift; git rev-list --all | xargs -r -I{} git grep -e \"$STRING\" {} -- \"$@\"; }; f"
+	# mkobject = hash-object --stdin -w
 
 	# add
 	a        = "!f() { cd ${GIT_PREFIX:-.}; git add \"${@:-.}\"; }; f"
@@ -80,14 +101,19 @@
 	unstage  = reset HEAD --
 
 	# commit
-	aa       = commit --amend --all
-	aaq      = commit --amend --all --no-edit
-	aav      = commit --amend --all --verbose
-	amend    = commit --amend
+	aa       = commit --allow-empty --amend --all
+	aaq      = commit --allow-empty --amend --all --no-edit
+	aav      = commit --allow-empty --amend --all --verbose
+	amend    = commit --allow-empty --amend
 	ce       = commit --allow-empty
 	cam      = "!f() { git commit --all --message \"$*\"; }; f"
-	camp     = "!f() { git commit --all --message \"$*\"; X=$(git remote); [ -n \"$X\" ] && git push; }; f"
+	cem      = "!f() { git commit --allow-empty --message \"$*\"; }; f"
+	camp     = "!f() { git commit --all --message \"$*\"; X=$(git remote); [ -n \"$X\" ] && git pm; }; f"
 	cm       = "!f() { git commit --message \"$*\"; }; f"
+	# edit     = "!f() { X=$(git rev-parse --short \"$1\"); GIT_SEQUENCE_EDITOR=\"sed -i '/$X/s/^pick/e/'\" git rebase -i $X^; }; f"
+	edit     = "!f() { X=$(git rev-parse --short \"$1\"); GIT_SEQUENCE_EDITOR=\"sed -i '/$X/s/^pick/e/'\" git rebase -i $X^; nvim -p $(git diff --name-only HEAD^); }; f"
+	reword   = "!f() { X=$(git rev-parse --short \"$1\"); GIT_SEQUENCE_EDITOR=\"sed -i '/$X/s/^pick/r/'\" git rebase -i $X^; }; f"
+	line     = commit --allow-empty --message "--------------------"
 
 	# hiding
 	hidden   = "!f() { git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'; }; f"
@@ -95,64 +121,84 @@
 	unhide   = "!f() { git update-index --no-assume-unchanged \"$@\"; }; f"
 
 	# logs
-	; l        = log --branches --graph --pretty=tidy -n 20
-	; lg       = log --graph --pretty=tidy -n 20
-	; l        = log --graph --pretty=tidy origin/mutt/1.5.24^..
-	; l        = log --branches --graph --pretty=tidy base^..
-	; l        = log --pretty=tidyd -n 20
-	; l        = log --branches --graph --pretty=tidy origin/mutt/1.5.24^..
-	; l        = log --branches --graph --format=tidy -n 20
-	; l1       = log --oneline --graph
+	# l        = log --branches --graph --pretty=tidy -n 20
+	# lg       = log --graph --pretty=tidy -n 20
+	# l        = log --graph --pretty=tidy origin/mutt/1.5.24^..
+	# l        = log --branches --graph --pretty=tidy base^..
+	# l        = log --pretty=tidyd -n 20
+	# l        = log --branches --graph --pretty=tidy origin/mutt/1.5.24^..
+	# l        = log --branches --graph --format=tidy -n 20
+	# l1       = log --oneline --graph
 	l1       = log --oneline
-	; ll       = log --branches --graph --format=tidy
-	ll       = log --branches --graph --format=tidy
-	llm      = log --branches --graph --format=tidy master^..
+	# ll       = log --branches --graph --format=tidy
+	ll       = log --branches --graph --format=nodate
+	# llm      = log --branches --graph --format=nodate main^..
+	# llm      = !git log --graph --format=nodate $(git for-each-ref --contains main --format='%(refname:short)' refs/heads) ^main^2
+	llm      = "!f() { X=$(git show -s --pretty=%P main); git log --graph --format=nodate $(git for-each-ref --contains main --format='%(refname:short)' refs/heads) ^${X##* } \"$@\"; }; f"
+	llqm     = log --branches --graph --format=quiet main^..
+	# llm0     = log --branches --graph --format=nodate m0^2..
+	# llm0     = "!f() { PARENT=$(git log -n1 --format='%P' m0); PARENT=${PARENT##* }; git log --branches --graph --format=nodate $PARENT..; }; f"
+	llm0     = "!f() { X=$(git show -s --pretty=%P m0); git log --graph --format=nodate $(git for-each-ref --contains m0 --format='%(refname:short)' refs/heads) ^${X##* } \"$@\"; }; f"
+	llu      = log --graph --format=nodate @ @{U} main^..
 	lt       = log --format=tidy
 	ltb      = log --format=tidy base..
-	ltm      = log --format=tidy master..
-	ltu      = "!f() { git log --format=tidy $(git upstream)..; }; f"
-	lt1      = "!f() { git log --format=tidy ${1:-HEAD} -n1 \"$@\"; }; f"
-	log1     = "!f() { git log ${1:-HEAD} -n1 \"$@\"; }; f"
-	logm     = log master..
+	ltm      = log --format=tidy main..
+	# ltm0     = log --format=tidy m0^2..
+	ltm0     = "!f() { PARENT=$(git log -n1 --format='%P' m0); PARENT=${PARENT##* }; git log --format=tidy $PARENT.. \"$@\"; }; f"
+	ltr      = "!f() { git log --format=tidy $(git describe --abbrev=0)^.. \"$@\"; }; f"
+	lqr      = "!f() { git log --format=quiet $(git describe --abbrev=0)^.. \"$@\"; }; f"
+	lgr      = "!f() { git log --graph --format=tidy $(git describe --abbrev=0)^.. \"$@\"; }; f"
+	ltu      = "!f() { git log --format=tidy ..$(git upstream); git log --format=tidy $(git upstream)..; }; f"
+	lt1      = "!f() { git log --format=tidy ${1:-HEAD}^! \"$@\"; }; f"
+	ld       = log --format=sdate --date=short
+	ld1      = log --format=sdate --date=short -n1
+	ldm      = log --format=sdate --date=short main..
+	log1     = "!f() { git log ${1:-HEAD}^! \"$@\"; }; f"
+	logm     = log main..
 	logu     = "!f() { git log $(git upstream)..; }; f"
 	lg       = log --format=tidy --graph
-	lgm      = log --format=tidy --graph master..
-	; lt       = log --format=tidy master.. --reverse
+	lgh      = "!git lqm --reverse | sed 's/^/- /'"
+	lgm      = log --format=tidy --graph main..
+	# lt       = log --format=tidy main.. --reverse
 	ln       = log --graph --format=named
-	lnm      = log --graph --format=named master..
+	lnm      = log --graph --format=named main..
 	lq       = log --format=quiet
-	lqm      = log --format=quiet master..
+	lq1      = log --format=quiet -n1
+	lqm      = log --format=quiet main..
 	ls       = log --stat
-	ls1      = "!f() { git log --stat ${1:-HEAD} -n1 \"$@\"; }; f"
+	ls1      = "!f() { git log --stat ${1:-HEAD}^! \"$@\"; }; f"
 	lsb      = log --stat base..
-	lsm      = log --stat master..
+	lsm      = log --stat main..
 	since    = log --branches --graph --format=tidy --since
 	when     = log --format=tidy --diff-filter=A
 
 	# rebase
 	# --preserve-merges
-	rb       = rebase --committer-date-is-author-date
-	rbm      = rebase --committer-date-is-author-date master
-	rbc      = rebase --continue
+	rb       = rebase
+	rbm      = rebase main
+	rbc      = "!f() { git rebase --continue && git lq1; }; f"
 	rbu      = "!f() { git rebase $(git u); }; f"
-	ri       = rebase --committer-date-is-author-date --interactive --autosquash
-	rim      = rebase --committer-date-is-author-date --interactive --autosquash master
-	riu      = "!f() { git rebase --committer-date-is-author-date --interactive --autosquash $(git u); }; f"
-	; fix      = "!f() { SEARCH=\"$1\"; shift; git commit --fixup  $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
-	; sq       = "!f() { SEARCH=\"$1\"; shift; git commit --squash $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
+	# ri       = rebase --interactive
+	ri       = "!f() { COMMIT=\"$1\"; [[ \"$COMMIT\" =~ ^[0-9]{1,4}$ ]] && COMMIT=\"HEAD~$COMMIT\"; git rebase --interactive \"$COMMIT\"; }; f"
+	rim      = rebase --interactive main
+	rim0     = rebase --interactive m0
+	riu      = "!f() { git rebase --interactive --autosquash $(git u); }; f"
+	# fix      = "!f() { SEARCH=\"$1\"; shift; git commit --fixup  $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
+	# sq       = "!f() { SEARCH=\"$1\"; shift; git commit --squash $(git log -n 1 --format='%h' --grep \"^$SEARCH\") \"$@\"; }; f"
 
 	rb-fix   = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"; GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"; GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL";' \"$@\"; }; f"
 
 	# stash
 	pop      = stash pop
-	save     = stash save
+	save     = stash push
 
 	# status
 	bs       = "!f() { git branch --verbose --verbose; git stash list; git status --short; }; f"
 	s        = "!f() { git stash list; git status --short \"$@\"; }; f"
 	sb       = "!f() { git show-branch $([ $# = 1 ] && echo '--current') \"$@\"; }; f"
 	sbs      = "!f() { git show-branch --sha1-name $([ $# = 1 ] && echo '--current') \"$@\"; }; f"
-	sbm      = "!f() { git show-branch --sha1-name --current master \"$@\"; }; f"
+	sbm      = "!f() { git show-branch --sha1-name --current main \"$@\"; }; f"
+	sbu      = "!f() { git show-branch --sha1-name --current main @{U} \"$@\"; }; f"
 	st       = status
 	stats    = "!f() { W=$(git rev-list --count --max-age $(date -d \"-1 week\" +%s) HEAD); M=$(git rev-list --count --max-age $(date -d \"-1 month\" +%s) HEAD); A=$(git rev-list --count HEAD); echo $W/$M/$A commits; }; f"
 
@@ -160,8 +206,14 @@
 	bb       = repo bb
 	hub      = repo hub
 
+	recentb = "!r() { refbranch=$1 count=$2; git for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)|%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)' --color=always --count=${count:-20} | while read line; do branch=$(echo \"$line\" | awk 'BEGIN { FS = \"|\" }; { print $1 }' | tr -d '*'); ahead=$(git rev-list --count \"${refbranch:-github/main}..${branch}\"); behind=$(git rev-list --count \"${branch}..${refbranch:-github/main}\"); colorline=$(echo \"$line\" | sed 's/^[^|]*|//'); echo \"$ahead|$behind|$colorline\" | awk -F'|' -vOFS='|' '{$5=substr($5,1,70)}1' ; done | ( echo \"ahead|behind|branch|lastcommit|message\" && cat) | column -ts'|';}; r"
+	recent = "!r() { count=$1; git for-each-ref --sort=-committerdate refs/heads --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)' --color=always --count=${count:=10} | column -ts'|'; }; r"
+
 [clean]
 	requireforce = no
+
+[checkout]
+	defaultRemote = github
 
 [color "branch"]
 	current  = 47
@@ -177,6 +229,9 @@
 	old        = 204
 	new        = 228
 	whitespace = 204 reverse
+
+	oldMoved   = 146
+	newMoved   = 115
 
 [color "status"]
 	header    = white
@@ -194,13 +249,14 @@
 
 [commit]
 	template = ~/.gitmessage
-	verbose  = false
+	verbose  = true
 
 [core]
 	# whitespace     = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
 	whitespace     = -blank-at-eol,-space-before-tab,-blank-at-eof
-	pager          = "less -eFfiqrX"
+	# pager          = "less -eFfiqrX"
 	pager          = /home/github/3rd-party/diff-so-fancy/diff-so-fancy | less --tabs=8 -RFX
+	# pager          = delta
 	preloadindex   = true
 	attributesfile = ~/.gitattributes
 	excludesfile   = ~/.gitignore
@@ -234,10 +290,12 @@
 	prompt = no
 
 [diff]
+	algorithm           = histogram
+	colorMoved          = zebra
+	compactionHeuristic = true
+	guitool             = vimdiff
 	mnemonicprefix      = true
 	tool                = vimdiff
-	guitool             = vimdiff
-	compactionHeuristic = true
 
 [filter "patches"]
 	# clean = cat
@@ -256,8 +314,19 @@
 	smudge = unexpand --tabs=2 --first-only
 	clean = expand --tabs=2 --initial
 
+[git-extras "pr"]
+	remote = github
+
+[github]
+	user  = flatcap
+	token = 87f49c3aebb08f1add7b59c1e3f57cd0
+
+[gitlab]
+	user  = flatcap
+	token = BVQyzun2j6dHFXF44Zyz
+
 [gpg]
-	program = gpg2
+	program = gpg
 
 [grep]
 	# lineNumber = true
@@ -270,6 +339,7 @@
 	# path = ~/.gitconfig-private
 
 [init]
+	defaultBranch = main
 	# templatedir = ~/.git_template
 
 [interactive]
@@ -281,10 +351,9 @@
 	mailmap = true
 
 [mailmap]
-	file = ~/.gitmailmap
-	; file = ~/management/git/mailmap-name-nick
-	; file = ~/management/git/mailmap-nick
-	; file = ~/management/git/mailmap
+	file = /home/github/neomutt/source/authors/git/mailmap-name-nick
+	# file = /home/github/neomutt/source/authors/git/mailmap-nick
+	# file = /home/github/neomutt/source/authors/git/mailmap
 
 [merge]
 	branchdesc  = true
@@ -293,8 +362,8 @@
 	log         = 999
 	renormalize = true
 	stat        = false
-	tool        = vimdiff
-	; tool = diffconflicts
+	# tool        = vimdiff
+	tool        = diffconflicts
 
 [merge "ours"]
 	name = Always keep ours during merge
@@ -320,25 +389,29 @@
 	cmd = nvim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
 
-; [pager]
-; 	diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
+# [pager]
+# 	diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
 
 [pretty]
-	tidy   = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset
-	quiet  = %C(204)%h%Creset %s
-	nodec  = %C(204)%h%Creset %s %C(47)(%ar)%Creset
-	nodate = %C(204)%h%Creset %s%C(white dim)%d%Creset
-	dtidy  = %C(204)%h%Creset %s %C(47)(%ad)%Creset%C(228)%d%Creset
-	; named  = %C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%aN <%aE>%Creset
-	; named  = %C(204)%h%Creset %s -- %C(white dim)%aN <%aE>%Creset
-	sdate  = %C(204)%h%Creset %C(47)%ad%Creset %s
-	sndate = %C(204)%h%Creset %C(47)%ad%Creset %C(white dim)%aN <%aE>%Creset %s
+	tidy   = "%C(204)%h%Creset %s %C(22)(%ar)%Creset%C(228)%d%Creset"
+	quiet  = "%C(204)%h%Creset %s"
+	nodec  = "%C(204)%h%Creset %s %C(47)(%ar)%Creset"
+	nodate = "%C(204)%h%Creset %s%C(white dim)%d%Creset"
+	dtidy  = "%C(204)%h%Creset %s %C(47)(%ad)%Creset%C(228)%d%Creset"
+	# named  = "%C(204)%h%Creset %s %C(47)(%ar)%Creset%C(228)%d%Creset %C(white dim)%aN <%aE>%Creset"
+	# named  = "%C(204)%h%Creset %s -- %C(white dim)%aN <%aE>%Creset"
+	sdate  = "%C(204)%h%Creset %C(46)%ad%Creset %s%C(228)%d%Creset"
+	cdate  = "%C(204)%h%Creset %C(46)%cd%Creset %s%C(228)%d%Creset"
+	sndate = "%C(204)%h%Creset %C(46)%ad%Creset %C(white dim)%aN <%aE>%Creset %s"
 
-	named = %C(204)%h%Creset %s %C(white dim)(%aN)%Creset
-	column = %C(204)%h% C(white dim)%<(12,trunc)%aN%Creset %s
+	named = "%C(204)%h%Creset %s -- %C(white dim)%aN%Creset"
+	column = "%C(204)%h% C(white dim)%<(12,trunc)%aN%Creset %s"
 
 [push]
-	default = matching
+	default = current
+
+[pull]
+	ff = only
 
 [rebase]
 	autosquash = true
@@ -346,34 +419,45 @@
 [rerere]
 	enabled = true
 
-[url "git@gist.github.com:/"]
-	insteadOf = "gist:"
+[sequence]
+	editor = "~/bin/git-sequence-editor.sh"
+
+[url "git@gist.github.com:"]
+# 	insteadOf = "gist:"
+	pushInsteadOf = "https://gist.github.com/flatcap/"
 	pushInsteadOf = "https://gist.github.com/"
 
-[url "git://github.com/"]
-	insteadOf = "gh:"
+# [url "git://github.com/"]
+# 	insteadOf = "gh:"
 
-[url "git@github.com:flatcap/"]
-	insteadOf = "rich:"
-	pushInsteadOf = "https://github.com/flatcap/"
-
-[url "git@github.com:"]
-	pushInsteadOf = "https://github.com/"
+# [url "git@github.com:flatcap/"]
+# 	insteadOf = "rich:"
+# 	pushInsteadOf = "https://github.com/flatcap/"
 
 [url "git@github.com:"]
+# 	insteadOf = "rich:"
 	pushInsteadOf = "https://github.com/"
 
 [url "git@gitlab.com:"]
 	pushInsteadOf = "https://gitlab.com/"
 
+[url "git@gitlab.com:neomutt/"]
+	insteadOf = "https://gitlab.com/neomutt/"
+
 [user]
-	email      = "rich@flatcap.org"
 	name       = "Richard Russon"
-	signingkey = "Richard Russon (NeoMutt) <rich@flatcap.org>"
+	email      = "rich@flatcap.org"
+	# signingkey = "Richard Russon (NeoMutt) <rich@flatcap.org>"
+	signingkey = "5FAF0A6EE7371805"
+	# name       = "Pietro Cerutti"
+	# email      = "gahr@gahr.ch"
+	# name       = "Austin Ray"
+	# email      = "austin@austinray.io"
+
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
 
 ; [remote "github"]
 ; 	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
-
-[include]
-	path = ~/.gitconfig.local
 

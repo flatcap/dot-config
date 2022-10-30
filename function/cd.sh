@@ -15,9 +15,9 @@ function is_git_branch()
 	local DIR="$1"
 
 	[ -n "$DIR"     ] || return
-	[ "$DIR" == "." ] && DIR="master"
+	[ "$DIR" == "." ] && DIR="main"
 
-	git branch 2> /dev/null | grep -Fqw "$DIR"
+	git branch 2> /dev/null | grep -q " $DIR$"
 }
 
 function get_git_branch()
@@ -52,7 +52,7 @@ function cd ()
 			local TAIL=""
 		fi
 		local GDIR="$ARG"
-		[ "$GDIR" = "." ] && GDIR="master"			# dir=. => master branch
+		[ "$GDIR" = "." ] && GDIR="main"			# dir=. => main branch
 
 		if [ -L "$ARG" ]; then					# cd link to dir/file
 			ARG="$(readlink $ARG)"
@@ -74,7 +74,7 @@ function cd ()
 			elif [ "$project" = "$DIR" ]; then
 				git checkout -q "$GDIR"
 				return
-			elif [ "$GDIR" = "master" -a -d "../$project" ]; then
+			elif [ "$GDIR" = "main" -a -d "../$project" ]; then
 				set -- "../$project"
 			else
 				git checkout -q "$GDIR"

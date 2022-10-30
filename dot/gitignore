@@ -1,26 +1,32 @@
+# .gitattributes
+
+# junk -------------------------------------------------------------------------
 *.bak
+*.expand
 *.gpg
 *.o
 *~
 .*sw[po]
+.build/
 .dep
 .obj
 .vimlocal
 .~*#
+action-doxygen
+build[0-9]*
 core.[0-9]*
+coredump
 tags
+typescript
 watcher
+# asan.*
 
 *.rej
 *.orig
 
 *.patch
-*.diff
 
-*.gcda
-*.gcno
-callgrind.out.*
-
-hcache/hcversion.h
-
-/build[0-9]*
+# *.gcda
+# *.gcno
+# callgrind.out.*
+# *.diff

@@ -46,6 +46,9 @@ set match-hidden-files off
 # Expand tilde to full path on completion
 # set expand-tilde on
 
+# Needed for cgdb
+set enable-bracketed-paste off
+
 # ------------------------------------------------------------------------------
 
 $if Bash
@@ -74,7 +77,8 @@ $endif
 "\eD" "| uniq -d "              # show Duplicates
 "\eE" "| uniq -c "              # Enumerate (count uniq)
 "\eG" "| grep -i "
-"\eH" "| head "
+# "\eG" "| ag "
+"\eH" "| head -n 10 "
 "\eL" "| nl -nrz -w4 -ba "      # Line numbers
 "\eM" "| less\n"
 "\eN" "| sort -n "
@@ -86,8 +90,9 @@ $endif
 "\eV" "| grep -v "
 "\eW" "| wc -l\n"
 "\eX" "| shuf "                 # miX up
+"\eY" "~/.neomuttdebug0"
 "\eZ" "| cat -s "
-"\e0" "> /dev/null "
+"\e0" "/dev/null "
 
 "\ei" " -iname "
 
@@ -100,7 +105,10 @@ $endif
 "\eJ" "^[[19~$(cat \C-e)"
 "\eK" "^[[19~$(\C-e)"
 
-# Remaining letters: BOQY
+# Alt-Q, quote last arg
+"\eQ" '""'
+
+# Remaining letters: BOQ
 
 # ------------------------------------------------------------------------------
 # Mappings

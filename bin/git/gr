@@ -30,7 +30,7 @@ function usage()
 function get_dirs()
 {
 	local i
-	local dir_list="$(find -L . -type d -name .git | LANG=C sort | cut -b3-)"
+	local dir_list="$(find . -name .git | LANG=C sort | cut -b3-)"
 	for i in $dir_list; do
 		[ "$i" = ".git" ] && i=.
 		DIRS="$DIRS ${i%/*}"
@@ -50,7 +50,7 @@ function git_fetch()
 		title2 git fetch $i
 		log $i
 		pushd $i > /dev/null
-		[ -n "$(git remote)" ] && git fetch --all
+		[ -n "$(git remote)" ] && git fetch --all --prune
 		popd > /dev/null
 	done
 }
@@ -93,9 +93,9 @@ function git_pull()
 				git fetch --tags github $BRANCH:$BRANCH
 			else
 				git fetch --tags --quiet
-				MASTER=$(git rev-parse HEAD)
+				MAIN=$(git rev-parse HEAD)
 				FETCH=$(git rev-parse FETCH_HEAD)
-				if [ $MASTER != $FETCH ]; then
+				if [ $MAIN != $FETCH ]; then
 					BRANCH=$(git branch | sed -n '/*/{s/^\* //;p}')
 					git --no-pager log --branches --graph --pretty="%Cred%h%Creset %s %Cgreen(%ar)%Creset%C(yellow)%d%Creset" $BRANCH^1..FETCH_HEAD
 					git merge --ff --quiet FETCH_HEAD
@@ -214,7 +214,8 @@ function git_remote()
 	for i in $DIRS; do
 		title2 git remote $i
 		pushd $i > /dev/null
-		local REMOTE=$(git remote -v | awk '/(fetch)/{ printf ("\t%s\n", $2); }')
+		# local REMOTE=$(git remote -v | awk '/(fetch)/{ printf ("\t%s\n", $2); }')
+		local REMOTE=$(git remote -v | awk '/(fetch)/{ printf ("\t%-12s %s\n", $1, $2); }')
 		if [ -n "$REMOTE" ]; then
 			log $i
 			echo "$REMOTE"
