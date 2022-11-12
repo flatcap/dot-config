@@ -90,7 +90,7 @@ function git_pull()
 			BARE="$(git config --get core.bare)"
 			if [ "$BARE" = "true" ]; then
 				BRANCH=$(sed 's!.*/!!' HEAD)
-				git fetch --tags origin $BRANCH:$BRANCH
+				git fetch --tags github $BRANCH:$BRANCH
 			else
 				git fetch --tags --quiet
 				MASTER=$(git rev-parse HEAD)
@@ -156,8 +156,10 @@ function git_tidy()
 		rm -f GIT_COLA_MSG
 		rm -f hooks/*.sample
 		# rm -f info/exclude
+		rm -f AUTO_MERGE
 		rm -f MERGE_RR
 		rm -f ORIG_HEAD
+		rm -f REBASE_HEAD
 		rm -f qgit_cache.dat
 		rm -fr logs
 		rm -fr rr-cache

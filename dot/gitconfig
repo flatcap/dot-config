@@ -200,7 +200,7 @@
 	# whitespace     = blank-at-eol,space-before-tab,indent-with-non-tab,tabwidth=8,-blank-at-eof
 	whitespace     = -blank-at-eol,-space-before-tab,-blank-at-eof
 	pager          = "less -eFfiqrX"
-	; pager          = diff-so-fancy | less --tabs=8 -RFX
+	pager          = /home/github/3rd-party/diff-so-fancy/diff-so-fancy | less --tabs=8 -RFX
 	preloadindex   = true
 	attributesfile = ~/.gitattributes
 	excludesfile   = ~/.gitignore
