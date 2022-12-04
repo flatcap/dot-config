@@ -111,8 +111,6 @@ function __prompt_user()
 		__virtual_machine && HOSTNAME=dummy.vm.flatcap.org
 		case "$HOSTNAME" in
 			vivo.flatcap.org)	prompt_colour="32" ;;	# green
-			laptop.flatcap.org)	prompt_colour="32" ;;	# green
-			desktop.flatcap.org)	prompt_colour="36" ;;	# cyan
 			flatcap.org)		prompt_colour="31" ;;	# red
 			*.vm.flatcap.org)	prompt_colour="33" ;;	# yellow
 			*)			prompt_colour="35" ;;	# magenta
@@ -244,9 +242,7 @@ function __prompt_command()
 		[ -n "$IP" ] && IP=":$IP"
 		hostname="{${hostname%%.*}$IP} "
 	else
-		if [[ $hostname =~ ^laptop.flatcap.org$ ]]; then
-			hostname=""
-		elif [[ $hostname =~ ^vivo.flatcap.org$ ]]; then
+		if [[ $hostname =~ ^vivo.flatcap.org$ ]]; then
 			hostname=""
 		else
 			hostname="{${hostname%%.*}} "
