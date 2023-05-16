@@ -61,6 +61,7 @@ $endif
 # "\M-k" forward-backward-delete-char
 
 # RSI prevention (Alt lower-case letter):
+"\ea" "@"       # <Alt-a> = at     
 "\ej" "-"       # <Alt-j> = hyphen     
 "\ek" "_"       # <Alt-k> = underscore 
 "\ef" "+"       # <Alt-f> = plus       

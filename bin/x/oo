@@ -28,6 +28,9 @@ for i in "$@"; do
 		*.pdf)
 			(evince "$i" &) &> /dev/null
 			;;
+		*.kml|*.gpx)
+			(gpxsee "$i" &) &> /dev/null
+			;;
 		# *.dot|*.gv)
 			#(dotty "$i" &) &> /dev/null
 			#xdotool search --name ${i%.*} windowkill

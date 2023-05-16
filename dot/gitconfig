@@ -82,7 +82,7 @@
 
 	origin   = "!f() { git remote add origin ~/neomutt.git; git remote --verbose; }; f"
 	# github   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/neomutt; git remote --verbose; }; f"
-	github   = "!f() { DIR=$(git remote get-url github 2> /dev/null); DIR=${DIR##*/}; if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/${DIR:-neomutt}; git remote --verbose; }; f"
+	github   = "!f() { DIR=$(git remote get-url github 2> /dev/null); DIR=${DIR##*/}; if [ -n \"$1\" ]; then USER=$1; REMOTE=${1}; else USER=neomutt; REMOTE=github; fi; git remote add $REMOTE https://github.com/$USER/${DIR:-neomutt}; git remote --verbose; }; f"
 	# gitlab   = "!f() { if [ -n \"$1\" ]; then USER=$1; REMOTE=${1,,}; REMOTE=${REMOTE//-}; else USER=neomutt; REMOTE=lab; fi; git remote add $REMOTE https://gitlab.com/$USER/neomutt.git/; git remote --verbose; }; f"
 
 	build    = "!f() { COMMIT=\"${1:-main}\"; [[ $COMMIT =~ ^[0-9]{1,4}$ ]] && COMMIT=\"HEAD~$COMMIT\"; git rebase --exec 'git clean -xdfq; git lq1; build' \"$COMMIT\"; }; f"
@@ -151,6 +151,7 @@
 	ltu      = "!f() { git log --format=tidy ..$(git upstream); git log --format=tidy $(git upstream)..; }; f"
 	lt1      = "!f() { git log --format=tidy ${1:-HEAD}^! \"$@\"; }; f"
 	ld       = log --format=sdate --date=short
+	ldn      = log --format=datename --date=short
 	ld1      = log --format=sdate --date=short -n1
 	ldm      = log --format=sdate --date=short main..
 	log1     = "!f() { git log ${1:-HEAD}^! \"$@\"; }; f"
@@ -159,9 +160,10 @@
 	lg       = log --format=tidy --graph
 	lgh      = "!git lqm --reverse | sed 's/^/- /'"
 	lgm      = log --format=tidy --graph main..
+	lgm0     = "!f() { PARENT=$(git log -n1 --format='%P' m0); PARENT=${PARENT##* }; git log --graph --format=tidy $PARENT.. \"$@\"; }; f"
 	# lt       = log --format=tidy main.. --reverse
-	ln       = log --graph --format=named
-	lnm      = log --graph --format=named main..
+	ln       = log --format=named
+	lnm      = log --format=named main..
 	lq       = log --format=quiet
 	lq1      = log --format=quiet -n1
 	lqm      = log --format=quiet main..
@@ -404,6 +406,7 @@
 	cdate  = "%C(204)%h%Creset %C(46)%cd%Creset %s%C(228)%d%Creset"
 	sndate = "%C(204)%h%Creset %C(46)%ad%Creset %C(white dim)%aN <%aE>%Creset %s"
 
+	datename = "%C(204)%h%Creset %C(46)%ad%Creset %s -- %C(white dim)%aN%Creset"
 	named = "%C(204)%h%Creset %s -- %C(white dim)%aN%Creset"
 	column = "%C(204)%h% C(white dim)%<(12,trunc)%aN%Creset %s"
 
