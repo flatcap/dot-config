@@ -1,6 +1,6 @@
 HISTCONTROL="ignorespace:erasedups"
 HISTFILE="$HOME/.bash_history"
 HISTFILESIZE="100000"
-HISTIGNORE="%*:h:h *:-:bg:cd:cd -:exit:fg:keep:la:lc:list:ll:ls:ls -C:ls -l:ls -la:off:poweroff:reboot:ren:vi:g:.."
+HISTIGNORE="%*:h:h *:-:bg:cd:cd -:exit:fg:keep:la:lc:list:ll:ls:ls -C:ls -l:ls -la:poweroff:reboot:ren:vi:g:.."
 HISTSIZE="100000"
-HISTTIMEFORMAT="%a %H:%M  "
+# HISTTIMEFORMAT="%a %H:%M  "

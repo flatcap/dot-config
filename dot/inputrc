@@ -61,14 +61,15 @@ $endif
 # "\M-k" forward-backward-delete-char
 
 # RSI prevention (Alt lower-case letter):
-"\ea" "@"       # <Alt-a> = at     
-"\ej" "-"       # <Alt-j> = hyphen     
-"\ek" "_"       # <Alt-k> = underscore 
-"\ef" "+"       # <Alt-f> = plus       
-"\ed" "="       # <Alt-d> = equals     
-"\eg" "^"       # <Alt-g> = caret      
-"\eh" "~"       # <Alt-h> = tilda      
-"\em" "\n"      # <Alt-m> = return     
+"\ea" "@"       # <Alt-a> = at
+"\ej" "-"       # <Alt-j> = hyphen
+"\ek" "_"       # <Alt-k> = underscore
+"\ef" "+"       # <Alt-f> = plus
+"\ed" "="       # <Alt-d> = equals
+"\eg" "^"       # <Alt-g> = caret
+"\eh" "~"       # <Alt-h> = tilda
+"\em" "\n"      # <Alt-m> = return
+"\en" "#"       # <Alt-n> = hash
 "\es" "*"       # <Alt-s> = star
 "\ew" "\\*"     # <Alt-w> = backslash-star
 
@@ -105,11 +106,13 @@ $endif
 "\eF" "$(cat )\eOD"
 "\eJ" "^[[19~$(cat \C-e)"
 "\eK" "^[[19~$(\C-e)"
+"\eo" ".git/files/"
 
 # Alt-Q, quote last arg
 "\eQ" '""'
 
-# Remaining letters: BOQ
+# Remaining letters: BIO
+# Remaining letters: bcelpqrtuvxyz
 
 # ------------------------------------------------------------------------------
 # Mappings
