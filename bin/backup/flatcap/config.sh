@@ -52,7 +52,7 @@ find "$DATE" -type f -print0							\
 	| sort --zero-terminated						\
 	| tar --create --file - --null --files-from - --sparse --selinux --acls	\
 	| xz --best									\
-	| gpg2 --encrypt --recipient "$RCPT" --output "$TAR"
+	| gpg --encrypt --recipient "$RCPT" --output "$TAR"
 
 rm --force --recursive $TMP_DIR
 

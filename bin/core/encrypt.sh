@@ -15,6 +15,6 @@ umask 0077
 for i in "$@"; do
 	[[ "$i" =~ \.(gz|bz2|xz|zip)$ ]] && COMPRESS="--compress-algo none" || COMPRESS=""
 	echo $i
-	gpg2 --encrypt --hidden-recipient "$RCPT" $COMPRESS "$i"
+	gpg --encrypt --hidden-recipient "$RCPT" $COMPRESS "$i"
 done
 

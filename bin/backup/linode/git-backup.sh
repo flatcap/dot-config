@@ -27,6 +27,6 @@ tar $TAR_OPTS --create --file "$GIT_TAR" gitolite3 gitolite3/repositories/*
 cd "$DIR"
 
 xz -6 -T0 "$GIT_TAR"
-gpg2 --encrypt --recipient "$RCPT" "$GIT_TAR.xz"
+gpg --encrypt --recipient "$RCPT" "$GIT_TAR.xz"
 rm -f "$GIT_TAR.xz"
 

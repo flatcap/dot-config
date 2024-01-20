@@ -35,7 +35,7 @@ function get_dirs()
 		[ "$i" = ".git" ] && i=.
 		DIRS="$DIRS ${i%/*}"
 	done
-	DIRS="$DIRS $(find -L . -type d -name "?*.git" | LANG=C sort | cut -b3-)"
+	DIRS="$DIRS $(find . -type d -name "?*.git" | LANG=C sort | cut -b3-)"
 
 	local HERE=$(pwd)
 	if [[ "$HERE" =~ \.git$ ]]; then

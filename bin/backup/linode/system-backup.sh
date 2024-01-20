@@ -40,7 +40,7 @@ cd "$DIR"
 xz -6 -T0 *.tar
 
 for i in *.tar.xz; do
-	gpg2 --encrypt --recipient "$RCPT" "$i"
+	gpg --encrypt --recipient "$RCPT" "$i"
 	rm "$i"
 done
 

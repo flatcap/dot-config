@@ -35,7 +35,7 @@ rpm --query --all | sort > rpm-list
 rpm --query --all --last > rpm-last
 
 for i in *; do
-	gpg2 --encrypt --recipient "$RCPT" "$i"
+	gpg --encrypt --recipient "$RCPT" "$i"
 	rm "$i"
 done
 

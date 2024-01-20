@@ -15,6 +15,6 @@ CHUNK_SIZE="1G"
 [ -d "$DIR" ] || exit 1
 
 tar --sort=name -cvf - "$DIR" \
-	| gpg2 --encrypt --hidden-recipient "$RCPT" --compress-algo none -o - \
+	| gpg --encrypt --hidden-recipient "$RCPT" --compress-algo none -o - \
 	| split --bytes "$CHUNK_SIZE" --additional-suffix="$SUFFIX" --numeric-suffixes=1 --suffix-length="$NUM_LENGTH" - "${DIR}-"
 

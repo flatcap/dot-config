@@ -75,7 +75,7 @@ find $TMP_DIR -name "*.bak*"           -exec rm {} \;
 pushd $TMP_DIR > /dev/null
 tar --create --file $TAR .mozilla
 xz --best $TAR
-gpg2 --encrypt --recipient "$RCPT" --output $BAK_DIR/$TAR.xz.gpg $TAR.xz
+gpg --encrypt --recipient "$RCPT" --output $BAK_DIR/$TAR.xz.gpg $TAR.xz
 popd > /dev/null
 
 # chmod 400 $BAK_DIR/$TAR.xz.gpg

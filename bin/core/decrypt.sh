@@ -14,5 +14,5 @@ umask 0077
 
 for i in "$@"; do
 	echo $i
-	gpg2 --decrypt --default-key "$RCPT" "$i" > "${i%.gpg}"
+	gpg --decrypt --default-key "$RCPT" "$i" > "${i%.gpg}"
 done

@@ -10,7 +10,7 @@ mkdir --parents "$TO"
 rsync --archive --prune-empty-dirs --remove-source-files --include '*/' --include '*.gz'        --exclude '*' $FROM $TO
 rsync --archive --prune-empty-dirs --remove-source-files --include '*/' --include '*@*.journal' --exclude '*' $FROM $TO
 
-find "$TO" -type f ! -name \*.gpg -print0 | xargs --no-run-if-empty -0 -n 1 gpg2 --encrypt --recipient "$RCPT"
+find "$TO" -type f ! -name \*.gpg -print0 | xargs --no-run-if-empty -0 -n 1 gpg --encrypt --recipient "$RCPT"
 
 # RISKY!  Ought to check that the encryption stage succeeded.
 find "$TO" -type f ! -name \*.gpg -print0 | xargs --no-run-if-empty -0 rm

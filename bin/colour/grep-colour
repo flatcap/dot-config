@@ -24,7 +24,7 @@ function read_col()
 		blue)      add_col "1;34" ;;
 		magenta)   add_col "1;35" ;;
 		cyan)      add_col "1;36" ;;
-		grey)      add_col "1;30" ;;
+		grey)      add_col "38;5;244" ;;
 		black)     add_col "0;30" ;;
 		bold)      add_col "1"    ;;
 		underline) add_col "4"    ;;
