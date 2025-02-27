@@ -84,6 +84,7 @@ $endif
 "\eL" "| nl -nrz -w4 -ba "      # Line numbers
 "\eM" "| less\n"
 "\eN" "| sort -n "
+"\eO" "| fzf "                  # filter Output
 "\eP" "$(pwd) "
 "\eR" "| rev "                  # Reverse lines
 "\eS" "| sort -f "
@@ -96,7 +97,12 @@ $endif
 "\eZ" "| cat -s "
 "\e0" "/dev/null "
 
-"\ei" " -iname "
+"\ei" " -iname "		# find param
+"\e\"" "| 2"			# strip leading two characters
+
+# Fix keybounce
+# "grerp" "grep"
+# "trere" "tree"
 
 # F8 - mapping for use in macro (below)
 "^[[19~" vi-backward-bigword

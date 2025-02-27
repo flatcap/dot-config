@@ -8,10 +8,10 @@ PROMPT_CFG_IDENT=yes
 PROMPT_CFG_TITLE=yes
 PROMPT_CFG_USER=yes
 
-[[   $USER     != flatcap                                       ]] && PROMPT_CFG_USER="yes"
-[[ ! $HOSTNAME =~ ^(vivo.flatcap.org)$                          ]] && PROMPT_CFG_COLOUR="yes"
-[[ ! $TERM     =~ ^(xterm|xterm-256color|vt100|linux|screen.*)$ ]] && PROMPT_CFG_COLOUR="no"
-[[ ! $TERM     =~ ^(xterm|xterm-256color|vt100|linux|screen.*)$ ]] && PROMPT_CFG_TITLE="no"
-[[   $HOSTNAME =~ ^(vivo.flatcap.org|flatcap.org)$              ]] && PROMPT_CFG_GIT="yes"
-[[   $SSH_CLIENT                                                ]] && PROMPT_CFG_USER="yes"
+[[   $USER     != flatcap                                                    ]] && PROMPT_CFG_USER="yes"
+[[ ! $HOSTNAME =~ ^(vivo.flatcap.org)$                                       ]] && PROMPT_CFG_COLOUR="yes"
+[[ ! $TERM     =~ ^(xterm|xterm-direct|xterm-256color|vt100|linux|screen.*)$ ]] && PROMPT_CFG_COLOUR="no"
+[[ ! $TERM     =~ ^(xterm|xterm-direct|xterm-256color|vt100|linux|screen.*)$ ]] && PROMPT_CFG_TITLE="no"
+[[   $HOSTNAME =~ ^(vivo.flatcap.org|flatcap.org)$                           ]] && PROMPT_CFG_GIT="yes"
+[[   $SSH_CLIENT                                                             ]] && PROMPT_CFG_USER="yes"
 

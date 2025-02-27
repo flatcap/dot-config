@@ -41,7 +41,7 @@ for i in "$@"; do
 		*/[0-9]*.gv)
 			TITLE="${i%.*}"
 			TITLE="${TITLE##*/}"
-			(display -resize 75% -title "$TITLE" "$i" &) >& /dev/null
+			(display -resize 65% -title "$TITLE" "$i" &) >& /dev/null
 			;;
 		*.svg|*.dot|*.gv)
 			#(inkscape "$i" &) &> /dev/null

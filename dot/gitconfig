@@ -71,9 +71,9 @@
 	rd       = range-diff
 	rdu      = range-diff main @{U} @
 	rhu      = reset --hard @{U}
-	sl       = shortlog --numbered --summary
-	slm      = shortlog --numbered --summary main..
-	slr      = "!f() { git shortlog --numbered --summary $(git describe --abbrev=0).. \"$@\"; }; f"
+	sl       = shortlog --no-merges --group=author --group=trailer:co-authored-by --numbered --summary
+	slm      = shortlog --no-merges --group=author --group=trailer:co-authored-by --numbered --summary main..
+	slr      = "!f() { git shortlog --no-merges --group=author --group=trailer:co-authored-by --numbered --summary $(git describe --abbrev=0).. \"$@\"; }; f"
 	sw       = switch
 	t        = tag
 	tidy     = "!f() { git fsck --full --strict; git gc --aggressive; git prune; }; f"
@@ -114,8 +114,10 @@
 	cm       = "!f() { git commit --message \"$*\"; }; f"
 	# edit     = "!f() { X=$(git rev-parse --short \"$1\"); GIT_SEQUENCE_EDITOR=\"sed -i '/$X/s/^pick/e/'\" git rebase -i $X^; }; f"
 	edit     = "!f() { X=$(git rev-parse --short \"$1\"); GIT_SEQUENCE_EDITOR=\"sed -i '/$X/s/^pick/e/'\" git rebase -i $X^; nvim -p $(git diff --name-only HEAD^); }; f"
+	editq    = "!f() { X=$(git rev-parse --short \"$1\"); GIT_SEQUENCE_EDITOR=\"sed -i '/$X/s/^pick/e/'\" git rebase -i $X^; }; f"
 	reword   = "!f() { X=$(git rev-parse --short \"$1\"); GIT_SEQUENCE_EDITOR=\"sed -i '/$X/s/^pick/r/'\" git rebase -i $X^; }; f"
 	line     = commit --allow-empty --message "--------------------"
+	mememe   = commit --allow-empty --amend --all --no-edit --author 'Richard Russon <rich@flatcap.org>'
 
 	# hiding
 	hidden   = "!f() { git ls-files -v | sed -n '/^[a-z]/{s/^..//;p}'; }; f"
@@ -137,7 +139,7 @@
 	# llm      = log --branches --graph --format=nodate main^..
 	# llm      = !git log --graph --format=nodate $(git for-each-ref --contains main --format='%(refname:short)' refs/heads) ^main^2
 	# llm      = "!f() { X=$(git show -s --pretty=%P main); git log --graph --format=nodate $(git for-each-ref --contains main --format='%(refname:short)' refs/heads) ^${X##* } \"$@\"; }; f"
-	llm      = "!f() { X=$(git show -s --pretty=%P main); git log --branches --graph --format=nodate ${X##* }..; }; f"
+	llm      = "!f() { X=$(git show -s --pretty=%P main); git log --branches --graph --format=nodate ${X##* }.. \"$@\"; }; f"
 	llqm     = log --branches --graph --format=quiet main^..
 	# llm0     = log --branches --graph --format=nodate m0^2..
 	# llm0     = "!f() { PARENT=$(git log -n1 --format='%P' m0); PARENT=${PARENT##* }; git log --branches --graph --format=nodate $PARENT..; }; f"
@@ -423,6 +425,7 @@
 
 [rebase]
 	autosquash = true
+	# rebaseMerges = true
 
 [rerere]
 	enabled = true

@@ -2,7 +2,7 @@
 
 DICT="/usr/share/dict/words"
 LINES=$(tput lines)
-LINES=$((LINES-2))
+LINES=$((LINES-5))
 
 if [ $# = 0 ]; then
 	echo "Usage: "${0##*/} template
